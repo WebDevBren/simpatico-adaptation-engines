@@ -59,7 +59,7 @@ public class Handler {
             .collect(Collectors.toCollection(HashSet::new));
     protected MachineLinking machineLinking;
 	
-	@PostConstruct 
+//	@PostConstruct 
 	public void init() throws IOException {
 		Resource res = applicationContext.getResource(config);
 		allProps = new Properties();

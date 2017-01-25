@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  ******************************************************************************/
-package eu.simpaticoproject.adaptation.text.controllers;
+package eu.simpaticoproject.adaptation.common.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,15 +26,20 @@ import springfox.documentation.annotations.ApiIgnore;
  */
 @ApiIgnore
 @Controller
-public class DashboardController {
+public class DemoController {
 
-	@RequestMapping("/webdemo")
-	public String dashboard() {
-		return "redirect:/taedemo/index.html";
+	@RequestMapping({"/tae/webdemo", "/tae"})
+	public String taeDashboard() {
+		return "redirect:/tae/webdemo/index.html";
 	}
-	@RequestMapping("/")
-	public String dashboardHome() {
-		return "redirect:/taedemo/index.html";
+
+	@RequestMapping({"/wae/webdemo", "/wae"})
+	public String waeDemo() {
+		return "redirect:/wae/webdemo/wae-test.html";
 	}
-	
+
+	@RequestMapping("/wae/webdemo/logincallback")
+	public String login() {
+		return "redirect:/wae/webdemo/logincb.html";
+	}
 }
