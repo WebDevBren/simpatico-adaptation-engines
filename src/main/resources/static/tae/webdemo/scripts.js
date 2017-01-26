@@ -79,7 +79,7 @@ $(function () {
         $(this).toggleClass('disabled');
         $('#text').attr('disabled', 'disabled');
 
-        $.ajax("/tae/simp", {
+        $.ajax("../../tae/simp", {
             dataType: "json",
             data: {
                 text: text
