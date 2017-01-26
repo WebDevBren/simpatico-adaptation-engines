@@ -12,3 +12,5 @@ buildNumber.properties
 /.mvn/
 /.project
 /.settings/
+.idea
+simpatico-adaptation-engines.iml
