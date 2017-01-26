@@ -5,6 +5,15 @@
             <PatternLayout charset="UTF-8"
                 pattern="%d{dd-MM HH:mm:ss.SSS} (%level{length=1}) %msg  [%t %logger{1.}]%n%rEx{full}" />
         </Console>
+		<RollingFile name="RollingFile" fileName="./simp-engines.log"
+		  filePattern="${log-path}/simp-engines-%d{yyyy-MM-dd}.log" >
+            <PatternLayout charset="UTF-8"
+                pattern="%d{dd-MM HH:mm:ss.SSS} (%level{length=1}) %msg  [%t %logger{1.}]%n%rEx{full}" />
+			<DefaultRolloverStrategy max="4"/>
+		<Policies>
+		  <TimeBasedTriggeringPolicy />
+		</Policies>
+		</RollingFile>
     </Appenders>
     <Loggers>
         <Root level="warn">
