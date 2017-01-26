@@ -1,14 +1,14 @@
 $( function() {
 	// INIT WAE ENGINE CONFIG
 	waeUI.init({
-		endpoint: '/wae',
+		endpoint: '/simp-engines/wae',
 		prevButtonLabel: 'Precedente',
 		nextButtonLabel: 'Successivo',
 		topBarHeight: 60
 	});
 	// INIT TAE CONFIG
 	taeUI.init({
-		endpoint: '/tae',
+		endpoint: '/simp-engines/tae',
 		dialogTitle: 'Arricchimento testo',
 		tabDefinitionsTitle: 'Definizioni',
 		tabSimplificationTitle: 'Semplificazione',

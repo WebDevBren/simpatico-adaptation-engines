@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import eu.simpaticoproject.adaptation.text.Handler;
 import eu.simpaticoproject.adaptation.text.tae.SimpaticoInput;
 import eu.simpaticoproject.adaptation.text.tae.SimpaticoOutput;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * @author raman
@@ -45,14 +46,21 @@ public class TAEController {
 	private Handler handler;
 	
 	@RequestMapping(value = "/tae/simp", method = RequestMethod.GET)
-	public @ResponseBody SimpaticoOutput simp(
+	@ApiOperation(value = "Process text",
+				  response = SimpaticoOutput.class,
+				  notes = "Obtain text annotations and simplifications")
+	public @ResponseBody String simp(
 			@RequestParam(required = false) String lang,
 			@RequestParam(required = false) String text,
 			@RequestParam(required = false) Boolean doLex) throws Exception {
 		String json = handler.service(lang, text, doLex);
-		return new ObjectMapper().readValue(json, SimpaticoOutput.class);
+		return json;
+//		return new ObjectMapper().readValue(json, SimpaticoOutput.class);
 	}
 	@RequestMapping(value = "/tae/simp", method = RequestMethod.POST)
+	@ApiOperation(value = "Process text",
+	  response = SimpaticoOutput.class,
+	  notes = "Obtain text annotations and simplifications")
 	public @ResponseBody SimpaticoOutput simp(@RequestBody SimpaticoInput input) throws Exception {
 		String json = handler.service(input.getLang(), input.getText(), input.getDoLex());
 		return new ObjectMapper().readValue(json, SimpaticoOutput.class);
