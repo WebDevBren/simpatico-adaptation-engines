@@ -12,3 +12,5 @@ buildNumber.properties
 /.mvn/
 /.project
 /.settings/
+
+simp-engines.log

@@ -150,7 +150,7 @@ $( function() {
 	        var aacBase = 'https://tn.smartcommunitylab.it/aac';
 	    		var base = window.location.href;
 	        var arr = base.split("/");
-	        var redirect = arr[0]+'//'+arr[2]+'/wae/webdemo/logincallback';
+	        var redirect = arr[0]+'//'+arr[2]+'/simp-engines/wae/webdemo/logincb.html';
 	        var authority = 'google';
 //	        	var authority = 'adc';
 
