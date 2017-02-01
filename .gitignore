@@ -9,7 +9,6 @@ buildNumber.properties
 .mvn/timing.properties
 /bin/
 /.classpath
-/.mvn/
 /.project
 /.settings/
 
