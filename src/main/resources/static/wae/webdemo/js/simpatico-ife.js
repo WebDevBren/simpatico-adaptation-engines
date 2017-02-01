@@ -46,6 +46,7 @@ $( function() {
 		},
 		{ // enrich text. A pop-up appears showing the information about the selected text
 			id: 'enrich',
+			img: 'images/enrich.png',
 			text: 'Arricchisci testo',
 			operation: function() {
 				taeUI.showDialog();
