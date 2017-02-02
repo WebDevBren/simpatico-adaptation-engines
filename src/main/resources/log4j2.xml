@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="WARN">
+<Configuration status="INFO">
     <Appenders>
         <Console name="stdout" target="SYSTEM_OUT">
             <PatternLayout charset="UTF-8"
                 pattern="%d{dd-MM HH:mm:ss.SSS} (%level{length=1}) %msg  [%t %logger{1.}]%n%rEx{full}" />
         </Console>
-		<RollingFile name="RollingFile" fileName="./simp-engines.log"
-		  filePattern="${log-path}/simp-engines-%d{yyyy-MM-dd}.log" >
+		<RollingFile name="file" fileName="./simp-engines.log"
+		  filePattern="./simp-engines-%d{yyyy-MM-dd}.log" >
             <PatternLayout charset="UTF-8"
                 pattern="%d{dd-MM HH:mm:ss.SSS} (%level{length=1}) %msg  [%t %logger{1.}]%n%rEx{full}" />
 			<DefaultRolloverStrategy max="4"/>
@@ -16,8 +16,9 @@
 		</RollingFile>
     </Appenders>
     <Loggers>
-        <Root level="warn">
+        <Root level="info">
             <AppenderRef ref="stdout" />
+            <AppenderRef ref="file" />
         </Root>
         <Logger name="eu.fbk" level="debug" />
     </Loggers>

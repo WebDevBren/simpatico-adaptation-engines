@@ -31,6 +31,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
@@ -49,6 +50,12 @@ public class Handler {
 	@Value("${config.file}")
 	private String config;
 	
+	@Value("${tae.mode.proxy.enabled}")
+	private Boolean modeProxy = false;
+
+	@Value("${tae.mode.proxy.endpoint}")
+	private String proxyEndpoint = null;
+	
 	@Autowired 
 	private ApplicationContext applicationContext;
 	
@@ -59,8 +66,12 @@ public class Handler {
             .collect(Collectors.toCollection(HashSet::new));
     protected MachineLinking machineLinking;
 	
-//	@PostConstruct 
+	protected RestTemplate rest = new RestTemplate();
+
+	@PostConstruct 
 	public void init() throws IOException {
+		if (modeProxy) return;
+		
 		Resource res = applicationContext.getResource(config);
 		allProps = new Properties();
 		if (res != null) {
@@ -94,6 +105,13 @@ public class Handler {
 	}
 	
 	public String service(String lang, String text, Boolean doLex) throws Exception {
+		if (modeProxy) {
+			return rest.getForObject(proxyEndpoint+"?lang={lang}&doLex={doLex}&text={text}", String.class, lang, doLex, text);
+		} else {
+			return serviceLocal(lang, text, doLex);
+		}
+	}
+	private String serviceLocal(String lang, String text, Boolean doLex) throws Exception {
         LOGGER.debug("Starting service");
 //        request.setCharacterEncoding("UTF-8");
 //        response.setCharacterEncoding("UTF-8");

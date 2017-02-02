@@ -1,14 +1,14 @@
 $( function() {
 	// INIT WAE ENGINE CONFIG
 	waeUI.init({
-		endpoint: '/wae',
+		endpoint: '../../wae',
 		prevButtonLabel: 'Precedente',
 		nextButtonLabel: 'Successivo',
 		topBarHeight: 60
 	});
 	// INIT TAE CONFIG
 	taeUI.init({
-		endpoint: '/tae',
+		endpoint: '../../tae',
 		dialogTitle: 'Arricchimento testo',
 		tabDefinitionsTitle: 'Definizioni',
 		tabSimplificationTitle: 'Semplificazione',
@@ -46,6 +46,7 @@ $( function() {
 		},
 		{ // enrich text. A pop-up appears showing the information about the selected text
 			id: 'enrich',
+			img: 'images/enrich.png',
 			text: 'Arricchisci testo',
 			operation: function() {
 				taeUI.showDialog();
@@ -150,7 +151,7 @@ $( function() {
 	        var aacBase = 'https://tn.smartcommunitylab.it/aac';
 	    		var base = window.location.href;
 	        var arr = base.split("/");
-	        var redirect = arr[0]+'//'+arr[2]+'/wae/webdemo/logincallback';
+	        var redirect = arr[0]+'//'+arr[2]+'/simp-engines/wae/webdemo/logincb.html';
 	        var authority = 'google';
 //	        	var authority = 'adc';
 

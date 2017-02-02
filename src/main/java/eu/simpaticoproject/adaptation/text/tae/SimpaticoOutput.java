@@ -81,6 +81,7 @@ public class SimpaticoOutput {
         private int hyphenWordCount = 0;
 
         protected Map<String, Double> measures = new HashMap<>();
+        protected Map<String, Object> forms = new HashMap<>();
 
         protected HashMap<String, String> genericPosDescription = new HashMap<>();
         protected HashMap<String, String> posDescription = new HashMap<>();
@@ -88,7 +89,14 @@ public class SimpaticoOutput {
         Set<Integer> tooLongSentences = new HashSet<>();
         Stats posStats = new Stats();
         Stats genericPosStats = new Stats();
-        public String getLanguage() {
+        
+        public Map<String, Object> getForms() {
+			return forms;
+		}
+		public void setForms(Map<String, Object> forms) {
+			this.forms = forms;
+		}
+		public String getLanguage() {
             return language;
         }
         public void setLanguage(String language) {

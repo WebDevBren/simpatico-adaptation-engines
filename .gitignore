@@ -9,8 +9,9 @@ buildNumber.properties
 .mvn/timing.properties
 /bin/
 /.classpath
-/.mvn/
 /.project
 /.settings/
+
+simp-engines.log
 .idea
-simpatico-adaptation-engines.iml
+*.iml
