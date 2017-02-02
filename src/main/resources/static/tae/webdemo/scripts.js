@@ -109,39 +109,41 @@ $(function () {
                             offsets[i] = i;
                         }
 
-                        data.languagetool.forEach(function (item) {
-                            var originalOffset = item.offset;
+                        if (data.languagetool != undefined) {
+                            data.languagetool.forEach(function (item) {
+                                var originalOffset = item.offset;
 
-                            var originalLength = item.length;
-                            if (originalOffset < beginSentence || originalOffset >= endSentence) {
-                                return;
-                            }
+                                var originalLength = item.length;
+                                if (originalOffset < beginSentence || originalOffset >= endSentence) {
+                                    return;
+                                }
 
-                            originalOffset -= beginSentence;
-                            var offset = offsets[originalOffset];
-                            var offEnd = offsets[originalOffset + originalLength];
-                            var formID = "form_" + beginSentence + "_" + originalOffset;
+                                originalOffset -= beginSentence;
+                                var offset = offsets[originalOffset];
+                                var offEnd = offsets[originalOffset + originalLength];
+                                var formID = "form_" + beginSentence + "_" + originalOffset;
 
-                            var before = '<a data-content="' + item.message.replace('"', "'") +
-                                '" title="' + item.shortMessage.replace('"', "'") +
-                                '" tabindex="0" role="button" class="my-popover label label-danger" id="' +
-                                formID + '">';
-                            var after = '</a>';
-                            var newText = text.substring(0, offset);
-                            newText += before;
-                            newText += text.substring(offset, offEnd);
-                            newText += after;
-                            newText += text.substring(offEnd);
+                                var before = '<a data-content="' + item.message.replace('"', "'") +
+                                    '" title="' + item.shortMessage.replace('"', "'") +
+                                    '" tabindex="0" role="button" class="my-popover label label-danger" id="' +
+                                    formID + '">';
+                                var after = '</a>';
+                                var newText = text.substring(0, offset);
+                                newText += before;
+                                newText += text.substring(offset, offEnd);
+                                newText += after;
+                                newText += text.substring(offEnd);
 
-                            for (var i = originalOffset; i < text.length; i++) {
-                                offsets[i] += before.length;
-                            }
-                            for (var i = originalOffset + originalLength; i < text.length; i++) {
-                                offsets[i] += after.length;
-                            }
+                                for (var i = originalOffset; i < text.length; i++) {
+                                    offsets[i] += before.length;
+                                }
+                                for (var i = originalOffset + originalLength; i < text.length; i++) {
+                                    offsets[i] += after.length;
+                                }
 
-                            text = newText;
-                        });
+                                text = newText;
+                            });
+                        }
 
                         p.append(text);
                         p.attr("id", "sentence" + i);
