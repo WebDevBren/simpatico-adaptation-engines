@@ -36,7 +36,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import eu.simpaticoproject.adaptation.common.Utils;
 import eu.simpaticoproject.adaptation.text.Handler;
-import eu.simpaticoproject.adaptation.text.tae.SimpaticoOutput;
 import eu.simpaticoproject.adaptation.workflow.model.WorkFlowModelStore;
 import eu.simpaticoproject.adaptation.workflow.model.wf.PageModel;
 import eu.simpaticoproject.adaptation.workflow.storage.RepositoryManager;
@@ -55,7 +54,6 @@ public class WAEController {
 	
 	@RequestMapping(value = "/wae/model/page", method = RequestMethod.GET)
 	@ApiOperation(value = "Find model",
-	  response = SimpaticoOutput.class,
 	  notes = "Get a model with the specific URI and profile")
 	public @ResponseBody PageModel getPageModel(@RequestParam String uri,
 			@RequestParam(required=false) String idProfile,
@@ -76,7 +74,6 @@ public class WAEController {
 	
 	@RequestMapping(value = "/wae/model", method = RequestMethod.GET)
 	@ApiOperation(value = "Get models",
-	  response = SimpaticoOutput.class,
 	  notes = "Get models matching the specific URI")
 	public @ResponseBody List<WorkFlowModelStore> getModelStore(@RequestParam String uri,
 			HttpServletRequest request) throws Exception {
@@ -89,7 +86,6 @@ public class WAEController {
 	
 	@RequestMapping(value = "/wae/model", method = RequestMethod.POST)
 	@ApiOperation(value = "Create model",
-	  response = SimpaticoOutput.class,
 	  notes = "Create a new model")
 	public @ResponseBody WorkFlowModelStore addModelStore(@RequestBody WorkFlowModelStore model,
 			HttpServletRequest request) throws Exception {
@@ -103,7 +99,6 @@ public class WAEController {
 	
 	@RequestMapping(value = "/wae/model/{objectId}", method = RequestMethod.PUT)
 	@ApiOperation(value = "Update model",
-	  response = SimpaticoOutput.class,
 	  notes = "Update an existing model")
 	public @ResponseBody WorkFlowModelStore saveModelStore(@PathVariable String objectId, 
 			@RequestBody WorkFlowModelStore model,
@@ -119,7 +114,6 @@ public class WAEController {
 	
 	@RequestMapping(value = "/wae/model/{objectId}", method = RequestMethod.DELETE)
 	@ApiOperation(value = "Delete model",
-	  response = SimpaticoOutput.class,
 	  notes = "Delete an existing model")
 	public @ResponseBody void deleteModelStore(@PathVariable String objectId,
 			HttpServletRequest request) throws Exception {
