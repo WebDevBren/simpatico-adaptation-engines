@@ -86,27 +86,27 @@ var taeUI = new function() {
 				var errCb = setError(ui.newPanel["0"].id);
 				
 				if(ui.newPanel["0"].id == "tab-0") {
-					if(taeUI.selectedText != "") {
+					if(!!taeUI.selectedText) {
 						ui.newPanel["0"].innerHTML = '<p>'+taeUI.labels.entryMessage+'</p>';
 					} else {
 						ui.newPanel["0"].innerHTML = '<p>'+taeUI.labels.notextMessage+'</p>';
 					}
 				} if(ui.newPanel["0"].id == "tab-definizioni") {
-					if(taeUI.selectedText != "") {
+					if(!!taeUI.selectedText) {
 						ui.newPanel["0"].innerHTML = '<p>Loading...</p>';
 						taeEngine.getDefinitions(taeUI.selectedText, cb, errCb);
 					} else {
 						ui.newPanel["0"].innerHTML = '<p>'+taeUI.labels.notextMessage+'</p>';
 					}
 				} if(ui.newPanel["0"].id == "tab-semplificazione") {
-					if(taeUI.selectedText != "") {
+					if(!!taeUI.selectedText) {
 						ui.newPanel["0"].innerHTML = '<p>Loading...</p>';
 						taeEngine.getExplanations(taeUI.selectedText, cb, errCb);
 					} else {
 						ui.newPanel["0"].innerHTML = '<p>'+taeUI.labels.notextMessage+'</p>';
 					}
 				} else if(ui.newPanel["0"].id == "tab-wikipedia") {
-					if(taeUI.selectedText != "") {
+					if(!!taeUI.selectedText) {
 						ui.newPanel["0"].innerHTML = '<p>Loading...</p>';
 						taeEngine.wikipedia(taeUI.selectedText, cb, errCb);
 					} else {
@@ -122,7 +122,7 @@ var taeUI = new function() {
 	}
 	
 	/**
-	 * CURRENTLY SELECTED TEXT
+	 * CURRENTLY SELECTED TEXT DATA: text, word, position (if apply)
 	 */
 	this.selectedText = null;
 	
@@ -134,7 +134,7 @@ var taeUI = new function() {
 	this.showDialog = function() {
 		this.dialog_simplify.tabs( "option", "active", 0);
 		this.dialog_simplify.tabs("option", "disabled", [] );
-		this.selectedText = getSelectedText().trim();
+		this.selectedText = getSelectedTextData();
 		this.dialog_simplify.dialog("open");
 		
 	}
@@ -193,14 +193,30 @@ var taeUI = new function() {
 		});
 	}
 	
-	function getSelectedText(){
-		var text = "";
+	function getSelectedTextData(){
+	  var textData = {text:''};
+		
 	  if (window.getSelection()) {
-	      text = window.getSelection().toString();
+	      textData.text = window.getSelection().toString().trim();
+	      if (!textData.text.match(/(\s)/i)) {
+	    	  textData.word = textData.text;
+	    	  var selection = window.getSelection(); 
+	    	  if (selection && selection.anchorNode) {
+	    		  textData.text = selection.anchorNode.textContent;
+	    	  }
+	      }
 	  } else if (document.selection && document.selection.type != "Control") {
-	      text = document.selection.createRange().text;
+		  textData.text = document.selection.createRange().text;
+	      if (!textData.text.match(/(\s)/i)) {
+	    	  textData.word = textData.text;
+	    	  var selection = window.getSelection(); 
+	    	  if (selection && selection.anchorNode) {
+	    		  textData.text = selection.anchorNode.value;
+	    	  }
+	      }
 	  }
-	  return text;
+	  if (!textData.text) return null;
+	  return textData;
 	};	
 	
 	function setInnerText(target) {

@@ -104,7 +104,7 @@ public class Handler {
         machineLinking = new MachineLinking(mlProperties);
 	}
 	
-	public String service(String lang, String text, Boolean doLex) throws Exception {
+	public String service(String word, Integer position, String lang, String text, Boolean doLex) throws Exception {
 		if (modeProxy) {
 			return rest.getForObject(proxyEndpoint+"?lang={lang}&doLex={doLex}&text={text}", String.class, lang, doLex, text);
 		} else {

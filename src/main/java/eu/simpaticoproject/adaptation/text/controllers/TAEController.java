@@ -50,10 +50,12 @@ public class TAEController {
 				  response = SimpaticoOutput.class,
 				  notes = "Obtain text annotations and simplifications")
 	public @ResponseBody String simp(
+			@RequestParam(required = false) String word,
+			@RequestParam(required = false) Integer position,
 			@RequestParam(required = false) String lang,
 			@RequestParam(required = false) String text,
 			@RequestParam(required = false) Boolean doLex) throws Exception {
-		String json = handler.service(lang, text, doLex);
+		String json = handler.service(word, position, lang, text, doLex);
 		return json;
 //		return new ObjectMapper().readValue(json, SimpaticoOutput.class);
 	}
@@ -62,7 +64,7 @@ public class TAEController {
 	  response = SimpaticoOutput.class,
 	  notes = "Obtain text annotations and simplifications")
 	public @ResponseBody SimpaticoOutput simp(@RequestBody SimpaticoInput input) throws Exception {
-		String json = handler.service(input.getLang(), input.getText(), input.getDoLex());
+		String json = handler.service(input.getWord(), input.getPosition(), input.getLang(), input.getText(), input.getDoLex());
 		return new ObjectMapper().readValue(json, SimpaticoOutput.class);
 	}
 
