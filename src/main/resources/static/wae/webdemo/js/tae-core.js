@@ -3,14 +3,19 @@
  */
 var taeEngine = new function() {
 	var endpoint = "/tae";
+	var lang = "it";
 	/**
 	 * INIT THE ENGINE CONFIG. PARAMETERS:
 	 * - endpoint: URL OF THE TAE API
+	 * - lang: LANGUAGE TO USE FOR THE TOOL
 	 */
 	this.init = function(config) {
 		config = config || {};
 		if (config.endpoint) {
 			endpoint = config.endpoint;
+		}
+		if (config.lang) {
+			lang = config.lang;
 		}
 	}
 	/**
@@ -20,7 +25,7 @@ var taeEngine = new function() {
 		var value = data.text.replace(/[\t\r\n]/g, ' ');
 		var word = data.word;
 		var position = !!word ? value.indexOf(data.word) : -1;
-		var url = endpoint + "/simp?lex=0&text=" + value;
+		var url = endpoint + "/simp?lang="+lang+"&text=" + value;
 		if (word != null) {
 			url += "&word="+data.word;
 			url += "&position="+position;
@@ -66,7 +71,7 @@ var taeEngine = new function() {
 	 */
 	this.getExplanations = function(data, callback, errorCallback) {
 		var value = data.text.replace(/[\t\r\n]/g, ' ');
-		var url = endpoint + "/simp?lex=1&text=" + value;
+		var url = endpoint + "/simp?lang="+lang+"&text=" + value;
 		if (data.word != null) {
 			url += "&word="+data.word;
 			url += "&position="+value.indexOf(data.word);
@@ -112,7 +117,7 @@ var taeEngine = new function() {
 	 */
 	this.wikipedia = function(data, callback, errorCallback) {
 		var value = data.text.replace(/[\t\r\n]/g, ' ');
-		var url = endpoint + "/simp?lex=1&text=" + value;
+		var url = endpoint + "/simp?lang="+lang+"&text=" + value;
 		if (data.word != null) {
 			url += "&word="+data.word;
 			url += "&position="+value.indexOf(data.word);
@@ -173,11 +178,23 @@ var taeEngine = new function() {
 	};
 	
 	/**
-	 * RETRIEVE SIMPLIFIED LITERAL TEXT GIVEN NORMAL TEXT
+	 * RETRIEVE SYNTACTICALLY SIMPLIFIED TEXT GIVEN NORMAL TEXT
 	 */
-	this.getSimplifiedText = function(source, callback, errorCallback) {
-		// TODO: this is completely fake implementation
-		callback('bla-bla-bla');
+	this.getSimplifiedText = function(data, callback, errorCallback) {
+		var value = data.text.replace(/[\t\r\n]/g, ' ');
+		var url = endpoint + "/simp?lang="+lang+"&text=" + value;
+		$.getJSON(url)
+		  .done(function(json) {
+			  if (!!json.simplifiedText) {
+				  callback(json.simplifiedText);
+			  } else {
+				  callback(value);
+			  }
+		  })
+		  .fail(function( jqxhr, textStatus, error) {
+		  	console.log(textStatus + ", " + error);
+		  	errorCallback("Errore nella comunicazione col server");
+		  });
 	}
 
 	

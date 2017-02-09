@@ -8,6 +8,7 @@ $( function() {
 	});
 	// INIT TAE CONFIG
 	taeUI.init({
+		lang: 'it',
 		endpoint: '../../tae',
 		dialogTitle: 'Arricchimento testo',
 		tabDefinitionsTitle: 'Definizioni',

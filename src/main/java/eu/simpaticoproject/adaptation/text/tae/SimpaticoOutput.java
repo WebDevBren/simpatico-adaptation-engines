@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.languagetool.rules.Rule;
 import org.languagetool.rules.RuleMatch;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -21,20 +22,21 @@ import eu.fbk.dkm.pikes.twm.LinkingTag;
 
 public class SimpaticoOutput {
 
-    List<RuleMatch> languagetool;
+    List<SimpRuleMatch> languagetool;
     SimpaticoReadability readability;
     String docDate;
     String timings;
-    List<LinkingTag> linkings;
-    List<LexensteinAnnotator.Simplification> simplifications;
+    List<Linking> linkings;
+    List<Simplification> simplifications;
     List<String> sentenceTexts;
+    List<String> sentences;
     
     String simplifiedText;
     
-    public List<RuleMatch> getLanguagetool() {
+    public List<SimpRuleMatch> getLanguagetool() {
         return languagetool;
     }
-    public void setLanguagetool(List<RuleMatch> languagetool) {
+    public void setLanguagetool(List<SimpRuleMatch> languagetool) {
         this.languagetool = languagetool;
     }
     public SimpaticoReadability getReadability() {
@@ -55,16 +57,16 @@ public class SimpaticoOutput {
     public void setTimings(String timings) {
         this.timings = timings;
     }
-    public List<LinkingTag> getLinkings() {
+    public List<Linking> getLinkings() {
         return linkings;
     }
-    public void setLinkings(List<LinkingTag> linkings) {
+    public void setLinkings(List<Linking> linkings) {
         this.linkings = linkings;
     }
-    public List<LexensteinAnnotator.Simplification> getSimplifications() {
+    public List<Simplification> getSimplifications() {
         return simplifications;
     }
-    public void setSimplifications(List<LexensteinAnnotator.Simplification> simplifications) {
+    public void setSimplifications(List<Simplification> simplifications) {
         this.simplifications = simplifications;
     }
     public List<String> getSentenceTexts() {
@@ -74,13 +76,31 @@ public class SimpaticoOutput {
         this.sentenceTexts = sentenceTexts;
     }
 
-    public String getSimplifiedText() {
+    public List<String> getSentences() {
+		return sentences;
+	}
+	public void setSentences(List<String> sentences) {
+		this.sentences = sentences;
+	}
+	public String getSimplifiedText() {
 		return simplifiedText;
 	}
 	public void setSimplifiedText(String simplifiedText) {
 		this.simplifiedText = simplifiedText;
 	}
 
+	public static class Simplification extends LexensteinAnnotator.Simplification{
+
+		
+		public Simplification() {
+			super(0, 0, null);
+		}
+		public Simplification(int start, int end, String simplification) {
+			super(start, end, simplification);
+		}
+		
+	}
+	
 	public static class SimpaticoReadability {
         private String language = null;
         private int contentWordSize = 0, contentEasyWordSize = 0, wordCount = 0;
@@ -222,7 +242,37 @@ public class SimpaticoOutput {
         }
     }
     
+    public static class Linking extends LinkingTag {
+		private static final long serialVersionUID = 5329649530750133527L;
+		
+		public Linking() {
+			super(0, null, 0, null, 0, null);
+		}
+		public Linking(int offset, String page, double score, String originalText, int length, String source) {
+			super(offset, page, score, originalText, length, source);
+		}
+    	
+    }
     
+    public static class SimpRuleMatch extends RuleMatch {
+    	
+    	public SimpRuleMatch() {
+			super(null, 0, 0, null);
+    	}
+
+		public SimpRuleMatch(Rule rule, int fromPos, int toPos, String message, String shortMessage,
+				boolean startWithUppercase, String suggestionsOutMsg) {
+			super(rule, fromPos, toPos, message, shortMessage, startWithUppercase, suggestionsOutMsg);
+		}
+		public SimpRuleMatch(Rule rule, int fromPos, int toPos, String message, String shortMessage) {
+			super(rule, fromPos, toPos, message, shortMessage);
+		}
+
+		public SimpRuleMatch(Rule rule, int fromPos, int toPos, String message) {
+			super(rule, fromPos, toPos, message);
+		}
+    	
+    }
 
     public static void main(String[] args) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
