@@ -28,6 +28,9 @@ public class SimpaticoOutput {
     List<LinkingTag> linkings;
     List<LexensteinAnnotator.Simplification> simplifications;
     List<String> sentenceTexts;
+    
+    String simplifiedText;
+    
     public List<RuleMatch> getLanguagetool() {
         return languagetool;
     }
@@ -71,8 +74,14 @@ public class SimpaticoOutput {
         this.sentenceTexts = sentenceTexts;
     }
 
+    public String getSimplifiedText() {
+		return simplifiedText;
+	}
+	public void setSimplifiedText(String simplifiedText) {
+		this.simplifiedText = simplifiedText;
+	}
 
-    public static class SimpaticoReadability {
+	public static class SimpaticoReadability {
         private String language = null;
         private int contentWordSize = 0, contentEasyWordSize = 0, wordCount = 0;
         private int docLenWithSpaces = 0, docLenWithoutSpaces = 0, docLenLettersOnly = 0;
@@ -212,6 +221,8 @@ public class SimpaticoOutput {
             this.support = support;
         }
     }
+    
+    
 
     public static void main(String[] args) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();

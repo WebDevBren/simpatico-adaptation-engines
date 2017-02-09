@@ -104,20 +104,19 @@ public class Handler {
         machineLinking = new MachineLinking(mlProperties);
 	}
 	
-	public String service(String word, Integer position, String lang, String text, Boolean doLex) throws Exception {
+	public String service(String word, Integer position, String lang, String text) throws Exception {
 		if (modeProxy) {
-			return rest.getForObject(proxyEndpoint+"?lang={lang}&doLex={doLex}&text={text}", String.class, lang, doLex, text);
+			return rest.getForObject(proxyEndpoint+"?lang={lang}&text={text}", String.class, lang, text);
 		} else {
-			return serviceLocal(lang, text, doLex);
+			return serviceLocal(lang, text);
 		}
 	}
-	private String serviceLocal(String lang, String text, Boolean doLex) throws Exception {
+	private String serviceLocal(String lang, String text) throws Exception {
         LOGGER.debug("Starting service");
 //        request.setCharacterEncoding("UTF-8");
 //        response.setCharacterEncoding("UTF-8");
 
         Annotation annotation = null;
-        doLex = false;
 
         StanfordCoreNLP enPipeline = new StanfordCoreNLP(enProps);
         StanfordCoreNLP esPipeline = new StanfordCoreNLP(esProps);
@@ -126,7 +125,7 @@ public class Handler {
             itPipeline.loadDefaultProperties();
             itPipeline.addProperties(itProps);
             String annotators = itPipeline.getProperty("annotators");
-            if (doLex && !annotators.contains("lexenstein")) {
+            if (!annotators.contains("lexenstein")) {
                 itPipeline.setProperty("annotators", itProps.getProperty("annotators") + ", lexenstein");
                 System.out.println("Annotators: " + itPipeline.getProperty("annotators"));
             }
