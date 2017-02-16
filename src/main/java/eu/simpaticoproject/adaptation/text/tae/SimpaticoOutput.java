@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.languagetool.rules.DemoRule;
 import org.languagetool.rules.Rule;
 import org.languagetool.rules.RuleMatch;
 
@@ -254,10 +256,11 @@ public class SimpaticoOutput {
     	
     }
     
+    @JsonIgnoreProperties({"rule","context"})
     public static class SimpRuleMatch extends RuleMatch {
     	
     	public SimpRuleMatch() {
-			super(null, 0, 0, null);
+			super(new DemoRule(), 0, 1, "");
     	}
 
 		public SimpRuleMatch(Rule rule, int fromPos, int toPos, String message, String shortMessage,
@@ -272,6 +275,23 @@ public class SimpaticoOutput {
 			super(rule, fromPos, toPos, message);
 		}
     	
+		private int offset, length;
+    	
+		public int getOffset() {
+			return offset;
+		}
+		public void setOffset(int offset) {
+			this.offset = offset;
+		}
+		public int getLength() {
+			return length;
+		}
+		public void setLength(int length) {
+			this.length = length;
+		}
+		public void setRule(Rule rule) {
+			
+		}
     }
 
     public static void main(String[] args) throws JsonProcessingException {
