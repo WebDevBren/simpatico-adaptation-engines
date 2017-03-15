@@ -34,7 +34,7 @@ $( function() {
 	var buttons = [
 		{ // simplify text. Switch to a modality where annotated paragraph are highlighted and replaced
 			id: 'simplify',
-			img: 'images/simplify.png',
+			img: 'https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/images/simplify.png',
 			text: 'Semplifica testo',
 			operation: function(){
 				taeUI.activateSimplification('#0000FF');
@@ -47,7 +47,7 @@ $( function() {
 		},
 		{ // enrich text. A pop-up appears showing the information about the selected text
 			id: 'enrich',
-			img: 'images/enrich.png',
+			img: 'https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/images/enrich.png',
 			text: 'Arricchisci testo',
 			operation: function() {
 				taeUI.showDialog();
@@ -60,7 +60,7 @@ $( function() {
 		},
 		{ // citizenpedia. Switch to a modality, where annotated paragraphs are linked to questions from Citizenpedia
 			id: 'citizenpedia',
-			img: 'images/citizenpedia.png',
+			img: 'https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/images/citizenpedia.png',
 			text: 'Citizenpedia',
 			operation: function() {
 				cpdUI.activateCitizenpedia();
@@ -73,7 +73,7 @@ $( function() {
 		},
 		{ // workflow adaptation. Switch to the modality, where the form adaptation starts
 			id: 'workflow',
-			img: 'images/forms.png',
+			img: 'https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/images/forms.png',
 			text: 'Semplifica processo',
 			enabled: waeUI.enabled,
 			operation: function() {
@@ -125,13 +125,13 @@ $( function() {
 	    simpaticoBarHtml = 
 		    '<div id="simpatico_navbar">'+
 	        '  <div>' +
-	        '    <a href="#"><img src="images/logo_simpatico.png" height="50px" alt="Simpatico" /></a>'+
+	        '    <a href="#"><img src="https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/images/logo_simpatico.png" height="50px" alt="Simpatico" /></a>'+
 	        '  </div>'+
 	        '  <ul id="simpatico_bar_buttons">' +
 	        '  </ul>' +
 	        '  <ul class="navbar-right">' +
-	        '    <li><a class="image-ancor" id="userdata" href="#!"><span id="userdataname">User</span><img height="50px" src="images/ic_on.png"/></a>' +
-	        '        <a class="image-ancor" id="access" href="#!">Accedi ai tuoi dati</span><img height="50px" src="images/login.png"/></a></li>' +
+	        '    <li><a class="image-ancor" id="userdata" href="#!"><span id="userdataname">User</span><img height="50px" src="https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/images/ic_on.png"/></a>' +
+	        '        <a class="image-ancor" id="access" href="#!">Accedi ai tuoi dati</span><img height="50px" src="https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/images/login.png"/></a></li>' +
 	        '  </ul>' +
 	        '</div>';
 	    
