@@ -6,6 +6,7 @@ var waeUI = new function() {
 	var blockMap = {};
 	var moduleErrorMessage;
 	var topBarHeight = 50;
+	var errorLabel = {};
 	
 	var labels = {
 			prevButtonLabel: 'Previous',
@@ -28,6 +29,7 @@ var waeUI = new function() {
 		labels.prevButtonLabel = config.prevButtonLabel || labels.prevButtonLabel;
 		labels.nextButtonLabel = config.nextButtonLabel || labels.nextButtonLabel;
 		topBarHeight = config.topBarHeight || topBarHeight;
+		errorLabel = config.errorLabel;
 	}
 
 	
@@ -138,10 +140,12 @@ var waeUI = new function() {
 	};
 	
 	function moduleErrorMsg(text) {
-		moduleErrorMessage = text;
+		var keyNames = Object.keys(JSON.parse(text));
+		var blockId = keyNames[0];
+		moduleErrorMessage = errorLabel[blockId];
 		var element = $("#div_simpatico_error_msg");
 		if(element != null) {
-			$(element).text(text);
+			$(element).text(moduleErrorMessage);
 		}
 	};
 	

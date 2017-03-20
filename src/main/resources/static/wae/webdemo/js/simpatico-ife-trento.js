@@ -4,7 +4,11 @@ $( function() {
 		endpoint: 'https://dev.smartcommunitylab.it/simp-engines/wae',
 		prevButtonLabel: 'Precedente',
 		nextButtonLabel: 'Successivo',
-		topBarHeight: 60
+		topBarHeight: 60,
+		errorLabel: {
+			'block1' : 'Manca il codice fiscale',
+			'block4' : 'Manca selezione Part-time / Full-time'
+		}
 	});
 	// INIT TAE CONFIG
 	taeUI.init({
