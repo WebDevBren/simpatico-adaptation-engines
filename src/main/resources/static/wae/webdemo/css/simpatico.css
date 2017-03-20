@@ -91,3 +91,9 @@ body {
     padding-top: 5px;
     text-decoration: underline;
 }
+
+#div_simpatico_error_msg {
+	padding: 4px 16px;
+	color: red;
+	font-weight: bold;
+}
