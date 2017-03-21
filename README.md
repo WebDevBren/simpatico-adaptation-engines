@@ -48,6 +48,8 @@ The following properties are relevant:
 Documentation
 ============
 
+The WAE workflow model and its usage is described [here](doc/wae-model.docx)
+
 The API exposes the Swagger documentation at the following endpoints
   - `<context-path>/apidocs`: The raw swagger 2 API definition
   - `<context-path>/swagger-ui.html`: The Swagger UI interface of the component
