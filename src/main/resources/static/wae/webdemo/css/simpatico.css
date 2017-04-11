@@ -1,7 +1,8 @@
 body {
 	margin-top: 60px;
 }
-#simpatico_navbar {
+
+#simp-bar {
 	z-index: 999;
 	position: fixed;
 	top:0;
@@ -9,34 +10,126 @@ body {
 	height: 52px;
 	background-color: #d3d3d6 !important;
 }
-#simpatico_navbar div, #simpatico_navbar ul {
+
+#simp-bar img {
+    vertical-align: middle;
+}
+
+#simp-bar div, #simp-bar ul {
 	display: inline-block;
 	margin-top: 0;
 	margin-bottom: 0;
 }
-#simpatico_navbar img {
-    vertical-align: middle;
+
+/********************* Citizenpedia questions box Styles *********************/
+
+/* Main question box class */
+.simp-ctz-ui-qb {
+	border-left: thick solid #24BCDA !important;
+	border-top: : thick solid #24BCDA !important;
+	background-color: #D3F2F8 !important;
 }
-#simpatico_navbar .navbar-right {
-	float: right;
-	margin: 0;
+/* Title of a question box */
+.simp-ctz-ui-qb p {
+font-weight: bold;
+	margin-left: 0px !important;
+	margin-right: : 0px !important;
+	color: #D3F2F8 !important;
+	background-color: #24BCDA !important;
 }
-#simpatico_navbar li {
-    border: 1px solid transparent;
-    display: inherit;
-    margin-right: 15px;
+/* Each question in a question list */
+.simp-ctz-ui-qb li {
+	padding-left: 10px !important;
 }
-#simpatico_navbar a {
-    text-decoration: none;
-    color: #000;
-}
-#simpatico_navbar li.active {
-	border: 1px solid #fff;
-}
-#simpatico_navbar li.active a {
-    background: transparent;
+.simp-ctz-ui-qb a {
+	text-decoration: none;
 }
 
+/*****************************************************************************/
+
+/************************* CDV styles**********************************/
+    .ui-dialog {
+        position: fixed !important;
+		overflow-y:auto;
+		overflow-x:hidden;
+    } 
+	
+	.no-close .ui-dialog-titlebar-close {
+        display: none;
+    }
+	/* Personalised style for active buttons cdv */
+    .simp-bar-btn-active-cdv {
+      background-color: #379E4C;
+      border: 1px solid #fff;
+    }
+	
+		
+	/************************* **********************************/
+
+/************************* WAE styles**********************************/
+	/* Personalised style for active buttons cdv */
+    .simp-bar-btn-active-wae {
+      background-color: #379E4C;
+      border: 1px solid #fff;
+    }
+
+
+	/************************* **********************************/
+
+
+#simp-bar-container-left {
+	display: inline-block;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+#simp-bar-container-right {
+	display: inline-block;
+	margin-top: 0;
+	margin-bottom: 0;
+	float: right;
+}
+
+#simp-bar li {
+    border: 1px solid transparent;
+    display: inline-block;
+    margin-right: 15px;
+}
+
+.simp-bar-btn-inactive {
+	background-color: transparent;
+	border: 0px solid #fff;
+}
+
+.simp-bar-btn-inactive:hover {
+		background-color: #24BCDA;
+    border: 1px solid #fff;
+}
+
+.simp-bar-btn-active {
+	background-color: #24BCDA;
+	border: 1px solid #fff;
+}
+
+
+/* TAE: Begin */
+.simp-bar-btn-inactive-tae {
+	background-color: transparent;
+	border: 0px solid #fff;
+}
+
+.simp-bar-btn-inactive-tae:hover {
+		background-color: #DE453E;
+    border: 1px solid #fff;
+}
+
+.simp-bar-btn-active-tae {
+	background-color: #DE453E;
+	border: 1px solid #fff;
+}
+/* TAE: End */
+
+/*////////////////////////////////////////////////////////////////////////////*/
 .ui-widget-content .simpatico-label  {
 	background-color:#337ab7;
 	color:#ffffff;
