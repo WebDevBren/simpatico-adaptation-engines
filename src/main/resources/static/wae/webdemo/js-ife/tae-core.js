@@ -46,19 +46,7 @@ var taeCORE = ( function () {
       // text and the json response
       // When we have the TAE working we will change it
 
-      // TODO: REMOVE [START]
-      originalText = 'Ai sensi del regolamento per la disciplina del ' +
-                      'sistema dei servizi socio educativi per la prima ' +
-                      'infanzia approvato con deliberazione del Consiglio comunale'
-      jQuery.getJSON('https://simpatico.morelab.deusto.es/replica/demo/tae-demo-resp.json',
-        function(jsonResponse) {
-          storeWords(name, jsonResponse);
-          simplifyCallback(name, originalText, jsonResponse);
-        }
-      );
-      // TODO: REMOVE [END]
       // TODO: UNCOMMENT [BEGIN]
-      /*
       jQuery.getJSON(simplifyTextURL + '?' +
                             'text="' + originalText +
                             '"&lang="' + language +
@@ -67,7 +55,7 @@ var taeCORE = ( function () {
           storeWords(name, jsonResponse);
           simplifyCallback(name, originalText, jsonResponse);
         }
-      );//*/
+      );//
       // TODO: UNCOMMENT [END]
     }
 

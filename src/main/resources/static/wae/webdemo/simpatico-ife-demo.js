@@ -87,7 +87,7 @@ function initFeatures() {
     secondaryColor:"#F0ABA8",
     elementsToEnhanceClassName: "simp-text-paragraph",
     simplifyBoxClassName: "simp-tae-ui-sb",
-    simplifyBoxTitle: "Simplified text",
+    simplifyBoxTitle: "Testo semplificato",
     wordPropertiesClassName: "simp-tae-ui-word"
   });
 
@@ -158,20 +158,20 @@ function initFeatures() {
                   disable: function() { citizenpediaUI.getInstance().disable(); }
                 },
 
-//                {
-//                  id: "simp-bar-sw-tae",
-//                  // Ad-hoc images to define the enabled/disabled images
-//                  imageSrcEnabled: "./img/simplify.png",
-//                  imageSrcDisabled: "./img/simplify.png",
-//                  alt: "Text simplification",
-//                  // Ad-hoc css classes to define the enabled/disabled styles
-//                  styleClassEnabled: "simp-bar-btn-active-tae",
-//                  styleClassDisabled: "simp-bar-btn-inactive-tae",
-//
-//                  isEnabled: function() { return taeUI.getInstance().isEnabled(); },
-//                  enable: function() { taeUI.getInstance().enable(); },
-//                  disable: function() { taeUI.getInstance().disable(); }
-//                },
+                {
+                  id: "simp-bar-sw-tae",
+                  // Ad-hoc images to define the enabled/disabled images
+                  imageSrcEnabled: "./img/simplify.png",
+                  imageSrcDisabled: "./img/simplify.png",
+                  alt: "Text simplification",
+                  // Ad-hoc css classes to define the enabled/disabled styles
+                  styleClassEnabled: "simp-bar-btn-active-tae",
+                  styleClassDisabled: "simp-bar-btn-inactive-tae",
+
+                  isEnabled: function() { return taeUI.getInstance().isEnabled(); },
+                  enable: function() { taeUI.getInstance().enable(); },
+                  disable: function() { taeUI.getInstance().disable(); }
+                },
                 
                 {
                     id: "simp-bar-sw-tae-popup",
