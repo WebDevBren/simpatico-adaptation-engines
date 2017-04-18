@@ -24,7 +24,7 @@ var cdvUI = (function () {
 		var labels = {
 			dialogTitle: 'Citizen Data Vault',
 			tabPFieldsTitle: 'Personal Data Fields',
-			entryMessage: 'Welcome to SIMPATICO CDV!',
+			entryMessage: 'Welcome to SIMPATICO Citizen Data Vault!',
 			statusMessage: 'Now you can select/update your personal data to fill form fields.',
 			notextMessage: 'No field selected',
 			dialogSaveTitle: 'Data Saved',
@@ -59,7 +59,8 @@ var cdvUI = (function () {
 				endpoint: parameters.endpoint,
 				serviceID: parameters.serviceID,
 				dataFields: parameters.dataFields,
-				serviceURL: parameters.serviceURL
+				serviceURL: parameters.serviceURL,
+				cdvDashUrl: parameters.cdvDashUrl
 			});
 
 			labels.dialogTitle = parameters.dialogTitle || labels.dialogTitle;
@@ -182,13 +183,22 @@ var cdvUI = (function () {
 					propertyField=propertyField.replace( /(:|\.|\[|\]|,|=|@)/g, "\\$1" );	
 					
 					datalisttemp += '<datalist id="datalist' + property.key + '">';
+					datalisttemp +='<select id='+property.key+' style="display: none;">';
 
 					for (field in property.values) {
 						datalisttemp += '<option>' + property.values[field] + '</option>';
 					}
-					datalisttemp += '</datalist>';
+					datalisttemp += '</select></datalist>';
 					$('#' +propertyField).attr("list", "datalist" + property.key);
 					console.log(datalisttemp);
+					if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
+						 $('#' +propertyField).autocomplete({
+							 source: property.values,
+							 minLength: 0,
+							 }).focus(function () {
+							 $(this).autocomplete("search");
+						 });
+					}
 				}
 				$(document.body).append(datalisttemp + '</div>');
 
@@ -240,7 +250,7 @@ var cdvUI = (function () {
 			    fieldSelect1 += ' <button class="ui-button ui-widget ui-corner-all" onClick="confirmRemoveAccount();">Remove Account</button>';
 
 				fieldSelect2 += ' <button on-click class="ui-button ui-widget ui-corner-all" onClick="cdvCORE.getInstance().exportData();">Export your data</button>';
-				fieldSelect3 += ' <button class="ui-button ui-widget ui-corner-all" onClick="openCDV()">Manage CDV</button>';
+				fieldSelect3 += ' <button class="ui-button ui-widget ui-corner-all" onClick="openCDV()">Manage your Data</button>';
 
 				
 				
@@ -274,15 +284,12 @@ var cdvUI = (function () {
 						'	<div id="tabs">' +
 						'		<ul>' +
 						'			<li><a href="#tab-0">Simpatico</a></li>' +
-						'			<li><a href="#tab-pdata">' + labels.tabPFieldsTitle + '</a></li>' +
 						'			<li><a href="#tab-setting">' + labels.tabSettingsTitle + '</a></li>' +
 						'		</ul>' +
 						'		<div id="tab-0">' +
 						'			<p>' + entryMessage + '</p>' +
 						'			<br>' +
 						'			<p>' + statusMessage + '</p>' +
-						'		</div>' +
-						'		<div id="tab-pdata">' +
 						'		</div>' +
 						'		<div id="tab-setting">' +
 						'			<p>Loading...</p>' +

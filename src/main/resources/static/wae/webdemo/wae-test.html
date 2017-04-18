@@ -15,6 +15,7 @@
 
     <script type="text/javascript">
       var simpaticoEservice = "2"; //  the id corresponding to the e-service
+      var simpaticoForm = "main";
       var simpaticoCategory = "Infanzia"; // the general category of the e-service
       var simpaticoMapping=["AventeTitolo_EMailPEC","AventeTitolo_Fax","AventeTitolo_EMail"];
       var ERROR_LABELS = {
@@ -23,16 +24,26 @@
       }
     </script>
 
+    <script src="js-ife/log-core.js"></script>
+
     <script src="js-ife/ctz-ui.js"></script>
     <script src="js-ife/ctz-core.js"></script>
+
     <script src="js-ife/cdv-ui-popup.js"></script>
     <script src="js-ife/cdv-core-popup.js"></script>
+
     <script src="js-ife/tae-core.js"></script>
     <script src="js-ife/tae-ui.js"></script>
+
     <script src="js-ife/wae-core.js"></script>
     <script src="js-ife/wae-ui.js"></script>
+
     <script src="js-ife/tae-core-popup.js"></script>
     <script src="js-ife/tae-ui-popup.js"></script>
+
+    <script src="js-ife/sf-core.js"></script>
+    <script src="js-ife/sf-ui.js"></script>
+
     <script src="js-ife/simpatico-auth.js"></script>
     
     <script src="simpatico-ife-demo.js"></script>
@@ -44,7 +55,7 @@
 
 <body>
     <form data-simpatico-workflow="http://simpatico.eu/test" id="modulo" class="main_form" accept-charset="utf-8"
-        method="post" onsubmit="return sendForm()" autocomplete="off">
+        method="post" onsubmit="return sendForm()" autocomplete="on">
 
         <input dynamic_value="#Ente.value()" id="Parametri_Comune"
             name="Parametri_Comune" type="hidden" placeholder="" value="TRENTO"><input
@@ -2271,7 +2282,7 @@ function get_ufficio_dest() {
                                 <input id="SalvaModulo" name="SalvaModulo"
                                     style="height: 30px; width: 120px;"
                                     title="Verifica la corretta compilazione dei campi e salva il modulo nel faldone virtuale dell&#39;istanza."
-                                    type="submit" value="Salva modulo" placeholder="">
+                                    type="button" value="Salva modulo" placeholder="">
                             </p> <input
                             destinatario_amministrazione="getParameter(&#39;Ente&#39;)"
                             id="GLOBO_modulo_cM1876S-ISCRIZIONE-NIDO-SIMPATICO"

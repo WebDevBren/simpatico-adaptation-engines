@@ -19,6 +19,12 @@ function initFeatures() {
     authority: null,
     redirect: 'https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/logincb.html'
   });
+  
+  // Init the LOG component (see log-core.js)
+  // - endpoint: the main URL of the used LOG instance
+  logCORE.getInstance().init({
+	  endpoint: "https://dev.smartcommunitylab.it/simpatico-logs/api"
+  });
 
   // Init the Citizenpedia component (see ctz-ui.js)
   // - endpoint: the main URL of the used Citizenpedia instance
@@ -125,6 +131,16 @@ function initFeatures() {
 		topBarHeight: 60,
 		errorLabel: ERROR_LABELS
   });
+  
+  // Init the Session Feedback component (see sf-ui.js)
+  // - buttonToShowSfId: the id of the button/link that opens the dialog of the feedback form
+  // - apiEndpoint: the main URL of the logs API server (<site>/simpatico/api)
+  // NOTE: Requires jquery-ui to work properly
+  sfUI.getInstance().init({
+    buttonToShowSfId: 'SalvaModulo',
+    apiEndpoint: 'https://dev.smartcommunitylab.it/simpatico-logs/api',
+  });
+  
   // Declare here the buttons that will be available in the Simpatico Bar
   // The first one is the login button. This is mandatory but it also can be personalised
   // Options available:
