@@ -47,7 +47,7 @@ function initFeatures() {
     addQuestionLabel: "+ Aggiungi una domanda",
     diagramNotificationImage: "./img/diagram.png",
     diagramNotificationClassName: "simp-ctz-ui-diagram",
-    diagramNotificationText: "There is one diagram related to this e-service in Citizenpedia"
+    diagramNotificationText: "C'e' una visualizzazione di e-service in Citizenpedia"
   });
   
   // Init the CDV component (see cdv-ui.js)
@@ -61,7 +61,6 @@ function initFeatures() {
   cdvUI.getInstance().init({
     endpoint: 'https://dev.smartcommunitylab.it/',
     serviceID: simpaticoEservice,
-    serviceURL: '2',
     dataFields: simpaticoMapping,
     cdvColor: '#008000',
     dialogTitle: 'Citizen Data Vault',
@@ -111,7 +110,8 @@ function initFeatures() {
 		endpoint: 'https://dev.smartcommunitylab.it/simp-engines/tae',
 		dialogTitle: 'Arricchimento testo',
 		tabDefinitionsTitle: 'Definizioni',
-		tabSimplificationTitle: 'Semplificazione',
+		tabSyntSimpTitle: 'Testo semplificato',
+		tabSimplificationTitle: 'Sinonimi',
 		tabWikipediaTitle: 'Wikipedia',
 		entryMessage: 'Scegli il tipo di aiuto',
 		notextMessage: 'Nessun testo selezionato'
@@ -149,7 +149,7 @@ function initFeatures() {
                   // Ad-hoc images to define the enabled/disabled images
                   imageSrcEnabled: "./img/ic_on.png",
                   imageSrcDisabled: "./img/login.png",
-                  alt: "Autheticate",
+                  alt: "Entra",
                   // Ad-hoc css classes to define the enabled/disabled styles
                   styleClassEnabled: "simp-none", 
                   styleClassDisabled: "simp-none",
@@ -164,7 +164,7 @@ function initFeatures() {
                   // Ad-hoc images to define the enabled/disabled images
                   imageSrcEnabled: "./img/citizenpedia.png",
                   imageSrcDisabled: "./img/citizenpedia.png",
-                  alt: "Questions and answer",
+                  alt: "Domande e risposte",
                   // Ad-hoc css classes to define the enabled/disabled styles
                   styleClassEnabled: "simp-bar-btn-active",
                   styleClassDisabled: "simp-bar-btn-inactive",
@@ -179,7 +179,7 @@ function initFeatures() {
                   // Ad-hoc images to define the enabled/disabled images
                   imageSrcEnabled: "./img/simplify.png",
                   imageSrcDisabled: "./img/simplify.png",
-                  alt: "Text simplification",
+                  alt: "Semplificazione del testo",
                   // Ad-hoc css classes to define the enabled/disabled styles
                   styleClassEnabled: "simp-bar-btn-active-tae",
                   styleClassDisabled: "simp-bar-btn-inactive-tae",
@@ -272,7 +272,9 @@ function enablePrivateFeatures() {
   // For each button (without the login one) create and add the node
   var buttonsContainer = document.getElementById("simp-bar-container-left");
   for (var i = 1, len = buttons.length; i < len; i++) {
-    buttonsContainer.appendChild(createButtonNode(buttons[i]), loginButton);
+	if (document.getElementById(buttons[i].id) == null) {
+		buttonsContainer.appendChild(createButtonNode(buttons[i]), loginButton);
+	}
   }
 }//enablePrivateFeatures(id)
 
