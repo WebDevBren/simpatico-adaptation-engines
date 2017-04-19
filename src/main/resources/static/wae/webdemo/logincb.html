@@ -15,8 +15,12 @@
         
         function complete() {
             var params = processAuthParams(decodeURIComponent(document.location.hash.substring(1)));
-            window.opener.postMessage(params, '*');
-            window.close();         
+            if (window.opener.handleDataDirectly) {
+            	window.opener.handleDataDirectly(JSON.stringify(params));
+            }else {
+                window.opener.postMessage(params, '*');
+                window.close();         
+            }
         }
         
         function cancel() {
