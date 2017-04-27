@@ -10,7 +10,7 @@ var sfCORE = (function () {
 
     function selectDialog (ctzSelected, simplificationSelected, timeoutExceeded, userId) {
       // Check which dialog show
-      $.get(endpoint + "/sf/selectdialog?id="+userId+"&ctz="+ctzSelected+"&simpl="+simplificationSelected+"&timeout="+timeoutExceeded, 
+      $.get(endpoint + "/sf/selectdialog?id="+userId+"&ctz="+ctzSelected+"&simpl="+simplificationSelected+"&timeout="+timeoutExceeded +'&lang=it', 
         function (modalChosen) {
           showFeedbackDialog(modalChosen);
         });
