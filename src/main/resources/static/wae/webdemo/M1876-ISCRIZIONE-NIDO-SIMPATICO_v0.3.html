@@ -23,43 +23,58 @@
 				versione="1.0|06/04/2016">
 
 
-				<!-- SIMPATICO BEGIN -->
-				<link rel="stylesheet" type="text/css" href="css/moduli.css" />
-				<link rel="stylesheet" type="text/css" href="css/simpatico.css" />
+		    <!-- SIMPATICO BEGIN -->
+            <link rel="stylesheet" type="text/css" href="css/moduli.css" />
+            <link rel="stylesheet" type="text/css" href="css/simpatico.css" />
+		    
+		    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+		    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+		    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		
+		    <script type="text/javascript">
+		      var simpaticoEservice = "2"; //  the id corresponding to the e-service
+		      var simpaticoForm = "main";
+		      var simpaticoCategory = "Infanzia"; // the general category of the e-service
+		      var simpaticoMapping=["AventeTitolo_EMailPEC","AventeTitolo_Fax","AventeTitolo_EMail"];
+              var ERROR_LABELS = {
+                      'block1' : 'Manca il codice fiscale',
+                      'block2' : 'Selezione Ruolo',
+                      'block6' : 'Selezione Part-time / Full-time' 
+                      
+                    }
+		    </script>
+		
+		    <script src="js-ife/log-core.js"></script>
+		
+		    <script src="js-ife/ctz-ui.js"></script>
+		    <script src="js-ife/ctz-core.js"></script>
+		
+		    <script src="js-ife/cdv-ui-popup.js"></script>
+		    <script src="js-ife/cdv-core-popup.js"></script>
+		
+		    <script src="js-ife/tae-core.js"></script>
+		    <script src="js-ife/tae-ui.js"></script>
+		
+		    <script src="js-ife/wae-core.js"></script>
+		    <script src="js-ife/wae-ui.js"></script>
+		    <script src="https://github.com/google/wicked-good-xpath/releases/download/1.3.0/wgxpath.install.js"></script>
+		    <script>
+		        wgxpath.install();
+		    </script>
+		
+		    <script src="js-ife/tae-core-popup.js"></script>
+		    <script src="js-ife/tae-ui-popup.js"></script>
+		
+		    <script src="js-ife/sf-core.js"></script>
+		    <script src="js-ife/sf-ui.js"></script>
+		
+		    <script src="js-ife/simpatico-auth.js"></script>
+		    
+		    <script src="simpatico-ife-trento.js"></script>
+		    
+		    <!-- SIMPATICO END -->
 
-				<link rel="stylesheet"
-					href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
-				<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-				<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-				<script type="text/javascript">
-      var simpaticoEservice = "2"; //  the id corresponding to the e-service
-      var simpaticoCategory = "Infanzia"; // the general category of the e-service
-      var simpaticoMapping=["AventeTitolo_EMailPEC","AventeTitolo_Fax","AventeTitolo_EMail"];
-      var ERROR_LABELS = {
-        'block1' : 'Manca il codice fiscale',
-        'block2' : 'Selezione Ruolo',
-        'block6' : 'Selezione Part-time / Full-time' 
-        
-      }
-    </script>
-
-				<script src="./js-ife/ctz-ui.js"></script>
-				<script src="./js-ife/ctz-core.js"></script>
-				<script src="./js-ife/cdv-ui-popup.js"></script>
-				<script src="./js-ife/cdv-core-popup.js"></script>
-				<script src="./js-ife/tae-core.js"></script>
-				<script src="./js-ife/tae-ui.js"></script>
-				<script src="./js-ife/wae-core.js"></script>
-				<script src="./js-ife/wae-ui.js"></script>
-				<script src="./js-ife/tae-core-popup.js"></script>
-				<script src="./js-ife/tae-ui-popup.js"></script>
-				<script src="./js-ife/simpatico-auth.js"></script>
-
-				<script src="./simpatico-ife-trento.js"></script>
-				<!-- SIMPATICO END -->
-
-				<title>M1876-ISCRIZIONE-NIDO-VAR</title>
+				<title>M1876-ISCRIZIONE-NIDO-SIMPATICO</title>
 </head>
 <body>
 
