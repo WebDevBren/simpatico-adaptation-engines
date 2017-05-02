@@ -25,6 +25,13 @@ var taeUIPopup = (function () {
 			notextMessage: 'No text selected'
 	
 		};
+
+		// It uses the log component to register the produced events
+		_instance.logger = function(event, details) {
+		  var nop = function(){};	
+	      if (logCORE != null) return logCORE.getInstance().taeLogger;
+	      else return {logParagraph: nop, logPhrase: nop, logWord: nop, logFreetext: nop};
+	    }
 	
 		/**
 		 * INITIALIZE UI COMPONENT.
@@ -150,6 +157,12 @@ var taeUIPopup = (function () {
 		_instance.showDialog = function() {
 			_instance.shown = true;
 			_instance.selectedText = getSelectedTextData();
+			if (_instance.selectedText && _instance.selectedText.word) {
+				_instance.logger().logWord(simpaticoEservice,  _instance.selectedText.word);
+			} else if (_instance.selectedText && _instance.selectedText.text) {
+				_instance.logger().logFreetext(simpaticoEservice,  _instance.selectedText.text);
+			}
+			
 			_instance.dialog_simplify.tabs( "option", "active", 0);
 			var disabled = [];
 			if (!_instance.selectedText || !_instance.selectedText.text) disabled = [0,1,2,3,4];

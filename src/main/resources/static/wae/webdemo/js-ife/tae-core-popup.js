@@ -86,7 +86,7 @@ var taeEngine = ( function () {
 			    var annotatedText = "";
 			    if(json.simplifications) {
 			    	if (data.word == null) {
-					    for (item in json.simplifications) {
+					    for (var item = 0; item < json.simplifications.length; item++) {
 					    	var originalText = value.substring(json.simplifications[item].start, json.simplifications[item].end);
 					        annotatedText = annotatedText + value.substring(index, json.simplifications[item].start-1);
 					        annotatedText = annotatedText + ' <a class="simpatico-label" title="' + json.simplifications[item].simplification + 
@@ -96,7 +96,7 @@ var taeEngine = ( function () {
 					    annotatedText = annotatedText + value.substring(index, value.length);
 					    callback(annotatedText);
 			    	} else {
-					    for (item in json.simplifications) {
+					    for (var item = 0; item < json.simplifications.length; item++) {
 					    	if (json.simplifications[item].start == value.indexOf(data.word)) {
 					    		callback(' <a class="simpatico-label" title="' + json.simplifications[item].simplification + 
 								        '">' + data.word +'</a> ');
@@ -133,7 +133,7 @@ var taeEngine = ( function () {
 				    json.linkings.sort(compareLinkItem);
 				    var actualOffset = -1;
 				    var actualLinkItem = null;
-				    for (itemName in json.linkings) {
+				    for (var itemName = 0; itemName < json.linkings.length; itemName++) {
 				    	var item = json.linkings[itemName];
 				    	if(actualOffset == -1) {
 				    		actualOffset = item.offset;
@@ -163,7 +163,7 @@ var taeEngine = ( function () {
 				    //console.log('annotatedText ' + annotatedText);
 				    callback(annotatedText);		    	
 			    } else {
-				    for (itemName in json.linkings) {
+				    for (var itemName = 0; itemName < json.linkings.length; itemName++) {
 				    	var item = json.linkings[itemName];
 				    	if(item.offset == value.indexOf(data.word)) {
 					      callback(' <a class="simpatico-label" target="_blank" href="' + item.page + 

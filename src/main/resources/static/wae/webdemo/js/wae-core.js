@@ -46,7 +46,7 @@ var waeEngine = new function() {
 	this.getBlocksNum = getBlocksNum;
 	
 	function getSimpaticoBlockElement(simpaticoId) {
-		var element = $("[data-simpatico-block-id='" + simpaticoId + "'");
+		var element = $("[data-simpatico-block-id='" + simpaticoId + "']");
 		return element;
 	};
 	/**
@@ -55,7 +55,7 @@ var waeEngine = new function() {
 	this.getSimpaticoBlockElement = getSimpaticoBlockElement;
 
 	function getSimpaticoFieldElement(simpaticoId) {
-		var element = $("[data-simpatico-field-id='" + simpaticoId + "'");
+		var element = $("[data-simpatico-field-id='" + simpaticoId + "']");
 		return element;
 	};
 	/**
@@ -64,7 +64,7 @@ var waeEngine = new function() {
 	this.getSimpaticoFieldElement= getSimpaticoFieldElement;
 
 	function getSimpaticoContainer() {
-		var container = $("[data-simpatico-id='simpatico_edit_block'");
+		var container = $("[data-simpatico-id='simpatico_edit_block']");
 		return container;
 	};
 	this.getSimpaticoContainer = getSimpaticoContainer;

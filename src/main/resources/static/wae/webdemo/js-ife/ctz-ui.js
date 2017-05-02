@@ -106,6 +106,14 @@ var citizenpediaUI = (function () {
       }
     }
 
+
+    // It uses the log component to register the produced events
+	var logger = function(event, details) {
+	  var nop = function(){};	
+      if (logCORE != null) return logCORE.getInstance().ctzpLogger;
+      else return {logContentRequest: nop, logQuestionRequest: nop, logNewQuestionRequest: nop, logTermRequest: nop};
+    }
+
     // If the Component feature is enabled it calls to the Citizenpedia instance to 
     // get the questions related to the paragraph passed as parameter
     // - paragraphName: the id of the paragraph which has produced the event
@@ -113,12 +121,29 @@ var citizenpediaUI = (function () {
     function paragraphEvent(paragraphName) {
       if (!featureEnabled) return;
       if (document.getElementById(paragraphName + "_questions") === null) {
+        logger().logContentRequest(simpaticoEservice, paragraphName);
         qaeCORE.getInstance().getQuestions(simpaticoEservice, paragraphName, drawQuestionsBox);
       } else {
         hideQuestionsBox(paragraphName);
       }
     }
-    
+
+    // If logs when user creates a new question related to the paragraph passed as parameter
+    // - paragraphName: the id of the paragraph which has produced the event
+    function createNewQuestionEvent(paragraphName) {
+      if (!featureEnabled) return;
+      logger().logNewQuestionRequest(simpaticoEservice, paragraphName);
+    }
+
+
+    // If logs when user creates a new question related to the paragraph passed as parameter
+    // - paragraphName: the id of the paragraph which has produced the event
+    // - questionID: the id of the question which is the user interested in
+    function showQuestionDetailsEvent(paragraphName, questionID) {
+      if (!featureEnabled) return;
+      logger().logQuestionRequest(simpaticoEservice, paragraphName, questionID);
+    }    
+
     // Draw the questions box
     // - paragraphName: the id of the paragraph
     // - responseQuestions: the JSON Object of the questions related to the paragraph
@@ -139,18 +164,19 @@ var citizenpediaUI = (function () {
       // 2.a. for each question a new bulletpoint is made 
       for (var i = 0, len = responseQuestions.length; i < len; i++) {
         questionsHtml += '<li>' + 
-                            '<a href="' + 
-                                qaeCORE.getInstance().createQuestionDetailsURL(
+                            '<a onclick="citizenpediaUI.getInstance().showQuestionDetailsEvent(\'' + paragraphName + '\', \'' + responseQuestions[i]._id + '\');" ' +
+                            'href="' + qaeCORE.getInstance().createQuestionDetailsURL(
                                   responseQuestions[i]._id) + '"  target="_blank">' +
-                                '<i>' + responseQuestions[i].title + ' ('+ responseQuestions[i].answers.length+ ')</i>' +
+                                '<b>' + responseQuestions[i].answers.length + '</b>' + 
+                                '<i>' + responseQuestions[i].title + '</i>' +
                             '</a>' +
                          '</li>';
       }
 
       // 2.b. finally the Add Question link is also attached 
       questionsHtml += '<li>'
-      questionsHtml +=    '<a href="' + 
-                                qaeCORE.getInstance().createNewQuestionURL(
+      questionsHtml +=    '<a onclick="citizenpediaUI.getInstance().createNewQuestionEvent(\'' + paragraphName + '\');" ' +
+                              'href="' + qaeCORE.getInstance().createNewQuestionURL(
                                   simpaticoCategory,
                                   simpaticoEservice,
                                   paragraphName, 
@@ -205,7 +231,10 @@ var citizenpediaUI = (function () {
       disable: disableComponentFeatures, // Called when the Component button is disabled or another one enabled
       isEnabled: function() { return featureEnabled;}, // Returns if the feature is enabled
       
-      paragraphEvent: paragraphEvent
+      paragraphEvent: paragraphEvent,
+
+      createNewQuestionEvent: createNewQuestionEvent,
+      showQuestionDetailsEvent: showQuestionDetailsEvent
     };
   }
   

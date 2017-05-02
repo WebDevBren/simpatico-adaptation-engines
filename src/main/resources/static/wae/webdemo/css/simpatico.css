@@ -50,8 +50,6 @@ font-weight: bold;
 /************************* CDV styles**********************************/
     .ui-dialog {
         position: fixed !important;
-		overflow-y:auto;
-		overflow-x:hidden;
     } 
 	
 	.no-close .ui-dialog-titlebar-close {
@@ -448,3 +446,93 @@ font-weight: bold;
       color: #DE453E !important;
     }
     /*****************************************************************************/
+    
+    /********************* Session Feedback Dialog Styles *********************/
+.right {
+    float: right;
+}
+.left {
+    float: left;
+}
+
+/* Faces */
+#face-radio-buttons-session-feedback img {
+    width: 80px;
+    height: auto;
+}
+.input_hidden {
+    position: absolute;
+    left: -9999px;
+}
+.selected {
+    background-color: #ccc;
+}
+#face-radio-buttons-session-feedback label {
+    display: inline-block;
+    cursor: pointer;
+}
+input[type="radio"]:checked+label{ 
+    background-color: #efefef;
+} 
+
+#face-radio-buttons-session-feedback label:hover {
+    background-color: #efefef;
+}
+#face-radio-buttons-session-feedback label img {
+    padding: 3px;
+
+}
+
+/* Slider */
+#slider_session_feedback {
+    width:80%;
+    margin: 10px 9%;
+    padding: 0;
+}
+#slider {
+    margin: 10px;
+}
+.ui-slider-horizontal {
+    height: 15px;
+}
+.ui-slider .ui-slider-handle {
+    height: 16px;
+    padding-top: 5px;
+    width: 25px;
+}
+.slider-horizontal-text-below-left {
+    float: left;
+    margin-left: 10%;
+}
+.slider-horizontal-text-below-right {
+    float: right;
+    margin-right: 12%;
+}
+
+#slider_session_feedback_simplification {
+    width:80%;
+    margin: 10px 9%;
+    padding: 0;
+}
+
+/* Comments */
+#comentarios-session-feedback-content {
+    padding-top: 20px;
+}
+.session-feedback-comments, 
+.session-feedback-simplify-radio,
+.session-feedback-citizenpedia-radio {
+    margin-left: 6%;
+}
+.session-feedback-comments-text {
+    font-size: 1.5em;
+    vertical-align: top;
+    width: 90%;
+}
+
+#button_cancel_session_feedback_text, #button_send_session_feedback_a {
+	padding: 5px 10px;
+	border: 1px solid;
+	border-radius: 0 !important;
+}
+    

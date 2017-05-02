@@ -46,7 +46,7 @@ var waeEngine = new function() {
 	this.getBlocksNum = getBlocksNum;
 	
 	function getSimpaticoBlockElement(simpaticoId) {
-		var element = $("[data-simpatico-block-id='" + simpaticoId + "'");
+		var element = $("[data-simpatico-block-id='" + simpaticoId + "']");
 		return element;
 	};
 	/**
@@ -55,7 +55,7 @@ var waeEngine = new function() {
 	this.getSimpaticoBlockElement = getSimpaticoBlockElement;
 
 	function getSimpaticoFieldElement(simpaticoId) {
-		var element = $("[data-simpatico-field-id='" + simpaticoId + "'");
+		var element = $("[data-simpatico-field-id='" + simpaticoId + "']");
 		return element;
 	};
 	/**
@@ -64,7 +64,7 @@ var waeEngine = new function() {
 	this.getSimpaticoFieldElement= getSimpaticoFieldElement;
 
 	function getSimpaticoContainer() {
-		var container = $("[data-simpatico-id='simpatico_edit_block'");
+		var container = $("[data-simpatico-id='simpatico_edit_block']");
 		return container;
 	};
 	this.getSimpaticoContainer = getSimpaticoContainer;
@@ -74,12 +74,12 @@ var waeEngine = new function() {
 		$.getJSON(url)
 	  .done(function(json) {
 	  	workflowModel = json;
-	  	for(item in json.blocks) {
-	  		blockMap[json.blocks[item].id] = json.blocks[item];
-	  	} 
-	  	for(item in json.fields) {
-	  		fieldMap[json.fields[item].id] = json.fields[item]; 
-	  	}
+	  	json.blocks.forEach(function(b) {
+	  		blockMap[b.id] = b;
+	  	});
+	  	json.fields.forEach(function(f) {
+	  		fieldMap[f.id] = f;
+	  	});
 	  	//console.log(JSON.stringify(json));
 	  	initModule();
 	  	if (callback) callback(blockMap);
@@ -195,8 +195,8 @@ var waeEngine = new function() {
 	function setBlockVars(blockId) {
 		var block = blockMap[blockId];
 		if(block != null) {
-			for(index in block.fields) {
-				var fieldId = block.fields[index];
+			block.fields.forEach(function(f) {
+				var fieldId = f;
 				var field = fieldMap[fieldId];
 				if(field != null) {
 					if(field.mapping.binding == "OUT" || field.mapping.binding == "INOUT") {
@@ -211,20 +211,20 @@ var waeEngine = new function() {
 						}
 					}
 				}
-			}
+			});
 		}
 	};
 
 	function revertBlockVars(blockId) {
 		var block = blockMap[blockId];
 		if(block != null) {
-			for(index in block.fields) {
-				var fieldId = block.fields[index];
+			block.fields.forEach(function(f) {
+				var fieldId = f;
 				var field = fieldMap[fieldId];
 				if(field != null) {
 					delete contextVar[field.mapping.key];
 				}
-			}
+			});	
 		}
 	};
 
@@ -283,8 +283,8 @@ var waeEngine = new function() {
 	function fillBlock() {
 		var block = blockMap[actualBlockId];
 		if(block != null) {
-			for(index in block.fields) {
-				var fieldId = block.fields[index];
+			block.fields.forEach(function(f) {
+				var fieldId = f;
 				var field = fieldMap[fieldId];
 				if(field != null) {
 					if(field.mapping.binding == "IN" || field.mapping.binding == "INOUT") {
@@ -295,7 +295,7 @@ var waeEngine = new function() {
 						}
 					}
 				}
-			}
+			});	
 		}
 	}
 
