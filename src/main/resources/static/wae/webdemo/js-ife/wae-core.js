@@ -321,6 +321,10 @@ var waeEngine = new function() {
 			if($(element).is(':checked')) {
 				return $(element).val();
 			}
+		} else if($(element).is(':radio')) {
+			if($(element).is(':checked')) {
+				return $(element).val();
+			}
 		} else {
 			return $(element).val();
 		}

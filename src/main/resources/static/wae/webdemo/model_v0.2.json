@@ -1,0 +1,222 @@
+{
+	"context" : {},
+	"blocks" : [
+		{
+			"id" : "block1",
+			"type" : "BLOCK",
+			"xpath" : "(//*[contains(@class, 'simpatico-block')])[1]",
+			"tags" : [],
+			"fields" : ["AventeTitolo_CodiceFiscale"],
+			"completed" : "(context['AventeTitolo_CodiceFiscale'] != null) && (context['AventeTitolo_CodiceFiscale'] != '')"  
+		},
+		{
+			"id" : "block2",
+			"type" : "BLOCK",
+			"xpath" : "(//*[contains(@class, 'simpatico-block')])[2]",
+			"tags" : [],
+			"fields" : [],
+			"dependencies" : ["block1"]
+		},
+		{
+			"id" : "block3",
+			"type" : "BLOCK",
+			"xpath" : "(//*[contains(@class, 'simpatico-block')])[3]",
+			"tags" : [],
+			"fields" : [],
+			"dependencies" : ["block2"]
+		},
+		{
+			"id" : "block4",
+			"type" : "BLOCK",
+			"xpath" : "(//*[contains(@class, 'simpatico-block')])[4]",
+			"tags" : [],
+			"fields" : ["Tassonomia_FullTime", "Tassonomia_PartTime"],
+			"dependencies" : ["block3"],
+			"completed" : "context['Tassonomia_FullTime']=='FT' || context['Tassonomia_PartTime']=='PT'"
+		},	
+		{
+			"id" : "block5",
+			"type" : "BLOCK",
+			"xpath" : "(//*[contains(@class, 'simpatico-block')])[5]",
+			"tags" : [],
+			"fields" : [],
+			"dependencies" : ["block4"]
+		},		
+		{
+			"id" : "block6",
+			"type" : "BLOCK",
+			"xpath" : "(//*[contains(@class, 'simpatico-block')])[6]",
+			"tags" : [],
+			"fields" : [],
+			"dependencies" : ["block5"]
+		},		
+		{
+			"id" : "block7",
+			"type" : "BLOCK",
+			"xpath" : "(//*[contains(@class, 'simpatico-block')])[7]",
+			"tags" : [],
+			"fields" : [],
+			"dependencies" : ["block6"]
+		},		
+		{
+			"id" : "block8",
+			"type" : "BLOCK",
+			"xpath" : "(//*[contains(@class, 'simpatico-block')])[8]",
+			"tags" : [],
+			"fields" : [],
+			"dependencies" : ["block7"]
+		},		
+		{
+			"id" : "block9",
+			"type" : "BLOCK",
+			"xpath" : "(//*[contains(@class, 'simpatico-block')])[9]",
+			"tags" : [],
+			"fields" : ["Tassonomia_TipoFrequenza1"],
+			"dependencies" : ["block8"],
+			"condition" :  "context['Tassonomia_FullTime']=='FT'"
+		},		
+		{
+			"id" : "block10",
+			"type" : "BLOCK",
+			"xpath" : "(//*[contains(@class, 'simpatico-block')])[10]",
+			"tags" : [],
+			"fields" : ["Tassonomia_TipoFrequenza2"],
+			"dependencies" : ["block8"],
+			"condition" : "context['Tassonomia_PartTime']=='PT'"
+		},		
+		{
+			"id" : "block11",
+			"type" : "BLOCK",
+			"xpath" : "(//*[contains(@class, 'simpatico-block')])[11]",
+			"tags" : [],
+			"fields" : [],
+			"condition" : "context['Tassonomia_TipoFrequenza1']=='FT' || context['Tassonomia_TipoFrequenza2']=='PT'"
+		},		
+		{
+			"id" : "block12",
+			"type" : "BLOCK",
+			"xpath" : "(//*[contains(@class, 'simpatico-block')])[12]",
+			"tags" : [],
+			"fields" : [],
+			"dependencies" : ["block11"]
+		},		
+		{
+			"id" : "block13",
+			"type" : "BLOCK",
+			"xpath" : "(//*[contains(@class, 'simpatico-block')])[13]",
+			"tags" : [],
+			"fields" : [],
+			"dependencies" : ["block12"]
+		},		
+		{
+			"id" : "block14",
+			"type" : "BLOCK",
+			"xpath" : "(//*[contains(@class, 'simpatico-block')])[14]",
+			"tags" : [],
+			"fields" : [],
+			"dependencies" : ["block13"]
+		},		
+		{
+			"id" : "block15",
+			"type" : "BLOCK",
+			"xpath" : "(//*[contains(@class, 'simpatico-block')])[15]",
+			"tags" : [],
+			"fields" : [],
+			"dependencies" : ["block14"]
+		},		
+		{
+			"id" : "block16",
+			"type" : "BLOCK",
+			"xpath" : "(//*[contains(@class, 'simpatico-block')])[16]",
+			"tags" : [],
+			"fields" : [],
+			"dependencies" : ["block15"]
+		},		
+		{
+			"id" : "block17",
+			"type" : "BLOCK",
+			"xpath" : "(//*[contains(@class, 'simpatico-block')])[17]",
+			"tags" : [],
+			"fields" : [],
+			"dependencies" : ["block16"]
+		},		
+		{
+			"id" : "block18",
+			"type" : "BLOCK",
+			"xpath" : "(//*[contains(@class, 'simpatico-block')])[18]",
+			"tags" : [],
+			"fields" : [],
+			"dependencies" : ["block17"]
+		},		
+		{
+			"id" : "block19",
+			"type" : "BLOCK",
+			"xpath" : "(//*[contains(@class, 'simpatico-block')])[19]",
+			"tags" : [],
+			"fields" : [],
+			"dependencies" : ["block18"]
+		},		
+		{
+			"id" : "block20",
+			"type" : "BLOCK",
+			"xpath" : "(//*[contains(@class, 'simpatico-block')])[20]",
+			"tags" : [],
+			"fields" : [],
+			"dependencies" : ["block19"]
+		},		
+		{
+			"id" : "block21",
+			"type" : "BLOCK",
+			"xpath" : "(//*[contains(@class, 'simpatico-block')])[21]",
+			"tags" : [],
+			"fields" : [],
+			"dependencies" : ["block20"]
+		}
+		
+		
+		
+		
+	],
+	"fields" : [
+		{
+			"id" : "AventeTitolo_CodiceFiscale",
+			"xpath" : "//*[@id=\"AventeTitolo_CodiceFiscale\"]",
+			"mapping" : {
+				"key" : "AventeTitolo_CodiceFiscale",
+				"binding" : "OUT"
+			}
+		},
+		{
+			"id" : "Tassonomia_FullTime",
+			"xpath" : "//*[@id=\"Tassonomia_FullTime\"]",
+			"mapping" : {
+				"key" : "Tassonomia_FullTime",
+				"binding" : "OUT"
+			}
+		},
+		{
+			"id" : "Tassonomia_PartTime",
+			"xpath" : "//*[@id=\"Tassonomia_PartTime\"]",
+			"mapping" : {
+				"key" : "Tassonomia_PartTime",
+				"binding" : "OUT"
+			}
+		},
+		{
+			"id" : "Tassonomia_TipoFrequenza1",
+			"xpath" : "//*[@id=\"Tassonomia_TipoFrequenza1\"]",
+			"mapping" : {
+				"key" : "Tassonomia_TipoFrequenza1",
+				"binding" : "OUT"
+			}
+		},
+		{
+			"id" : "Tassonomia_TipoFrequenza2",
+			"xpath" : "//*[@id=\"Tassonomia_TipoFrequenza2\"]",
+			"mapping" : {
+				"key" : "Tassonomia_TipoFrequenza2",
+				"binding" : "OUT"
+			}
+		}
+	]
+}
