@@ -42,7 +42,11 @@ var sfCORE = (function () {
 		var dataObj = {};
 		dataForms.each(function(idx, d) {
 			var key = d.name ? d.name : d.id;
-			dataObj[key] = d.value;
+			if (d.type=='radio') {
+				if (d.checked) dataObj[key] = d.value;
+			} else {
+				dataObj[key] = d.value;
+			}
 		});
 		logCORE.getInstance().sfLogger.feedbackData(simpaticoEservice, dataObj);
 		// TODO: manage complexity correctly

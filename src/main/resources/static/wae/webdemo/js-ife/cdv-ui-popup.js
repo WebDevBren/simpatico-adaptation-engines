@@ -406,11 +406,10 @@ var cdvUI = (function () {
 
 				$("input[type='submit']").on("click", function () {
 					console.log("selected submit: " + $(this).attr("id"));
-					var r = confirm("Update your Personal Data?");
-					if (r == true) {
-						cdvCORE.cdv_send();
-					}
-
+//					var r = confirm("Update your Personal Data?");
+//					if (r == true) {
+//						cdvCORE.cdv_send();
+//					}
 				});
 
 				dialog_cdv.tabs("option", "active", 0);
