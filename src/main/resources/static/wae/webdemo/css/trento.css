@@ -1,0 +1,43 @@
+.simp-ctz-ui-qb {
+	border-radius: 0 !important;
+	border-left: 0 !important;
+}
+
+.simp-ctz-ui-qb p {
+	border-radius: 0 !important;
+	margin: 0 !important;
+}
+
+.simp-paragraph-active {
+	position: relative;
+	border-left: 0;
+	border-radius: 0;
+	padding: 0;
+	margin: 0;
+}
+
+.simp-paragraph-active::before {
+	content: "";
+	position: absolute;
+	width: 1cm;
+	height: 100%;
+	left: 19cm;
+	background-image:
+		url(https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/citizenpedia.png);
+	background-repeat: no-repeat;
+	background-size: contain;
+	border-left: 6px solid #24BCDA;
+}
+
+.simp-ctz-ui-qb {
+	position: absolute;
+	left: 20.5cm;
+	top: 0;
+	min-width: 8cm;
+}
+
+#slider-session-feedback-content {
+	width: 80%;
+	margin: 10px 9%;
+	padding: 0;
+}

@@ -203,7 +203,7 @@ var waeEngine = new function() {
 						var element = getSimpaticoFieldElement(field.id);
 						if(element != null) {
 							var value = getInputValue(element);
-							if(value != null) {
+							if(!!value) {
 								contextVar[field.mapping.key] = value;
 							} else {
 								delete contextVar[field.mapping.key];

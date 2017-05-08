@@ -10,7 +10,7 @@
 
 var citizenpediaUI = (function () {
   var instance; // Singleton Instance of the UI component
-  var featureEnabled = true;
+  var featureEnabled = false;
   function Singleton () {
     // Component-related variables
     var primaryColor = '';
@@ -63,12 +63,13 @@ var citizenpediaUI = (function () {
 
         // Add the enhanced paragraph style
         paragraphName = "Paragraph" + paragrapId;
-        paragraphs[i].style.position = 'relative';
-        paragraphs[i].style.borderLeft = "12px solid " + primaryColor;
-        paragraphs[i].style.borderRadius = "16px";
-
-        paragraphs[i].style.padding = '0px 0px 0px 8px';
-        paragraphs[i].style.margin = '0px 0px 8px 0px';
+//        paragraphs[i].style.position = 'relative';
+//        paragraphs[i].style.borderLeft = "12px solid " + primaryColor;
+//        paragraphs[i].style.borderRadius = "16px";
+//
+//        paragraphs[i].style.padding = '0px 0px 0px 8px';
+//        paragraphs[i].style.margin = '0px 0px 8px 0px';
+        paragraphs[i].classList.add('simp-paragraph-active');
 
         paragraphs[i].setAttribute("id", paragraphName);
         // Add the onclick event to enhance the paragraph
@@ -94,7 +95,7 @@ var citizenpediaUI = (function () {
       // Reformat the paragraphs with the original style
       for (var i = 0, len = paragraphs.length; i < len; i++) {
         // Restore the original style
-        paragraphs[i].style = originalStyles[i];
+        paragraphs[i].classList.remove('simp-paragraph-active');
         // Remove the onclick event to enhance the paragraph
         paragraphs[i].removeAttribute("onclick");
       }
@@ -111,7 +112,7 @@ var citizenpediaUI = (function () {
 	var logger = function(event, details) {
 	  var nop = function(){};	
       if (logCORE != null) return logCORE.getInstance().ctzpLogger;
-      else return {logContentRequest: nop, logQuestionRequest: nop, logNewQuestionRequest: nop, logTermRequest: nop};
+      else return {logContentRequest: nop, logQuestionRequest: nop, logNewQuestionRequest: nop, logTermRequest: nop, logNewAnswer: nop};
     }
 
     // If the Component feature is enabled it calls to the Citizenpedia instance to 
@@ -174,13 +175,24 @@ var citizenpediaUI = (function () {
       }
 
       // 2.b. finally the Add Question link is also attached 
-      questionsHtml += '<li>'
+      questionsHtml += '<li>';
+      
+      // fix for text selection filter	
+      var selectors = ['h1', '.Rigaintestazione', '.Rigaintestazioneridotta'];
+      var txt = '';
+      for (var v = 0; v < selectors.length; v++) {
+    	  txt = $("#"+paragraphName + " " + selectors[v]).text().trim();
+    	  if (txt) {
+    		  break;
+    	  }
+      }
+      txt = txt.replace(/[\f\t\n\r\v\s]+/g,' ');
       questionsHtml +=    '<a onclick="citizenpediaUI.getInstance().createNewQuestionEvent(\'' + paragraphName + '\');" ' +
                               'href="' + qaeCORE.getInstance().createNewQuestionURL(
                                   simpaticoCategory,
                                   simpaticoEservice,
                                   paragraphName, 
-                                  document.getElementById(paragraphName).textContent) + '" target="_blank">' +
+                                  txt) + '" target="_blank">' +
                                 '<b>' + addQuestionLabel + '</b>' +
                           '</a>'
       questionsHtml += '</li>';
@@ -212,7 +224,7 @@ var citizenpediaUI = (function () {
             diagramNode.parentNode.appendChild(diagramContainer); 
         }
         // Attach the corresponding CPD elements
-        var content = '<a href="' + response["url"] + '">' +                            
+        var content = '<a href="' + response["url"] + '" target="_blank">' +                            
                             '<img ' +
                               'src="' + diagramNotificationImage + '" ' +
                               'wigth="40" ' +

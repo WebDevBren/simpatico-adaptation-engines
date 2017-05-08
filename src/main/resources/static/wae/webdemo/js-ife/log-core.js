@@ -14,6 +14,7 @@ var logCORE = (function () {
 	// Variables to store the used API and URL paths
 	var insertLogEventAPI = '';
 
+  var TEST_MODE = false;
 
 	var serverEndpoint = '';  
 	var ctzpEndpoint = '';
@@ -23,7 +24,9 @@ var logCORE = (function () {
 	var sfEndpoint = '';
 	var logsEndpoint = '';
 	
+  var start;
 	var log = function(url, data) {
+		if (TEST_MODE) return;
 		var token = authManager.getInstance().getToken();
 		var userId = authManager.getInstance().getUserId();
 		data.userID = userId;
@@ -61,6 +64,9 @@ var logCORE = (function () {
 		logTermRequest: function(eservice, contentId, term) {
 			log(ctzpEndpoint+'/termrequest', {'e-serviceID': eservice, annotableElementID: contentId, selected_term: term});
 		},	
+    logNewAnswer: function(eservice, contentId, questionId) {
+      log(ctzpEndpoint+'/newanswer', {'e-serviceID': eservice, annotableElementID: contentId, questionID: questionId});
+    }
 	};  
 	var taeLogger = {
 		logParagraph: function(eservice, paragraphID) {
@@ -100,6 +106,9 @@ var logCORE = (function () {
 		formEnd: function(eservice, form) {
 			var ts = new Date().getTime();
 			log(ifeEndpoint+'/formend', {'e-serviceID': eservice, formID: form, timestamp: ''+ts});
+		},
+    clicks: function(eservice, contentId, clicks) {
+      log(ifeEndpoint+'/clicks', {'e-serviceID': eservice, annotableElementID: contentId, clicks: clicks});
 		}
 	}
 	var sfLogger = {
@@ -108,6 +117,7 @@ var logCORE = (function () {
 		},
 		feedbackData: function(eservice, data) {
 			data['e-serviceID'] = eservice;
+      data['datatype'] = 'session-feedback'; // to distinguish it
 			log(logsEndpoint, data);
 		}
 	}
@@ -124,11 +134,12 @@ var logCORE = (function () {
       ifeEndpoint = parameters.endpoint + '/ife/insert';
       sfEndpoint = parameters.endpoint + '/sf/insert';
       logsEndpoint = parameters.endpoint + '/logs/insert';
+      start = new Date().getTime();
     }
 
     // TODO: HIB - Implement it
     function insertLogEvent(data) {
-      console.warn("TO-DO: HIB Implement the log insertion in [" + insertLogEventAPI + "] ---> " + JSON.stringify(data));
+      log(insertLogEventAPI, data);
     }
 
 
@@ -138,15 +149,14 @@ var logCORE = (function () {
     // - event: Id of the element that causes the event (e.g. paragraphID...)
     // - details: Optional parameter to pass additional info if it is required
     function logSimpaticoEvent(component, element, event, details) {
-      var timestamp = new Date().getTime()
+      var timestamp = new Date().getTime();
       //TODO: HIB- Implement it
       var postData = {
         "component": component, // Component which produces the event
         "element": element,
         "event": event,
         "details": details,
-        "userID": "userData.userId", // the id of the logged user
-        "serviceID": simpaticoEservice, // the id of the corresponding e-service
+        "e-serviceID": simpaticoEservice, // the id of the corresponding e-service
         "timestamp": timestamp
       }
       insertLogEvent(postData);
@@ -158,14 +168,15 @@ var logCORE = (function () {
     // - element: Id of the element that causes the event (e.g. paragraphID...)
     // - details: Optional parameter to pass additional info if it is required
     function logTimeEvent(element, details) {
-      var timestamp = new Date().getTime()
+      var end = new Date().getTime();
       var postData = {
-        "duration": "", // Component which produces the event
-        "userID": userData.userId, // the id of the logged user
+        "duration": end - start,
         "datatype": "duration",
-        "timeForElement": element
+        "timeForElement": element, // Component which produces the event
+        "details": details
       }
       insertLogEvent(postData);
+      start = new Date().getTime();
     }
 
     return {

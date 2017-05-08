@@ -18,6 +18,8 @@ function initFeatures() {
 	    clientID: '8ab03990-d5dd-47ea-8fc6-c92a3b0c04a4',
 	    authority: null,
 	    redirect: 'https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/logincb.html'
+  logCORE.getInstance().init({
+	  endpoint: "https://dev.smartcommunitylab.it/simpatico-logs/api"
   });
 
   // Init the Citizenpedia component (see ctz-ui.js)

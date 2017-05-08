@@ -19,6 +19,12 @@ function initFeatures() {
     authority: null,
     redirect: 'https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/logincb.html'
   });
+  
+  // Init the LOG component (see log-core.js)
+  // - endpoint: the main URL of the used LOG instance
+  logCORE.getInstance().init({
+	  endpoint: "https://dev.smartcommunitylab.it/simpatico-logs/api"
+  });
 
   // Init the Citizenpedia component (see ctz-ui.js)
   // - endpoint: the main URL of the used Citizenpedia instance
@@ -39,9 +45,9 @@ function initFeatures() {
     questionsBoxClassName: "simp-ctz-ui-qb",
     questionsBoxTitle: "Domande legate",
     addQuestionLabel: "+ Aggiungi una domanda",
-    diagramNotificationImage: "./img/diagram.png",
+    diagramNotificationImage: "https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/diagram.png",
     diagramNotificationClassName: "simp-ctz-ui-diagram",
-    diagramNotificationText: "There is one diagram related to this e-service in Citizenpedia"
+    diagramNotificationText: "C'e' una visualizzazione di e-service in Citizenpedia"
   });
   
   // Init the CDV component (see cdv-ui.js)
@@ -55,7 +61,6 @@ function initFeatures() {
   cdvUI.getInstance().init({
     endpoint: 'https://dev.smartcommunitylab.it/',
     serviceID: simpaticoEservice,
-    serviceURL: '2',
     dataFields: simpaticoMapping,
     cdvColor: '#008000',
     dialogTitle: 'Citizen Data Vault',
@@ -105,7 +110,8 @@ function initFeatures() {
 		endpoint: 'https://dev.smartcommunitylab.it/simp-engines/tae',
 		dialogTitle: 'Arricchimento testo',
 		tabDefinitionsTitle: 'Definizioni',
-		tabSimplificationTitle: 'Semplificazione',
+		tabSyntSimpTitle: 'Testo semplificato',
+		tabSimplificationTitle: 'Sinonimi',
 		tabWikipediaTitle: 'Wikipedia',
 		entryMessage: 'Scegli il tipo di aiuto',
 		notextMessage: 'Nessun testo selezionato'
@@ -125,15 +131,34 @@ function initFeatures() {
 		topBarHeight: 60,
 		errorLabel: ERROR_LABELS
   });
+  
+  // Init the Session Feedback component (see sf-ui.js)
+  // - buttonToShowSfId: the id of the button/link that opens the dialog of the feedback form
+  // - apiEndpoint: the main URL of the logs API server (<site>/simpatico/api)
+  // NOTE: Requires jquery-ui to work properly
+  sfUI.getInstance().init({
+    buttonToShowSfId: 'SalvaModulo',
+    apiEndpoint: 'https://dev.smartcommunitylab.it/simpatico-logs/api',
+  });
+
+  // Init the Data Analysis component (see da-ui.js)
+  // It is useful for UI elements like different tabs in the same view or an accordion.
+  // - elementsToTrackTimeClassName: The CSS class used to define the different tabs
+  // - apiEndpoint: the main URL of the logs API server (<site>/simpatico/api)
+  daUI.getInstance().init({
+    elementsToTrackTimeClassName: '',
+    apiEndpoint: 'https://dev.smartcommunitylab.it/simpatico-logs/api'
+  });
+
   // Declare here the buttons that will be available in the Simpatico Bar
   // The first one is the login button. This is mandatory but it also can be personalised
   // Options available:
   buttons = [{
                   id: "simp-bar-sw-login",
                   // Ad-hoc images to define the enabled/disabled images
-                  imageSrcEnabled: "./img/ic_on.png",
-                  imageSrcDisabled: "./img/login.png",
-                  alt: "Autheticate",
+                  imageSrcEnabled: "https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/ic_on.png",
+                  imageSrcDisabled: "https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/login.png",
+                  alt: "Entra",
                   // Ad-hoc css classes to define the enabled/disabled styles
                   styleClassEnabled: "simp-none", 
                   styleClassDisabled: "simp-none",
@@ -146,9 +171,9 @@ function initFeatures() {
                 {
                   id: "simp-bar-sw-citizenpedia",
                   // Ad-hoc images to define the enabled/disabled images
-                  imageSrcEnabled: "./img/citizenpedia.png",
-                  imageSrcDisabled: "./img/citizenpedia.png",
-                  alt: "Questions and answer",
+                  imageSrcEnabled: "https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/citizenpedia.png",
+                  imageSrcDisabled: "https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/citizenpedia.png",
+                  alt: "Domande e risposte",
                   // Ad-hoc css classes to define the enabled/disabled styles
                   styleClassEnabled: "simp-bar-btn-active",
                   styleClassDisabled: "simp-bar-btn-inactive",
@@ -158,26 +183,26 @@ function initFeatures() {
                   disable: function() { citizenpediaUI.getInstance().disable(); }
                 },
 
-                {
-                  id: "simp-bar-sw-tae",
-                  // Ad-hoc images to define the enabled/disabled images
-                  imageSrcEnabled: "./img/simplify.png",
-                  imageSrcDisabled: "./img/simplify.png",
-                  alt: "Text simplification",
-                  // Ad-hoc css classes to define the enabled/disabled styles
-                  styleClassEnabled: "simp-bar-btn-active-tae",
-                  styleClassDisabled: "simp-bar-btn-inactive-tae",
-
-                  isEnabled: function() { return taeUI.getInstance().isEnabled(); },
-                  enable: function() { taeUI.getInstance().enable(); },
-                  disable: function() { taeUI.getInstance().disable(); }
-                },
+//                {
+//                  id: "simp-bar-sw-tae",
+//                  // Ad-hoc images to define the enabled/disabled images
+//                  imageSrcEnabled: "./img/simplify.png",
+//                  imageSrcDisabled: "./img/simplify.png",
+//                  alt: "Semplificazione del testo",
+//                  // Ad-hoc css classes to define the enabled/disabled styles
+//                  styleClassEnabled: "simp-bar-btn-active-tae",
+//                  styleClassDisabled: "simp-bar-btn-inactive-tae",
+//
+//                  isEnabled: function() { return taeUI.getInstance().isEnabled(); },
+//                  enable: function() { taeUI.getInstance().enable(); },
+//                  disable: function() { taeUI.getInstance().disable(); }
+//                },
                 
                 {
                     id: "simp-bar-sw-tae-popup",
                     // Ad-hoc images to define the enabled/disabled images
-                    imageSrcEnabled: "./img/enrich.png",
-                    imageSrcDisabled: "./img/enrich.png",
+                    imageSrcEnabled: "https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/enrich.png",
+                    imageSrcDisabled: "https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/enrich.png",
                     alt: "Semplificazione del testo selezionato",
                     // Ad-hoc css classes to define the enabled/disabled styles
                     styleClassEnabled: "simp-bar-btn-active-tae",
@@ -194,8 +219,8 @@ function initFeatures() {
                 {
                   id: "simp-bar-sw-cdv",
                   // Ad-hoc images to define the enabled/disabled images
-                  imageSrcEnabled: "./img/cdv.png",
-                  imageSrcDisabled: "./img/cdv.png",
+                  imageSrcEnabled: "https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/cdv.png",
+                  imageSrcDisabled: "https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/cdv.png",
                   alt: "Citizen Data Vault",
                   // Ad-hoc css classes to define the enabled/disabled styles
                   styleClassEnabled: "simp-bar-btn-active-cdv",
@@ -207,8 +232,8 @@ function initFeatures() {
                 },
                 { // workflow adaptation. Switch to the modality, where the form adaptation starts
                   id: 'workflow',
-                  imageSrcEnabled: "./img/forms.png",
-                  imageSrcDisabled: "./img/forms.png",
+                  imageSrcEnabled: "https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/forms.png",
+                  imageSrcDisabled: "https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/forms.png",
                   alt: "Semplifica processo",
                   // Ad-hoc css classes to define the enabled/disabled styles
                   styleClassEnabled: "simp-bar-btn-active-wae",
@@ -256,7 +281,9 @@ function enablePrivateFeatures() {
   // For each button (without the login one) create and add the node
   var buttonsContainer = document.getElementById("simp-bar-container-left");
   for (var i = 1, len = buttons.length; i < len; i++) {
-    buttonsContainer.appendChild(createButtonNode(buttons[i]), loginButton);
+	if (document.getElementById(buttons[i].id) == null) {
+		buttonsContainer.appendChild(createButtonNode(buttons[i]), loginButton);
+	}
   }
 }//enablePrivateFeatures(id)
 
@@ -360,4 +387,7 @@ document.addEventListener('DOMContentLoaded', function () {
   initFeatures();
   addSimpaticoBar("simpatico_top");
   authManager.getInstance().updateUserData();
+});
+window.addEventListener('beforeunload', function (e) {
+  logCORE.getInstance().logTimeEvent($('body'));
 });

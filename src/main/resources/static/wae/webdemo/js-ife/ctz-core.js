@@ -25,7 +25,7 @@ var qaeCORE = (function () {
       createQuestionURL = parameters.endpoint + '/questions/create';
       showQuestionURL = parameters.endpoint + '/questions/show';
       getQuestionsAPI = parameters.endpoint + '/api/qae/questions';
-      getDiagramAPI = parameters.endpoint + '/api/diagram/eService';
+      getDiagramAPI = 'https://dev.smartcommunitylab.it/cpd/api/diagram/eService';
     }
 
     // Get questions from Citizenpedia related to a paragraphName.
@@ -62,7 +62,7 @@ var qaeCORE = (function () {
     // It creates an URL which can be used to redirect to the diagram details of the CPD
     // - serviceID: the id corresponding to the e-service
     function getDiagramDetails(serviceID, diagramCallback) {
-      jQuery.getJSON(getDiagramAPI +'/' + serviceID + '/element',
+      jQuery.getJSON(getDiagramAPI +'/' + serviceID + '/summary',
         function(jsonResponse) {
           diagramCallback(jsonResponse);
         }
