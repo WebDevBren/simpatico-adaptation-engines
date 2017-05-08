@@ -11,7 +11,7 @@ var waeUI = (function () {
 	var moduleErrorMessage;
 	var topBarHeight = 50;
 	var errorLabel = {};
-    var active = false;
+    this.active = false;
 	
   	var labels = {
 			prevButtonLabel: 'Previous',
@@ -50,11 +50,11 @@ var waeUI = (function () {
 	this.loadModel = function(idProfile) {
 		var moduleUri = $("[data-simpatico-workflow]").attr('data-simpatico-workflow');
 		waeEngine.loadModel(moduleUri, idProfile, moduleLoaded, moduleLoadError);
-        active = true;
+		instance.active = true;
 	};
 
     this.isEnabled = function(){
-      return active;
+      return instance.active;
     }
     this.enable = this.loadModel;
 	/**
@@ -74,7 +74,7 @@ var waeUI = (function () {
 				showElement(key, "SHOW");
 			}
 		}
-        this.active = false;
+		instance.active = false;
 		$('html, body').animate({scrollTop: 0}, 200);
 	}
     this.disable = this.reset;
