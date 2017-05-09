@@ -319,7 +319,7 @@ function addSimpaticoBar(containerID) {
   var simpaticoBarHtml = '<div id="simp-bar">' +
                             '<div>' +
                               '<a href="#">' +
-                                '<img src="./img/logo.png" ' +
+                                '<img src="https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/logo.png" ' +
                                 'height="50px" ' +
                                 'alt="Simpatico ">' +
                               '</a>' +
