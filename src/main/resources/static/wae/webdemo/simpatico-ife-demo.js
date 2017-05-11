@@ -17,7 +17,7 @@ function initFeatures() {
     endpoint: 'https://tn.smartcommunitylab.it/aac', 
     clientID: '8ab03990-d5dd-47ea-8fc6-c92a3b0c04a4',
     authority: null,
-    redirect: 'https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/logincb.html'
+    redirect: 'http://dev.smartcommunitylab.it/simp-engines/wae/webdemo/logincb.html'
   });
   
   // Init the LOG component (see log-core.js)
