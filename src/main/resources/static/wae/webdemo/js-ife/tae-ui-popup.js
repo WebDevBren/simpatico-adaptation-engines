@@ -61,24 +61,20 @@ var taeUIPopup = (function () {
 					'<div id="dialog-simplify" title="'+_instance.labels.dialogTitle+'">'+
 					'	<div id="tabs">'+
 					'		<ul>'+
-					'			<li><a href="#tab-0">'+_instance.labels.tabSyntSimpTitle+'</a></li>'+
-//					'			<li><a href="#tab-synt-simp">'+_instance.labels.tabSyntSimpTitle+'</a></li>'+
+//					'			<li><a href="#tab-0">'+_instance.labels.tabSyntSimpTitle+'</a></li>'+
+					'			<li><a href="#tab-0">'+_instance.labels.tabSimplificationTitle+'</a></li>'+
 					'			<li><a href="#tab-definizioni">'+_instance.labels.tabDefinitionsTitle+'</a></li>'+
-					'			<li><a href="#tab-semplificazione">'+_instance.labels.tabSimplificationTitle+'</a></li>'+
 					'			<li><a href="#tab-wikipedia">'+_instance.labels.tabWikipediaTitle+'</a></li>'+
 					'		</ul>'+
 					'		<div id="tab-0">'+
 					'			<p>'+_instance.labels.entryMessage+'</p>'+
 					'		</div>'+
-//					'		<div id="tab-synt-simp">'+
-//					'			<p>Loading...</p>'+
-//					'		</div>'+
 					'		<div id="tab-definizioni">'+
 					'			<p>Loading...</p>'+
 					'		</div>'+
-					'		<div id="tab-semplificazione">'+
-					'			<p>Loading...</p>'+
-					'		</div>'+
+//					'		<div id="tab-semplificazione">'+
+//					'			<p>Loading...</p>'+
+//					'		</div>'+
 					'		<div id="tab-wikipedia">'+
 					'			<p>Funzione non implementata</p>'+
 					'		</div>'+
@@ -104,7 +100,7 @@ var taeUIPopup = (function () {
 					if(ui.newPanel["0"].id == "tab-0") {
 						if(!!_instance.selectedText) {
 							ui.newPanel["0"].innerHTML = '<p>Loading...</p>';
-							taeEngine.getInstance().getSimplifiedText(_instance.selectedText, cb, errCb);
+							taeEngine.getInstance().getExplanations(_instance.selectedText, cb, errCb);
 						} else {
 							ui.newPanel["0"].innerHTML = '<p>'+_instance.labels.notextMessage+'</p>';
 						}
@@ -121,14 +117,6 @@ var taeUIPopup = (function () {
 						if(!!_instance.selectedText) {
 							ui.newPanel["0"].innerHTML = '<p>Loading...</p>';
 							taeEngine.getInstance().getDefinitions(_instance.selectedText, cb, errCb);
-						} else {
-							ui.newPanel["0"].innerHTML = '<p>'+_instance.labels.notextMessage+'</p>';
-						}
-					} 
-					if(ui.newPanel["0"].id == "tab-semplificazione") {
-						if(!!_instance.selectedText) {
-							ui.newPanel["0"].innerHTML = '<p>Loading...</p>';
-							taeEngine.getInstance().getExplanations(_instance.selectedText, cb, errCb);
 						} else {
 							ui.newPanel["0"].innerHTML = '<p>'+_instance.labels.notextMessage+'</p>';
 						}
@@ -169,25 +157,24 @@ var taeUIPopup = (function () {
 
 			var disabled = [];
 			if (!_instance.selectedText || !_instance.selectedText.text) disabled = [0,1,2,3];
-			else if (_instance.selectedText.word) disabled.push(0);
+//			else if (_instance.selectedText.word) disabled.push(0);
 			_instance.dialog_simplify.tabs("option", "disabled", disabled);
 			
+			var cb = setInnerText('tab-0');
+			var errCb = setError('tab-0');
 			if (_instance.selectedText && _instance.selectedText.word) {
-				_instance.logger().logWord(simpaticoEservice,  _instance.selectedText.word);
-				_instance.dialog_simplify.tabs( "option", "active", 1);
-			} else if (_instance.selectedText && _instance.selectedText.text) {
-				_instance.logger().logFreetext(simpaticoEservice,  _instance.selectedText.text);
-				var cb = setInnerText('tab-0');
-				var errCb = setError('tab-0');
 				document.getElementById('tab-0').innerHTML = '<p>Loading...</p>';
+				_instance.logger().logWord(simpaticoEservice,  _instance.selectedText.word);
+			} else if (_instance.selectedText && _instance.selectedText.text) {
+				document.getElementById('tab-0').innerHTML = '<p>Loading...</p>';
+				_instance.logger().logFreetext(simpaticoEservice,  _instance.selectedText.text);
 				taeEngine.getInstance().getSimplifiedText(_instance.selectedText, cb, errCb);
-				_instance.dialog_simplify.tabs( "option", "active", 0);
 			} else {
-				_instance.dialog_simplify.tabs( "option", "active", 0);
 				document.getElementById('tab-0').innerHTML = '<p>'+_instance.labels.notextMessage+'</p>';
 			}
+			_instance.dialog_simplify.tabs( "option", "active", 1);
+			_instance.dialog_simplify.tabs( "option", "active", 0);
 			_instance.dialog_simplify.dialog("open");
-
 	
 		}
 		_instance.hideDialog = function() {

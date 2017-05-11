@@ -111,7 +111,7 @@ function initFeatures() {
 		dialogTitle: 'Arricchimento testo',
 		tabDefinitionsTitle: 'Definizioni',
 		tabSyntSimpTitle: 'Testo semplificato',
-		tabSimplificationTitle: 'Sinonimi',
+		tabSimplificationTitle: 'Semplificazione lessicale',
 		tabWikipediaTitle: 'Wikipedia',
 		entryMessage: 'Scegli il tipo di aiuto',
 		notextMessage: 'Nessun testo selezionato'
