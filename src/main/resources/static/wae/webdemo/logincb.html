@@ -14,6 +14,7 @@
 		}
         
         function complete() {
+        	localStorage.authorized = 'true';            
             var params = processAuthParams(decodeURIComponent(document.location.hash.substring(1)));
             try {
                 window.opener.handleDataDirectly(JSON.stringify(params));
@@ -48,13 +49,14 @@
   
   <h3>Autorizzi a utilizzare i tuoi dati?</h3>
   
-  <div class="row">
+<!--   <div class="row">
     <div class="checkbox">
       <label>
         <input type="checkbox" onchange="oncheck()"  id="check"> Non chiedermi piu'
       </label>
     </div>    
   </div>  
+ -->  
   <div class="row">
     <div class="col-sm-offset-2 col-sm-4">
       <button type="button" class="btn btn-primary" onclick="complete()">Autorizzo</button>
