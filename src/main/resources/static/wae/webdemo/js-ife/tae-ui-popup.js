@@ -85,12 +85,7 @@ var taeUIPopup = (function () {
 				modal: true,
 				resizable: true,
 				height: "auto",
-				width: 600,
-				buttons: {
-					close: function() {
-						$(this).dialog( "close" );
-					}
-				}
+				width: 600
 			});
 			_instance.dialog_simplify.tabs({
 				beforeActivate: function( event, ui ) {

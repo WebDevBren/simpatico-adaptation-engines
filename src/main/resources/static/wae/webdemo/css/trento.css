@@ -44,3 +44,9 @@ body {
 	margin: 10px 9%;
 	padding: 0;
 }
+
+.toolbar-button-label {
+	max-width: 100px;
+	text-transform: uppercase;
+	vertical-align: middle;
+}

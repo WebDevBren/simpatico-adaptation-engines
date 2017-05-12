@@ -18,6 +18,8 @@ var sfUI = (function () {
     var timeout = 5 * 60 * 1000; // 5 minutes in ms
     var startTime;
 
+    this.active = false;
+    
     function initComponent (parameters) {
       buttonToShowSfId = parameters.buttonToShowSfId;
       sfCORE.getInstance().init({
@@ -48,6 +50,7 @@ var sfUI = (function () {
       var currentTime = new Date().getTime();
       timeoutExceeded = isTimeExceeded(currentTime - startTime);
       sfCORE.getInstance().selectDialog(ctzSelected, simplificationSelected, timeoutExceeded, data.userId);
+      this.active = true;
     }
 
     function isTimeExceeded (timeMs) {
@@ -56,11 +59,22 @@ var sfUI = (function () {
 
       return timeoutExceeded;
     }
+    
+    function isActive() {
+    	return this.active;
+    }
+    
+    function hideSF() {
+    	this.active = false;
+        $('#dialogSF').dialog("destroy").remove();
+    }
 
     return {
       init: initComponent,
       isTimeExceeded: isTimeExceeded,
-      showSF: showSF
+      showSF: showSF,
+      hideSF: hideSF,
+      isActive: isActive
     };
   }
 

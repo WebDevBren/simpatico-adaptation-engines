@@ -23,6 +23,7 @@ var citizenpediaUI = (function () {
     var diagramNotificationImage = '';
     var diagramNotificationClassName = '';
     var diagramNotificationText = '';
+    var diagramURL = '';
 
     // Internal usage variables
     var paragraphs = []; // Used to store all the tagged paragraphs
@@ -43,6 +44,7 @@ var citizenpediaUI = (function () {
       qaeCORE.getInstance().init({
           endpoint: parameters.endpoint
         });
+      qaeCORE.getInstance().getDiagramDetails(simpaticoEservice, drawDiagramNotification);
     }
     
     function enableComponentFeatures() {
@@ -79,7 +81,6 @@ var citizenpediaUI = (function () {
         paragrapId++;
       }
 
-      qaeCORE.getInstance().getDiagramDetails(simpaticoEservice, drawDiagramNotification);
     }
   
     function disableComponentFeatures() {
@@ -223,16 +224,17 @@ var citizenpediaUI = (function () {
         } else { 
             diagramNode.parentNode.appendChild(diagramContainer); 
         }
-        // Attach the corresponding CPD elements
-        var content = '<a href="' + response["url"] + '" target="_blank">' +                            
-                            '<img ' +
-                              'src="' + diagramNotificationImage + '" ' +
-                              'wigth="40" ' +
-                              'height="40"' +
-                              'title="' + diagramNotificationText + '" ' +  
-                              'alt="' + diagramNotificationText + '" ' +
-                      '</a>'
-        diagramContainer.innerHTML = content;
+//        // Attach the corresponding CPD elements
+//        var content = '<a href="' + response["url"] + '" target="_blank">' +                            
+//                            '<img ' +
+//                              'src="' + diagramNotificationImage + '" ' +
+//                              'wigth="40" ' +
+//                              'height="40"' +
+//                              'title="' + diagramNotificationText + '" ' +  
+//                              'alt="' + diagramNotificationText + '" ' +
+//                      '</a>'
+//        diagramContainer.innerHTML = content;
+        diagramURL = response["url"];
       }
     }
 
@@ -242,7 +244,9 @@ var citizenpediaUI = (function () {
       enable: enableComponentFeatures,  // Called when the Component button is enabled
       disable: disableComponentFeatures, // Called when the Component button is disabled or another one enabled
       isEnabled: function() { return featureEnabled;}, // Returns if the feature is enabled
-      
+      openDiagram: function(){
+    	  window.open(diagramURL,"_blank");
+      },
       paragraphEvent: paragraphEvent,
 
       createNewQuestionEvent: createNewQuestionEvent,

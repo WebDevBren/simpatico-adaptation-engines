@@ -65,12 +65,13 @@ function initFeatures() {
     cdvColor: '#008000',
     dialogTitle: 'Citizen Data Vault',
     tabPFieldsTitle: 'I miei dati',
-    entryMessage: 'Benvenuto a SIMPATICO CDV!',
-    statusMessage: 'Adesso puoi selezionare/aggiornare i tuoi dati per compillare i campi del modulo.',
+    entryMessage: 'Gestione dati personali',
+    statusMessage: 'Adesso puoi selezionare i tuoi dati per compilare i campi evidenziati con bordo verde. Usa i valori ' +
+    'salvati predecentemente oppure aggiungi i valori nuovi.',
     notextMessage: 'Nessun campo selezionato',
     dialogSaveTitle: 'I dati salvati!',
     dialogSaveMessage: 'I tuoi dati sono stati salvati con successo al tuo Data Vault.',
-    statusMessageNoAccount: "Nessun account CDV e' associato a te. Crearne uno?",
+    statusMessageNoAccount: "Nessun account di gestione dati personali e' associato a te. Crearne uno?",
     statusMessageNoActive: "CDV non e' abilitato per questo servizio. Abilitare?",
     tabSettingsTitle: 'Impostazioni'
     
@@ -137,7 +138,7 @@ function initFeatures() {
   // - apiEndpoint: the main URL of the logs API server (<site>/simpatico/api)
   // NOTE: Requires jquery-ui to work properly
   sfUI.getInstance().init({
-    buttonToShowSfId: 'SalvaModulo',
+    buttonToShowSfId: 'SF',
     apiEndpoint: 'https://dev.smartcommunitylab.it/simpatico-logs/api',
   });
 
@@ -173,11 +174,11 @@ function initFeatures() {
                   // Ad-hoc images to define the enabled/disabled images
                   imageSrcEnabled: "https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/citizenpedia.png",
                   imageSrcDisabled: "https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/citizenpedia.png",
-                  alt: "Domande e risposte",
+                  alt: "Accedi alle domande e risposte associate agli elementi del modulo",
                   // Ad-hoc css classes to define the enabled/disabled styles
                   styleClassEnabled: "simp-bar-btn-active",
                   styleClassDisabled: "simp-bar-btn-inactive",
-
+                  label: 'Domande e risposte',
                   isEnabled: function() { return citizenpediaUI.getInstance().isEnabled(); },
                   enable: function() { citizenpediaUI.getInstance().enable(); },
                   disable: function() { citizenpediaUI.getInstance().disable(); }
@@ -207,7 +208,7 @@ function initFeatures() {
                     // Ad-hoc css classes to define the enabled/disabled styles
                     styleClassEnabled: "simp-bar-btn-active-tae",
                     styleClassDisabled: "simp-bar-btn-inactive-tae",
-
+                    label: 'Semplifica testo',
                     isEnabled: function() { taeUIPopup.getInstance().isEnabled(); },
                     enable: function() { 
                     	taeUIPopup.getInstance().showDialog(); 
@@ -221,11 +222,11 @@ function initFeatures() {
                   // Ad-hoc images to define the enabled/disabled images
                   imageSrcEnabled: "https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/cdv.png",
                   imageSrcDisabled: "https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/cdv.png",
-                  alt: "Citizen Data Vault",
+                  alt: "Salva e precompila i campi usando i tuoi dati personali attraverso Citizen Data Vault",
                   // Ad-hoc css classes to define the enabled/disabled styles
                   styleClassEnabled: "simp-bar-btn-active-cdv",
                   styleClassDisabled: "simp-bar-btn-inactive",
-
+                  label: 'Dati personali',
                   isEnabled: function() { return cdvUI.getInstance().isEnabled(); },
                   enable: function() { cdvUI.getInstance().enable(); },
                   disable: function() { cdvUI.getInstance().disable(); }
@@ -234,15 +235,41 @@ function initFeatures() {
                   id: 'workflow',
                   imageSrcEnabled: "https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/forms.png",
                   imageSrcDisabled: "https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/forms.png",
-                  alt: "Semplifica processo",
+                  alt: "Compilazione guidata del modulo",
                   // Ad-hoc css classes to define the enabled/disabled styles
                   styleClassEnabled: "simp-bar-btn-active-wae",
                   styleClassDisabled: "simp-bar-btn-inactive",
-
+                  label: 'Compilazione guidata',
                   isEnabled: function() { return waeUI.getInstance().isEnabled(); },
                   enable: function() { var idProfile = null; waeUI.getInstance().enable(idProfile); },
                   disable: function() { waeUI.getInstance().disable(); }
-                }
+                },
+                { // session feedback
+                    id: 'process',
+                    imageSrcEnabled: "https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/diagram.png",
+                    imageSrcDisabled: "https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/diagram.png",
+                    alt: "Procedura amministrativa",
+                    // Ad-hoc css classes to define the enabled/disabled styles
+                    styleClassEnabled: "simp-bar-btn-active-wae",
+                    styleClassDisabled: "simp-bar-btn-inactive",
+                    label: 'Procedura',
+                    isEnabled: function() { return false; },
+                    enable: function() { citizenpediaUI.getInstance().openDiagram(); },
+                    disable: function() {  }
+                  },
+                  { // session feedback
+                      id: 'sf',
+                      imageSrcEnabled: "https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/feedback.png",
+                      imageSrcDisabled: "https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/feedback.png",
+                      alt: "La tua opinione",
+                      // Ad-hoc css classes to define the enabled/disabled styles
+                      styleClassEnabled: "simp-bar-btn-active-wae",
+                      styleClassDisabled: "simp-bar-btn-inactive",
+                      label: 'Feedback',
+                      isEnabled: function() { return sfUI.getInstance().isActive(); },
+                      enable: function() { sfUI.getInstance().showSF(); },
+                      disable: function() { sfUI.getInstance().hideSF(); }
+                    }
              
             ];
 }//initFeatures()
@@ -259,6 +286,7 @@ function createButtonHTML(button) {
                             'id="' + button.id + '-img" ' +
                             'src="' + button.imageSrcDisabled + '" ' +
                             'width="50" height="50" />' +
+                            (button.label ? ('<div class="toolbar-button-label">'+button.label+'</div>') :'')+
                             //'</a>'+
                           '</li>';
 }//createButtonHTMLbutton()

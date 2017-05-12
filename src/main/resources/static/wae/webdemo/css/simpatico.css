@@ -57,7 +57,7 @@ font-weight: bold;
     }
 	/* Personalised style for active buttons cdv */
     .simp-bar-btn-active-cdv {
-      background-color: #379E4C;
+      background-color: #24BCDA;
       border: 1px solid #fff;
     }
 	
@@ -67,7 +67,7 @@ font-weight: bold;
 /************************* WAE styles**********************************/
 	/* Personalised style for active buttons cdv */
     .simp-bar-btn-active-wae {
-      background-color: #379E4C;
+      background-color: #24BCDA;
       border: 1px solid #fff;
     }
 
@@ -117,12 +117,12 @@ font-weight: bold;
 }
 
 .simp-bar-btn-inactive-tae:hover {
-		background-color: #DE453E;
+		background-color: #24BCDA;
     border: 1px solid #fff;
 }
 
 .simp-bar-btn-active-tae {
-	background-color: #DE453E;
+	background-color: #24BCDA;
 	border: 1px solid #fff;
 }
 /* TAE: End */
@@ -206,7 +206,7 @@ font-weight: bold;
     }
     /* Personalised style for active buttons cdv */
     .simp-bar-btn-active-cdv {
-      background-color: #379E4C;
+      background-color: #24BCDA;
       border: 1px solid #fff;
     }
     
@@ -285,17 +285,17 @@ font-weight: bold;
       border: 0px solid #fff;
     }
     .simp-bar-btn-inactive-tae:hover {
-        background-color: #DE453E;
+        background-color:  #24BCDA;
         border: 1px solid #fff;
         animation-name: anim-inactive-hover-tae;
         animation-duration: 1s;
     }
     @keyframes anim-inactive-hover-tae {
       from {background-color: transparent;}
-      to {background-color: #DE453E;}
+      to {background-color: #24BCDA;}
     }
     .simp-bar-btn-active-tae {
-      background-color: #DE453E;
+      background-color: #24BCDA;
       border: 1px solid #fff;
     }
     /* <<< TAE Button */
