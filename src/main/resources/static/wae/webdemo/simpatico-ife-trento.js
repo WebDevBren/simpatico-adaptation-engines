@@ -211,6 +211,7 @@ function initFeatures() {
                     label: 'Semplifica testo',
                     isEnabled: function() { taeUIPopup.getInstance().isEnabled(); },
                     enable: function() { 
+                    	console.log(window.getSelection().toString().trim());
                     	taeUIPopup.getInstance().showDialog(); 
                     },
                     disable: function() { 
@@ -277,16 +278,16 @@ function initFeatures() {
 // It creates the HTML code corresponding to the button passed as parameter
 // - button: The button object stored in buttons
 function createButtonHTML(button) {
-  return '<li class="'+ button.styleClassDisabled +'" id="' + button.id + '" '+
-                          'onclick="toggleAction(\'' + button.id + '\');">'+
+  return '<li class="'+ button.styleClassDisabled +'" id="' + button.id + '" ' +'onclick="toggleAction(\'' + button.id + '\');"'+
+                          '">'+
                           //'<a href="#">' +
-                          '<img ' +
+                          '<img ' + 
                             'alt="' + button.alt + '" ' + 
                             'title="' + button.alt + '" ' +
                             'id="' + button.id + '-img" ' +
                             'src="' + button.imageSrcDisabled + '" ' +
                             'width="50" height="50" />' +
-                            (button.label ? ('<div class="toolbar-button-label">'+button.label+'</div>') :'')+
+                            (button.label ? ('<div class="toolbar-button-label">'+ button.label+'</div>') :'')+
                             //'</a>'+
                           '</li>';
 }//createButtonHTMLbutton()

@@ -237,7 +237,7 @@ var taeUIPopup = (function () {
 	
 		  if (window.getSelection()) {
 		      textData.text = window.getSelection().toString().trim();
-		      if (!textData.text.match(/(\s)/i)) {
+		      if (textData.text.length > 0 && !textData.text.match(/(\s)/i)) {
 		    	  textData.word = textData.text;
 		    	  var selection = window.getSelection();
 		    	  if (selection && selection.anchorNode) {
