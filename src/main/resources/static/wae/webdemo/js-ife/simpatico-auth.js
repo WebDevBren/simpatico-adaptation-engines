@@ -52,7 +52,7 @@ var authManager = (function () {
                     '&client_id=' + ifeClientID; //Client id from the AAC console
 	   console.log(url);				
 
-      var win = window.open(url, 'AuthPopup', 'width=1024,height=768,resizable=true,scrollbars=true,status=true');
+      var win = window.open(url, 'AuthPopup', 'width=1024,height=768,resizable=1,scrollbars=1,status=1');
 	   
       var processData = function(data) {
         jQuery.ajax({

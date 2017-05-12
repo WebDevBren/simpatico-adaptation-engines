@@ -29,6 +29,27 @@ var waeEngine = new function() {
 		}
 	}
 	
+	/**
+	 * Return if the model is already loaded and initialized (i.e., compillation in progress)
+	 */
+	this.isLoaded = function() {
+		return workflowModel != null;
+	}
+	
+	/**
+	 * Reset the module to the initial state
+	 */
+	this.reset = function(){
+		actualBlockIndex = -1;
+		prevBlockIndex = -1;
+		actualBlockId = null;
+		prevBlockId = null;
+		moveToBlock = true;
+		blockCompiledMap = {};
+		uncompletedFieldMap = {};
+		contextVar = {};
+	}
+	
 	function getActualBlockIndex() {
 		return actualBlockIndex;
  	}; 	
@@ -36,6 +57,12 @@ var waeEngine = new function() {
  	 * RETURN CURRENT BLOCK INDEX
  	 */
 	this.getActualBlockIndex = getActualBlockIndex;
+ 	/**
+ 	 * RETURN CURRENT BLOCK ID
+ 	 */
+	this.getActualBlockId = function() {
+		return actualBlockId;
+	};
 	
 	function getBlocksNum() {
 		return workflowModel.blocks.length;
@@ -109,7 +136,7 @@ var waeEngine = new function() {
 		prevBlockId = actualBlockId;
 		prevBlockIndex = actualBlockIndex;
 		actualBlockIndex = index;
-		actualBlockId = workflowModel.blocks[actualBlockIndex].id;
+		actualBlockId = workflowModel.blocks[actualBlockIndex] ? workflowModel.blocks[actualBlockIndex].id : null;
 		moveToBlock = true;
 	};
 
@@ -280,6 +307,11 @@ var waeEngine = new function() {
 	 */
 	this.nextBlock = nextBlock;
 
+	this.restartBlock = function(callback, errorCallback) {
+		setActualBlock(actualBlockIndex -1);
+		this.nextBlock(callback,errorCallback);
+	}
+	
 	function fillBlock() {
 		var block = blockMap[actualBlockId];
 		if(block != null) {

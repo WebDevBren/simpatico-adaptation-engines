@@ -12,6 +12,7 @@ var waeUI = (function () {
 	var topBarHeight = 50;
 	var errorLabel = {};
     this.active = false;
+    this.idProfile = null;
 	
   	var labels = {
 			prevButtonLabel: 'Previous',
@@ -49,14 +50,28 @@ var waeUI = (function () {
 	 */
 	this.loadModel = function(idProfile) {
 		var moduleUri = $("[data-simpatico-workflow]").attr('data-simpatico-workflow');
-		waeEngine.loadModel(moduleUri, idProfile, moduleLoaded, moduleLoadError);
-		instance.active = true;
+		if (!!idProfile) {
+			this.idProfile = idProfile;
+		}
+		waeEngine.loadModel(moduleUri, this.idProfile, moduleLoaded, moduleLoadError);
 	};
 
     this.isEnabled = function(){
       return instance.active;
     }
-    this.enable = this.loadModel;
+    this.enable = function(idProfile) {
+    	if (waeEngine.isLoaded()) {
+    		for(var key in blockMap) {
+    			if(blockMap.hasOwnProperty(key)) {
+    				showElement(key, "HIDE");
+    			}
+    		}
+    		waeEngine.restartBlock(doActions, moduleErrorMsg);    		
+    	} else {
+        	this.loadModel(idProfile);
+    	}
+		instance.active = true;
+    }
 	/**
 	 * RETURN TRUE IF THE CURRENT PAGE CONTAINS FORM TO SIMPLIFY
 	 */
@@ -74,8 +89,10 @@ var waeUI = (function () {
 				showElement(key, "SHOW");
 			}
 		}
+		resetBlock(waeEngine.getActualBlockId());
 		instance.active = false;
 		$('html, body').animate({scrollTop: 0}, 200);
+		//waeEngine.reset();
 	}
     this.disable = this.reset;
 
@@ -134,8 +151,11 @@ var waeUI = (function () {
 				}
 				//add error message
 				$(container).append(createErrorMsg());
-				var position = $(container).offset().top - topBarHeight;
-				$('html, body').animate({scrollTop: position}, 200);
+				var offset = $(container).offset();
+				if (offset) {
+					var position = offset.top - topBarHeight;
+					$('html, body').animate({scrollTop: position}, 200);
+				}
 			}
 		}
 	};
