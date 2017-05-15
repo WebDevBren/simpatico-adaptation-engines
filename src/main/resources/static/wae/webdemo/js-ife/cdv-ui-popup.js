@@ -31,8 +31,18 @@ var cdvUI = (function () {
 			dialogSaveMessage: 'Data saved successfully into your Data Vault.',
 			statusMessageNoAccount: "No CDV Account associated to you. Create?",
 			statusMessageNoActive: "CDV is not active for this service. Activate?",
-			tabSettingsTitle: 'Settings'
-
+			tabSettingsTitle: 'Settings',
+			buttonSave: 'Save your data',
+			labelAccount : 'CDV Account',
+			buttonRemoveAccount: 'Remove account',
+			buttonActivateCDV: 'Activate CDV',
+			labelExport : 'Export',
+			buttonExport: 'Export your data',
+			buttonActivate: 'Activate account',
+			msgConfirmRemove: '<p> Are you sure to remove your account?</p><p>Your data will be permanently deleted and cannot be recovered. Remember to save your data first.</p><p>' + 'Press \'OK\' to continue...</p>',
+			dialogRemoveTitle: 'Remove account',
+			buttonOK : 'OK',
+			buttonCANCEL: 'Cancel'
 		};
 
 		var dataFields = [];
@@ -73,6 +83,18 @@ var cdvUI = (function () {
             labels.statusMessageNoAccount = parameters.statusMessageNoAccount || labels.statusMessageNoAccount;
             labels.statusMessageNoActive = parameters.statusMessageNoActive || labels.statusMessageNoActive;
 			labels.tabSettingsTitle = parameters.tabSettingsTitle || labels.tabSettingsTitle;
+
+			labels.buttonSave = parameters.buttonSave || labels.buttonSave;
+			labels.buttonRemoveAccount = parameters.buttonRemoveAccount || labels.buttonRemoveAccount;
+			labels.buttonExport = parameters.buttonExport || labels.buttonExport;
+			labels.buttonActivate = parameters.buttonActivate || labels.buttonActivate;
+			labels.buttonActivateCDV = parameters.buttonActivateCDV || labels.buttonActivateCDV;
+			labels.msgConfirmRemove = parameters.msgConfirmRemove || labels.msgConfirmRemove;
+			labels.dialogRemoveTitle = parameters.dialogRemoveTitle || labels.dialogRemoveTitle;
+			labels.buttonOK = parameters.buttonOK || labels.buttonOK;
+			labels.buttonCANCEL = parameters.buttonCANCEL || labels.buttonCANCEL;
+			labels.labelAccount = parameters.labelAccount || labels.labelAccount;
+			labels.labelExport = parameters.labelExport || labels.labelExport;
 
           colors.cdv = parameters.cdvColor || colors.cdv;
 
@@ -129,28 +151,54 @@ var cdvUI = (function () {
 				console.log("saved__:" + saved);
 				var errCb = setError("tab-pdata");
 				if (saved) {
+					var dlgData = {
+							modal: true,
+							buttons: {}
+					};
+					dlgData.buttons[labels.buttonOK] = function () {
+							//cdvCORE.getInstance().cdv_getdata(cdvUI.selectedField, "tab-pdata", errCb);
+							var getPDataList = updatePDataFields(cdvUI.selectedField, "tab-pdata");
+							cdvCORE.getInstance().cdv_getdata(getPDataList, errCb);
+							$(this).dialog("close");
+							//dialog_saved.dialog("open");
+						};
 					var dialog_saved = $(
 							'<div id="dialog-message" title="' + labels.dialogSaveTitle + '">' +
 							'			<p>' + labels.dialogSaveMessage + '</p>' +
-							'</div>').dialog({
-							modal: true,
-							buttons: {
-								Ok: function () {
-									//cdvCORE.getInstance().cdv_getdata(cdvUI.selectedField, "tab-pdata", errCb);
-									var getPDataList = updatePDataFields(cdvUI.selectedField, "tab-pdata");
-									cdvCORE.getInstance().cdv_getdata(getPDataList, errCb);
-									$(this).dialog("close");
-									//dialog_saved.dialog("open");
-								}
-							}
-						});
+							'</div>').dialog(dlgData);
+					
 					dialog_saved.dialog("open");
 				}
 			}
 
 		}
 		
-		
+		function confirmRemoveAccount(){
+
+			var dlgData = {modal: true,
+					buttons: {}
+			};
+			dlgData.buttons[labels.buttonOK] = function () {
+				
+				cdvCORE.getInstance().removeCDV();
+				cdvUI.getInstance().disable();
+				$('#dialog_cdv').dialog("destroy");
+				$('#dialog_cdv').dialog("open");
+				
+				$(this).dialog("close");
+				
+				
+			};
+			dlgData.buttons[labels.buttonCANCEL] = function () {
+				$(this).dialog("close");
+			};
+			var dialog_saved = $(
+					'<div id="dialog-message" title="' + labels.dialogRemoveTitle + '">' +
+					labels.msgConfirmRemove +
+					'</div>').dialog(dlgData);
+			dialog_saved.dialog("open");
+
+		}
 
 		function initializeAccount() {
 			return function (account_exist) {
@@ -238,25 +286,25 @@ var cdvUI = (function () {
 
 		}
 		
-				
 		
 		function createTabSetting(target) {
 			//return function (json) {
 				
 				
-				var fieldSelect1 = "<fieldset><legend>CDV Account</legend>";
-				var fieldSelect2 = "<fieldset><legend>Export</legend>";
-				var fieldSelect3 = "<fieldset><legend>Data and Permissions</legend>";
-			    fieldSelect1 += ' <button class="ui-button ui-widget ui-corner-all" onClick="confirmRemoveAccount();">Remove Account</button>';
+				var fieldSelect1 = "<fieldset><legend>"+labels.labelAccount+"</legend>";
+			    fieldSelect1 += ' <button class="ui-button ui-widget ui-corner-all" onClick="cdvUI.getInstance().confirmRemoveAccount();">'+labels.buttonRemoveAccount+'</button>';
+				var fieldSelect2 = "<fieldset><legend>"+labels.labelExport+"</legend>";
+				fieldSelect2 += ' <button on-click class="ui-button ui-widget ui-corner-all" onClick="cdvCORE.getInstance().exportData();">'+labels.buttonExport+'</button>';
 
-				fieldSelect2 += ' <button on-click class="ui-button ui-widget ui-corner-all" onClick="cdvCORE.getInstance().exportData();">Export your data</button>';
-				fieldSelect3 += ' <button class="ui-button ui-widget ui-corner-all" onClick="openCDV()">Manage your Data</button>';
+//				var fieldSelect3 = "<fieldset><legend>Data and Permissions</legend>";
+//				fieldSelect3 += ' <button class="ui-button ui-widget ui-corner-all" onClick="openCDV()">Manage your Data</button>';
 
 				
 				
 				document.getElementById(target).innerHTML = fieldSelect1 + "</fieldset><br>";
-				document.getElementById(target).innerHTML += fieldSelect2 + "</fieldset><br>";
-				document.getElementById(target).innerHTML += fieldSelect3 + "</fieldset>";
+//				document.getElementById(target).innerHTML += fieldSelect2 + "</fieldset><br>";
+				document.getElementById(target).innerHTML += fieldSelect2 + "</fieldset>";
+//				document.getElementById(target).innerHTML += fieldSelect3 + "</fieldset>";
 
 			//}
 
@@ -326,44 +374,40 @@ var cdvUI = (function () {
 					});
 
 				if (!account_exist) {
-					dialog_cdv.dialog({
-						buttons: {
-							"Activate Account": function () {
-								var confirm = activateSLR();
-								cdvCORE.getInstance().createAccount(confirm);
-								dialog_cdv.dialog("destroy");
-							}
+					var dlgData = {
+							buttons: {}
 
 						}
+					dlgData.buttons[labels.buttonActivate] = function () {
+						var confirm = activateSLR();
+						cdvCORE.getInstance().createAccount(confirm);
+						dialog_cdv.dialog("destroy");
+					};
 
-					});
+					dialog_cdv.dialog(dlgData);
 
 				} else if (!activated) {
-					dialog_cdv.dialog({
-						buttons: {
-							"Activate CDV": function () {
-								var activate = activateSLR();
-								activate(true);
-								dialog_cdv.dialog("destroy");
-							}
+					var dlgData = {
+							buttons: {}
 
-						}
+					}
+					dlgData.buttons[labels.buttonActivateCDV] = function () {
+						var activate = activateSLR();
+						activate(true);
+						dialog_cdv.dialog("destroy");
+					};
 
-					});
+					dialog_cdv.dialog(dlgData);
 
 				} else {
-
-					dialog_cdv.dialog({
-						buttons: {
-							"Save Your Data": function () {
-								var confirm = confirmUpdateData();
-								cdvCORE.getInstance().cdv_postdata(confirm);
-							}
-
-						}
-
-					});
-
+					var dlgData = {
+							buttons: {}
+					}
+					dlgData.buttons[labels.buttonSave] = function () {
+						var confirm = confirmUpdateData();
+						cdvCORE.getInstance().cdv_postdata(confirm);
+					};
+					dialog_cdv.dialog(dlgData);
 				}
 
 				dialog_cdv.tabs({
@@ -503,7 +547,7 @@ var cdvUI = (function () {
 			isEnabled: function () {
 				return featureEnabled;
 			}, // Returns if the feature is enabled
-
+			confirmRemoveAccount: confirmRemoveAccount
 			//paragraphEvent: paragraphEvent
 		};
 	}
@@ -517,33 +561,3 @@ var cdvUI = (function () {
 	};
 })();
 
-function confirmRemoveAccount(){
-
-			var dialog_saved = $(
-					'<div id="dialog-message" title="' + 'Remove Account' + '">' +
-					'			<p>' + 'Are you sure to remove your account?' + '</p>' +
-					'			<p>' + 'Your data will be permanently deleted and cannot be recovered. Remember to save your data first.' + '</p>' +
-					'			<p>' + 'Press \'OK\' to continue... '+ '</p>' +
-					'</div>').dialog({
-					modal: true,
-					buttons: {
-						Ok: function () {
-							
-							cdvCORE.getInstance().removeCDV();
-							cdvUI.getInstance().disable();
-							$('#dialog_cdv').dialog("destroy");
-							$('#dialog_cdv').dialog("open");
-							
-							$(this).dialog("close");
-							
-							
-						},
-						Cancel: function () {
-							$(this).dialog("close");
-							
-						}
-					}
-				});
-			dialog_saved.dialog("open");
-
-		}

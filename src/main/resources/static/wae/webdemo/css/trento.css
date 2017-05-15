@@ -64,3 +64,19 @@ body {
     padding-top: 11px;
     pointer-events: none;
 }
+
+.block_edited {
+    border: 3px #24BCDA solid !important;
+    width: 19cm;
+    /* margin: 2px; */
+  padding: 2px;
+}
+
+#btn_simpatico_next, #btn_simpatico_prev {
+	text-transform: uppercase;
+	background-color: #24BCDA;
+	color: #fff;
+	border: 0;
+	margin: 8px 8px 6px 8px;
+	padding: 8px 16px;
+}

@@ -73,7 +73,19 @@ function initFeatures() {
     dialogSaveMessage: 'I tuoi dati sono stati salvati con successo al tuo Data Vault.',
     statusMessageNoAccount: "Nessun account di gestione dati personali e' associato a te. Crearne uno?",
     statusMessageNoActive: "CDV non e' abilitato per questo servizio. Abilitare?",
-    tabSettingsTitle: 'Impostazioni'
+    tabSettingsTitle: 'Impostazioni',
+	buttonSave: 'Salva i tuoi dati',
+	labelAccount : 'Account',
+	buttonRemoveAccount: 'Rimuovi account',
+	buttonActivateCDV: 'Abilita gestione dati personali',
+	labelExport : 'Esportazione',
+	buttonExport: 'Esporta i tuoi dati',
+	buttonActivate: 'Crea account',
+	msgConfirmRemove: "<p> Sei sicuro di voler rimuovere l'account?</p><p>I tuoi dati personali salvati in Citizen Data Vault saranno cancellati. </p><p>Premere 'OK' per procedere...</p>",
+	dialogRemoveTitle: 'Rimuovi account',
+	buttonOK : 'OK',
+	buttonCANCEL: 'Annula'
+    
     
   });
 
