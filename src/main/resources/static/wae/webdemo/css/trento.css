@@ -80,3 +80,29 @@ body {
 	margin: 8px 8px 6px 8px;
 	padding: 8px 16px;
 }
+
+img[src="img/happy_face.png"], img[src="img/normal_face.png"],img[src="img/sad_face.png"] {
+	visibility: hidden;
+}
+
+label[for="face-happy-session-feedback"] {
+    width: 80px;
+    height: 80px;
+    background-size: contain;
+    background-image:
+        url(https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/happy_face.png);
+} 
+label[for="face-normal-session-feedback"] {
+    width: 80px;
+    height: 80px;
+    background-size: contain;
+    background-image:
+        url(https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/normal_face.png);
+}
+label[for="face-sad-session-feedback"] {
+    width: 80px;
+    height: 80px;
+    background-size: contain;
+    background-image:
+        url(https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/sad_face.png);
+}
