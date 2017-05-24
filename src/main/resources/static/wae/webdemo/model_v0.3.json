@@ -7,7 +7,10 @@
 			"xpath" : "(//*[contains(@class, 'simpatico-block')])[1]",
 			"tags" : [],
 			"fields" : ["AventeTitolo_CodiceFiscale"],
-			"completed" : "(context['AventeTitolo_CodiceFiscale'] != null) && (context['AventeTitolo_CodiceFiscale'] != '')"  
+			"completed" : "(context['AventeTitolo_CodiceFiscale'] != null) && (context['AventeTitolo_CodiceFiscale'] != '')",  
+			"description": {
+			  "it": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id mollis turpis. Mauris rhoncus lobortis erat id egestas. Proin consectetur sem non placerat egestas. Sed mollis nisi non justo ultricies, sit amet varius quam tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus iaculis diam nec placerat aliquet. Ut rhoncus feugiat ipsum non semper. Ut sed ligula suscipit massa ullamcorper porta."
+			}
 		},
 		{
 			"id" : "block2",
@@ -16,7 +19,10 @@
 			"tags" : [],
 			"fields" : ["AventeTitolo_RuoloRichiedente"],
 			"dependencies" : ["block1"], 
-			"completed" : "context['AventeTitolo_RuoloRichiedente'] != null"
+			"completed" : "context['AventeTitolo_RuoloRichiedente'] != null",  
+            "description": {
+              "it": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id mollis turpis. Mauris rhoncus lobortis erat id egestas. Proin consectetur sem non placerat egestas. Sed mollis nisi non justo ultricies, sit amet varius quam tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus iaculis diam nec placerat aliquet. Ut rhoncus feugiat ipsum non semper. Ut sed ligula suscipit massa ullamcorper porta."
+            }
 		},
 		{
 			"id" : "block3",
@@ -25,7 +31,10 @@
 			"tags" : [],
 			"fields" : ["AventeTitolo_RuoloRichiedente"],
 			"dependencies" : ["block2"], 
-			"condition" :  "context['AventeTitolo_RuoloRichiedente']=='affidatario' || context['AventeTitolo_RuoloRichiedente']=='preadottivo'|| context['AventeTitolo_RuoloRichiedente']=='tutore'"
+			"condition" :  "context['AventeTitolo_RuoloRichiedente']=='affidatario' || context['AventeTitolo_RuoloRichiedente']=='preadottivo'|| context['AventeTitolo_RuoloRichiedente']=='tutore'",  
+            "description": {
+              "it": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id mollis turpis. Mauris rhoncus lobortis erat id egestas. Proin consectetur sem non placerat egestas. Sed mollis nisi non justo ultricies, sit amet varius quam tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus iaculis diam nec placerat aliquet. Ut rhoncus feugiat ipsum non semper. Ut sed ligula suscipit massa ullamcorper porta."
+            }
 		},
 		{
 			"id" : "block4",
@@ -33,7 +42,10 @@
 			"xpath" : "(//*[contains(@class, 'simpatico-block')])[4]",
 			"tags" : [],
 			"fields" : [],
-			"condition" :  "context['AventeTitolo_RuoloRichiedente']=='affidatario' || context['AventeTitolo_RuoloRichiedente']=='preadottivo'|| context['AventeTitolo_RuoloRichiedente']=='padre'|| context['AventeTitolo_RuoloRichiedente']=='madre'|| context['AventeTitolo_RuoloRichiedente']=='tutore'"
+			"condition" :  "context['AventeTitolo_RuoloRichiedente']=='affidatario' || context['AventeTitolo_RuoloRichiedente']=='preadottivo'|| context['AventeTitolo_RuoloRichiedente']=='padre'|| context['AventeTitolo_RuoloRichiedente']=='madre'|| context['AventeTitolo_RuoloRichiedente']=='tutore'",  
+            "description": {
+              "it": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id mollis turpis. Mauris rhoncus lobortis erat id egestas. Proin consectetur sem non placerat egestas. Sed mollis nisi non justo ultricies, sit amet varius quam tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus iaculis diam nec placerat aliquet. Ut rhoncus feugiat ipsum non semper. Ut sed ligula suscipit massa ullamcorper porta."
+            }
 		},	
 		{
 			"id" : "block5",
@@ -41,7 +53,10 @@
 			"xpath" : "(//*[contains(@class, 'simpatico-block')])[5]",
 			"tags" : [],
 			"fields" : [],
-			"dependencies" : ["block4"]
+			"dependencies" : ["block4"],  
+            "description": {
+              "it": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id mollis turpis. Mauris rhoncus lobortis erat id egestas. Proin consectetur sem non placerat egestas. Sed mollis nisi non justo ultricies, sit amet varius quam tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus iaculis diam nec placerat aliquet. Ut rhoncus feugiat ipsum non semper. Ut sed ligula suscipit massa ullamcorper porta."
+            }
 		},		
 		{
 			"id" : "block6",
@@ -50,7 +65,10 @@
 			"tags" : [],
 			"fields" : ["Tassonomia_FullTime", "Tassonomia_PartTime"],
 			"dependencies" : ["block5"],
-			"completed" : "context['Tassonomia_FullTime']=='FT' || context['Tassonomia_PartTime']=='PT'"
+			"completed" : "context['Tassonomia_FullTime']=='FT' || context['Tassonomia_PartTime']=='PT'",  
+            "description": {
+              "it": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id mollis turpis. Mauris rhoncus lobortis erat id egestas. Proin consectetur sem non placerat egestas. Sed mollis nisi non justo ultricies, sit amet varius quam tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus iaculis diam nec placerat aliquet. Ut rhoncus feugiat ipsum non semper. Ut sed ligula suscipit massa ullamcorper porta."
+            }
 		},		
 		{
 			"id" : "block7",
@@ -58,7 +76,10 @@
 			"xpath" : "(//*[contains(@class, 'simpatico-block')])[7]",
 			"tags" : [],
 			"fields" : [],
-			"dependencies" : ["block6"]
+			"dependencies" : ["block6"],  
+            "description": {
+              "it": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id mollis turpis. Mauris rhoncus lobortis erat id egestas. Proin consectetur sem non placerat egestas. Sed mollis nisi non justo ultricies, sit amet varius quam tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus iaculis diam nec placerat aliquet. Ut rhoncus feugiat ipsum non semper. Ut sed ligula suscipit massa ullamcorper porta."
+            }
 		},		
 		{
 			"id" : "block8",
@@ -66,7 +87,10 @@
 			"xpath" : "(//*[contains(@class, 'simpatico-block')])[8]",
 			"tags" : [],
 			"fields" : [],
-			"dependencies" : ["block7"]
+			"dependencies" : ["block7"],  
+            "description": {
+              "it": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id mollis turpis. Mauris rhoncus lobortis erat id egestas. Proin consectetur sem non placerat egestas. Sed mollis nisi non justo ultricies, sit amet varius quam tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus iaculis diam nec placerat aliquet. Ut rhoncus feugiat ipsum non semper. Ut sed ligula suscipit massa ullamcorper porta."
+            }
 		},		
 		{
 			"id" : "block9",
@@ -74,7 +98,10 @@
 			"xpath" : "(//*[contains(@class, 'simpatico-block')])[9]",
 			"tags" : [],
 			"fields" : [],
-			"dependencies" : ["block8"]
+			"dependencies" : ["block8"],  
+            "description": {
+              "it": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id mollis turpis. Mauris rhoncus lobortis erat id egestas. Proin consectetur sem non placerat egestas. Sed mollis nisi non justo ultricies, sit amet varius quam tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus iaculis diam nec placerat aliquet. Ut rhoncus feugiat ipsum non semper. Ut sed ligula suscipit massa ullamcorper porta."
+            }
 		},		
 		{
 			"id" : "block10",
@@ -83,7 +110,10 @@
 			"tags" : [],
 			"fields" : ["Tassonomia_ICEF1", "Tassonomia_ICEF2"],
 			"dependencies" : ["block9"],
-			"completed" : "context['Tassonomia_ICEF1']=='1' || context['Tassonomia_ICEF2']=='2'"
+			"completed" : "context['Tassonomia_ICEF1']=='1' || context['Tassonomia_ICEF2']=='2'",  
+            "description": {
+              "it": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id mollis turpis. Mauris rhoncus lobortis erat id egestas. Proin consectetur sem non placerat egestas. Sed mollis nisi non justo ultricies, sit amet varius quam tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus iaculis diam nec placerat aliquet. Ut rhoncus feugiat ipsum non semper. Ut sed ligula suscipit massa ullamcorper porta."
+            }
 		},		
 		{
 			"id" : "block11",
@@ -92,7 +122,10 @@
 			"tags" : [],
 			"fields" : ["Tassonomia_ICEF2"],
 			"dependencies" : ["block8"],
-			"condition" :  "context['Tassonomia_ICEF1']=='1'"
+			"condition" :  "context['Tassonomia_ICEF1']=='1'",  
+            "description": {
+              "it": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id mollis turpis. Mauris rhoncus lobortis erat id egestas. Proin consectetur sem non placerat egestas. Sed mollis nisi non justo ultricies, sit amet varius quam tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus iaculis diam nec placerat aliquet. Ut rhoncus feugiat ipsum non semper. Ut sed ligula suscipit massa ullamcorper porta."
+            }
 		},		
 		{
 			"id" : "block12",
@@ -100,7 +133,10 @@
 			"xpath" : "(//*[contains(@class, 'simpatico-block')])[12]",
 			"tags" : [],
 			"fields" : ["Tassonomia_TipoFrequenza1", "Tassonomia_ICEF1", "Tassonomia_ICEF2"],
-			"condition" :  "context['Tassonomia_FullTime']=='FT' && (context['Tassonomia_ICEF1']=='1' || context['Tassonomia_ICEF2']=='2')"
+			"condition" :  "context['Tassonomia_FullTime']=='FT' && (context['Tassonomia_ICEF1']=='1' || context['Tassonomia_ICEF2']=='2')",  
+            "description": {
+              "it": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id mollis turpis. Mauris rhoncus lobortis erat id egestas. Proin consectetur sem non placerat egestas. Sed mollis nisi non justo ultricies, sit amet varius quam tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus iaculis diam nec placerat aliquet. Ut rhoncus feugiat ipsum non semper. Ut sed ligula suscipit massa ullamcorper porta."
+            }
 		},		
 		{
 			"id" : "block13",
@@ -108,7 +144,10 @@
 			"xpath" : "(//*[contains(@class, 'simpatico-block')])[13]",
 			"tags" : [],
 			"fields" : ["Tassonomia_TipoFrequenza2"],
-			"condition" : "context['Tassonomia_PartTime']=='PT' && (context['Tassonomia_ICEF1']=='1' || context['Tassonomia_ICEF2']=='2')"
+			"condition" : "context['Tassonomia_PartTime']=='PT' && (context['Tassonomia_ICEF1']=='1' || context['Tassonomia_ICEF2']=='2')",  
+            "description": {
+              "it": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id mollis turpis. Mauris rhoncus lobortis erat id egestas. Proin consectetur sem non placerat egestas. Sed mollis nisi non justo ultricies, sit amet varius quam tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus iaculis diam nec placerat aliquet. Ut rhoncus feugiat ipsum non semper. Ut sed ligula suscipit massa ullamcorper porta."
+            }
 		},		
 		{
 			"id" : "block14",
@@ -116,7 +155,10 @@
 			"xpath" : "(//*[contains(@class, 'simpatico-block')])[14]",
 			"tags" : [],
 			"fields" : [],
-			"condition" : "context['Tassonomia_TipoFrequenza1']=='FT' || context['Tassonomia_TipoFrequenza2']=='PT'"
+			"condition" : "context['Tassonomia_TipoFrequenza1']=='FT' || context['Tassonomia_TipoFrequenza2']=='PT'",  
+            "description": {
+              "it": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id mollis turpis. Mauris rhoncus lobortis erat id egestas. Proin consectetur sem non placerat egestas. Sed mollis nisi non justo ultricies, sit amet varius quam tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus iaculis diam nec placerat aliquet. Ut rhoncus feugiat ipsum non semper. Ut sed ligula suscipit massa ullamcorper porta."
+            }
 		},		
 		{
 			"id" : "block15",
@@ -124,7 +166,10 @@
 			"xpath" : "(//*[contains(@class, 'simpatico-block')])[15]",
 			"tags" : [],
 			"fields" : [],
-			"dependencies" : ["block14"]
+			"dependencies" : ["block14"],  
+            "description": {
+              "it": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id mollis turpis. Mauris rhoncus lobortis erat id egestas. Proin consectetur sem non placerat egestas. Sed mollis nisi non justo ultricies, sit amet varius quam tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus iaculis diam nec placerat aliquet. Ut rhoncus feugiat ipsum non semper. Ut sed ligula suscipit massa ullamcorper porta."
+            }
 		},		
 		{
 			"id" : "block16",
@@ -132,7 +177,10 @@
 			"xpath" : "(//*[contains(@class, 'simpatico-block')])[16]",
 			"tags" : [],
 			"fields" : [],
-			"dependencies" : ["block15"]
+			"dependencies" : ["block15"],  
+            "description": {
+              "it": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id mollis turpis. Mauris rhoncus lobortis erat id egestas. Proin consectetur sem non placerat egestas. Sed mollis nisi non justo ultricies, sit amet varius quam tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus iaculis diam nec placerat aliquet. Ut rhoncus feugiat ipsum non semper. Ut sed ligula suscipit massa ullamcorper porta."
+            }
 		},		
 		{
 			"id" : "block17",
@@ -140,7 +188,10 @@
 			"xpath" : "(//*[contains(@class, 'simpatico-block')])[17]",
 			"tags" : [],
 			"fields" : [],
-			"dependencies" : ["block16"]
+			"dependencies" : ["block16"],  
+            "description": {
+              "it": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id mollis turpis. Mauris rhoncus lobortis erat id egestas. Proin consectetur sem non placerat egestas. Sed mollis nisi non justo ultricies, sit amet varius quam tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus iaculis diam nec placerat aliquet. Ut rhoncus feugiat ipsum non semper. Ut sed ligula suscipit massa ullamcorper porta."
+            }
 		},		
 		{
 			"id" : "block18",
@@ -148,7 +199,10 @@
 			"xpath" : "(//*[contains(@class, 'simpatico-block')])[18]",
 			"tags" : [],
 			"fields" : [],
-			"dependencies" : ["block17"]
+			"dependencies" : ["block17"],  
+            "description": {
+              "it": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id mollis turpis. Mauris rhoncus lobortis erat id egestas. Proin consectetur sem non placerat egestas. Sed mollis nisi non justo ultricies, sit amet varius quam tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus iaculis diam nec placerat aliquet. Ut rhoncus feugiat ipsum non semper. Ut sed ligula suscipit massa ullamcorper porta."
+            }
 		},		
 		{
 			"id" : "block19",
@@ -156,7 +210,10 @@
 			"xpath" : "(//*[contains(@class, 'simpatico-block')])[19]",
 			"tags" : [],
 			"fields" : [],
-			"dependencies" : ["block18"]
+			"dependencies" : ["block18"],  
+            "description": {
+              "it": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id mollis turpis. Mauris rhoncus lobortis erat id egestas. Proin consectetur sem non placerat egestas. Sed mollis nisi non justo ultricies, sit amet varius quam tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus iaculis diam nec placerat aliquet. Ut rhoncus feugiat ipsum non semper. Ut sed ligula suscipit massa ullamcorper porta."
+            }
 		},		
 		{
 			"id" : "block20",
@@ -164,7 +221,10 @@
 			"xpath" : "(//*[contains(@class, 'simpatico-block')])[20]",
 			"tags" : [],
 			"fields" : [],
-			"dependencies" : ["block19"]
+			"dependencies" : ["block19"],  
+            "description": {
+              "it": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id mollis turpis. Mauris rhoncus lobortis erat id egestas. Proin consectetur sem non placerat egestas. Sed mollis nisi non justo ultricies, sit amet varius quam tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus iaculis diam nec placerat aliquet. Ut rhoncus feugiat ipsum non semper. Ut sed ligula suscipit massa ullamcorper porta."
+            }
 		},		
 		{
 			"id" : "block21",
@@ -172,7 +232,10 @@
 			"xpath" : "(//*[contains(@class, 'simpatico-block')])[21]",
 			"tags" : [],
 			"fields" : ["Tassonomia_NoPadre", "Tassonomia_NoMadre", "Tassonomia_TipoNucleo2"],
-			"dependencies" : ["block20"]
+			"dependencies" : ["block20"],  
+            "description": {
+              "it": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id mollis turpis. Mauris rhoncus lobortis erat id egestas. Proin consectetur sem non placerat egestas. Sed mollis nisi non justo ultricies, sit amet varius quam tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus iaculis diam nec placerat aliquet. Ut rhoncus feugiat ipsum non semper. Ut sed ligula suscipit massa ullamcorper porta."
+            }
 		},		
 		{
 			"id" : "block22",
@@ -180,7 +243,10 @@
 			"xpath" : "(//*[contains(@class, 'simpatico-block')])[22]",
 			"tags" : [],
 			"fields" : [],
-			"dependencies" : ["block21"]
+			"dependencies" : ["block21"],  
+            "description": {
+              "it": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id mollis turpis. Mauris rhoncus lobortis erat id egestas. Proin consectetur sem non placerat egestas. Sed mollis nisi non justo ultricies, sit amet varius quam tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus iaculis diam nec placerat aliquet. Ut rhoncus feugiat ipsum non semper. Ut sed ligula suscipit massa ullamcorper porta."
+            }
 		},		
 		{
 			"id" : "block23",
@@ -188,7 +254,10 @@
 			"xpath" : "(//*[contains(@class, 'simpatico-block')])[23]",
 			"tags" : [],
 			"fields" : [],
-			"dependencies" : ["block22"]
+			"dependencies" : ["block22"],  
+            "description": {
+              "it": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id mollis turpis. Mauris rhoncus lobortis erat id egestas. Proin consectetur sem non placerat egestas. Sed mollis nisi non justo ultricies, sit amet varius quam tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus iaculis diam nec placerat aliquet. Ut rhoncus feugiat ipsum non semper. Ut sed ligula suscipit massa ullamcorper porta."
+            }
 		},		
 		{
 			"id" : "block24",
@@ -197,7 +266,10 @@
 			"tags" : [],
 			"fields" : [],
 			"dependencies" : ["block23"],
-			"condition" : "(context['AventeTitolo_RuoloRichiedente']=='madre' && context['Tassonomia_TipoNucleo2'])"
+			"condition" : "(context['AventeTitolo_RuoloRichiedente']=='madre' && context['Tassonomia_TipoNucleo2'])",  
+            "description": {
+              "it": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id mollis turpis. Mauris rhoncus lobortis erat id egestas. Proin consectetur sem non placerat egestas. Sed mollis nisi non justo ultricies, sit amet varius quam tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus iaculis diam nec placerat aliquet. Ut rhoncus feugiat ipsum non semper. Ut sed ligula suscipit massa ullamcorper porta."
+            }
 		},		
 		{
 			"id" : "block25",
@@ -206,7 +278,10 @@
 			"tags" : [],
 			"fields" : [],
 			"dependencies" : ["block23"],
-			"condition" : "context['AventeTitolo_RuoloRichiedente']=='padre' || (context['AventeTitolo_RuoloRichiedente']=='madre' && context['Tassonomia_TipoNucleo2']==null)"
+			"condition" : "context['AventeTitolo_RuoloRichiedente']=='padre' || (context['AventeTitolo_RuoloRichiedente']=='madre' && context['Tassonomia_TipoNucleo2']==null)",  
+            "description": {
+              "it": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id mollis turpis. Mauris rhoncus lobortis erat id egestas. Proin consectetur sem non placerat egestas. Sed mollis nisi non justo ultricies, sit amet varius quam tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus iaculis diam nec placerat aliquet. Ut rhoncus feugiat ipsum non semper. Ut sed ligula suscipit massa ullamcorper porta."
+            }
 		},		
 		{
 			"id" : "block26",
@@ -214,7 +289,10 @@
 			"xpath" : "(//*[contains(@class, 'simpatico-block')])[26]",
 			"tags" : [],
 			"fields" : [], 
-			"dependencies" : ["block22"]
+			"dependencies" : ["block22"],  
+            "description": {
+              "it": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id mollis turpis. Mauris rhoncus lobortis erat id egestas. Proin consectetur sem non placerat egestas. Sed mollis nisi non justo ultricies, sit amet varius quam tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus iaculis diam nec placerat aliquet. Ut rhoncus feugiat ipsum non semper. Ut sed ligula suscipit massa ullamcorper porta."
+            }
 		},		
 		{
 			"id" : "block27",
@@ -223,7 +301,10 @@
 			"tags" : [],
 			"fields" : [],
 			"dependencies" : ["block26"],
-			"condition" : "(context['AventeTitolo_RuoloRichiedente']=='padre' && context['Tassonomia_TipoNucleo2'])"
+			"condition" : "(context['AventeTitolo_RuoloRichiedente']=='padre' && context['Tassonomia_TipoNucleo2'])",  
+            "description": {
+              "it": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id mollis turpis. Mauris rhoncus lobortis erat id egestas. Proin consectetur sem non placerat egestas. Sed mollis nisi non justo ultricies, sit amet varius quam tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus iaculis diam nec placerat aliquet. Ut rhoncus feugiat ipsum non semper. Ut sed ligula suscipit massa ullamcorper porta."
+            }
 		},			
 		{
 			"id" : "block28",
@@ -232,7 +313,10 @@
 			"tags" : [],
 			"fields" : [],
 			"dependencies" : ["block26"],
-			"condition" : "context['AventeTitolo_RuoloRichiedente']=='madre' || (context['AventeTitolo_RuoloRichiedente']=='padre' && context['Tassonomia_TipoNucleo2']==null)"
+			"condition" : "context['AventeTitolo_RuoloRichiedente']=='madre' || (context['AventeTitolo_RuoloRichiedente']=='padre' && context['Tassonomia_TipoNucleo2']==null)",  
+            "description": {
+              "it": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id mollis turpis. Mauris rhoncus lobortis erat id egestas. Proin consectetur sem non placerat egestas. Sed mollis nisi non justo ultricies, sit amet varius quam tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus iaculis diam nec placerat aliquet. Ut rhoncus feugiat ipsum non semper. Ut sed ligula suscipit massa ullamcorper porta."
+            }
 		},		
 		{
 			"id" : "block29",
@@ -240,7 +324,10 @@
 			"xpath" : "(//*[contains(@class, 'simpatico-block')])[29]",
 			"tags" : [],
 			"fields" : [],
-			"dependencies" : ["block22"]
+			"dependencies" : ["block22"],  
+            "description": {
+              "it": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id mollis turpis. Mauris rhoncus lobortis erat id egestas. Proin consectetur sem non placerat egestas. Sed mollis nisi non justo ultricies, sit amet varius quam tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus iaculis diam nec placerat aliquet. Ut rhoncus feugiat ipsum non semper. Ut sed ligula suscipit massa ullamcorper porta."
+            }
 		},		
 		{
 			"id" : "block30",
@@ -248,7 +335,10 @@
 			"xpath" : "//*[@id='firme']", 
 			"tags" : [],
 			"fields" : [],
-			"dependencies" : ["block29"]
+			"dependencies" : ["block29"],  
+            "description": {
+              "it": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id mollis turpis. Mauris rhoncus lobortis erat id egestas. Proin consectetur sem non placerat egestas. Sed mollis nisi non justo ultricies, sit amet varius quam tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus iaculis diam nec placerat aliquet. Ut rhoncus feugiat ipsum non semper. Ut sed ligula suscipit massa ullamcorper porta."
+            }
 		}
 		
 		
