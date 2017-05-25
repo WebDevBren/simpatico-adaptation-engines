@@ -19,6 +19,20 @@ body {
 	margin: 0;
 }
 
+/**
+    NEEDED TO CLEAN TEXT SELECTION WHEN TOOLBAR BUTTON IS CLICKED
+*/
+#simp-bar-sw-tae-popup img {
+    padding-right: 100px;
+}
+#simp-bar-sw-tae-popup .toolbar-button-label {
+    position: absolute;
+    right: 0;
+    padding-top: 13px;
+    pointer-events: none;
+}
+ 
+
 .simp-paragraph-active::before {
 	content: "";
 	position: absolute;
