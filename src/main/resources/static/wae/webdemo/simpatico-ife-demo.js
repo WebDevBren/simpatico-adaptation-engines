@@ -65,14 +65,27 @@ function initFeatures() {
     cdvColor: '#008000',
     dialogTitle: 'Citizen Data Vault',
     tabPFieldsTitle: 'I miei dati',
-    entryMessage: 'Benvenuto a SIMPATICO CDV!',
-    statusMessage: 'Adesso puoi selezionare/aggiornare i tuoi dati per compillare i campi del modulo.',
+    entryMessage: 'Gestione dati personali',
+    statusMessage: 'Adesso puoi selezionare i tuoi dati per compilare i campi evidenziati con bordo verde. Usa i valori ' +
+    'salvati predecentemente oppure aggiungi i valori nuovi.',
     notextMessage: 'Nessun campo selezionato',
     dialogSaveTitle: 'I dati salvati!',
     dialogSaveMessage: 'I tuoi dati sono stati salvati con successo al tuo Data Vault.',
-    statusMessageNoAccount: "Nessun account CDV e' associato a te. Crearne uno?",
+    statusMessageNoAccount: "Nessun account di gestione dati personali e' associato a te. Crearne uno?",
     statusMessageNoActive: "CDV non e' abilitato per questo servizio. Abilitare?",
-    tabSettingsTitle: 'Impostazioni'
+    tabSettingsTitle: 'Impostazioni',
+	buttonSave: 'Salva i tuoi dati',
+	labelAccount : 'Account',
+	buttonRemoveAccount: 'Rimuovi account',
+	buttonActivateCDV: 'Abilita gestione dati personali',
+	labelExport : 'Esportazione',
+	buttonExport: 'Esporta i tuoi dati',
+	buttonActivate: 'Crea account',
+	msgConfirmRemove: "<p> Sei sicuro di voler rimuovere l'account?</p><p>I tuoi dati personali salvati in Citizen Data Vault saranno cancellati. </p><p>Premere 'OK' per procedere...</p>",
+	dialogRemoveTitle: 'Rimuovi account',
+	buttonOK : 'OK',
+	buttonCANCEL: 'Annula'
+    
     
   });
 
@@ -125,9 +138,11 @@ function initFeatures() {
   // - topBarHeight: height of the bar to control the scroll
   // - errorLabel: map with blockId - error message in case of block precondition fails
   waeUI.getInstance().init({
-		endpoint: 'https://dev.smartcommunitylab.it/simp-engines/wae',
+		lang: 'it',
+	  	endpoint: 'https://dev.smartcommunitylab.it/simp-engines/wae',
 		prevButtonLabel: 'Precedente',
 		nextButtonLabel: 'Successivo',
+		lastButtonLabel: 'Fine',
 		topBarHeight: 60,
 		errorLabel: ERROR_LABELS
   });
@@ -137,7 +152,7 @@ function initFeatures() {
   // - apiEndpoint: the main URL of the logs API server (<site>/simpatico/api)
   // NOTE: Requires jquery-ui to work properly
   sfUI.getInstance().init({
-    buttonToShowSfId: 'SalvaModulo',
+    buttonToShowSfId: 'SF',
     apiEndpoint: 'https://dev.smartcommunitylab.it/simpatico-logs/api',
   });
 
@@ -177,25 +192,10 @@ function initFeatures() {
                   // Ad-hoc css classes to define the enabled/disabled styles
                   styleClassEnabled: "simp-bar-btn-active",
                   styleClassDisabled: "simp-bar-btn-inactive",
-
+                  label: 'Domande e risposte',
                   isEnabled: function() { return citizenpediaUI.getInstance().isEnabled(); },
                   enable: function() { citizenpediaUI.getInstance().enable(); },
                   disable: function() { citizenpediaUI.getInstance().disable(); }
-                },
-
-                {
-                  id: "simp-bar-sw-tae",
-                  // Ad-hoc images to define the enabled/disabled images
-                  imageSrcEnabled: "./img/simplify.png",
-                  imageSrcDisabled: "./img/simplify.png",
-                  alt: "Semplificazione del testo",
-                  // Ad-hoc css classes to define the enabled/disabled styles
-                  styleClassEnabled: "simp-bar-btn-active-tae",
-                  styleClassDisabled: "simp-bar-btn-inactive-tae",
-
-                  isEnabled: function() { return taeUI.getInstance().isEnabled(); },
-                  enable: function() { taeUI.getInstance().enable(); },
-                  disable: function() { taeUI.getInstance().disable(); }
                 },
                 
                 {
@@ -205,16 +205,18 @@ function initFeatures() {
                     imageSrcDisabled: "./img/enrich.png",
                     alt: "Semplificazione del testo selezionato",
                     // Ad-hoc css classes to define the enabled/disabled styles
-                    styleClassEnabled: "simp-bar-btn-active-tae",
-                    styleClassDisabled: "simp-bar-btn-inactive-tae",
-
-                    isEnabled: function() { taeUIPopup.getInstance().isEnabled(); },
+                    styleClassEnabled: "simp-bar-btn-active",
+                    styleClassDisabled: "simp-bar-btn-inactive",
+                    label: 'Semplifica testo',
+                    isEnabled: function() { return false; },
                     enable: function() { 
+                    	console.log(window.getSelection().toString().trim());
                     	taeUIPopup.getInstance().showDialog(); 
                     },
                     disable: function() { 
                     	taeUIPopup.getInstance().hideDialog(); 
-                    }
+                    },
+                    exclusive: true
                   },
                 {
                   id: "simp-bar-sw-cdv",
@@ -223,12 +225,13 @@ function initFeatures() {
                   imageSrcDisabled: "./img/cdv.png",
                   alt: "Citizen Data Vault",
                   // Ad-hoc css classes to define the enabled/disabled styles
-                  styleClassEnabled: "simp-bar-btn-active-cdv",
+                  styleClassEnabled: "simp-bar-btn-active",
                   styleClassDisabled: "simp-bar-btn-inactive",
-
-                  isEnabled: function() { return cdvUI.getInstance().isEnabled(); },
+                  label: 'Dati personali',
+                  isEnabled: function() { return false; },
                   enable: function() { cdvUI.getInstance().enable(); },
-                  disable: function() { cdvUI.getInstance().disable(); }
+                  disable: function() { cdvUI.getInstance().disable(); },
+                  exclusive: true
                 },
                 { // workflow adaptation. Switch to the modality, where the form adaptation starts
                   id: 'workflow',
@@ -236,13 +239,40 @@ function initFeatures() {
                   imageSrcDisabled: "./img/forms.png",
                   alt: "Semplifica processo",
                   // Ad-hoc css classes to define the enabled/disabled styles
-                  styleClassEnabled: "simp-bar-btn-active-wae",
+                  styleClassEnabled: "simp-bar-btn-active",
                   styleClassDisabled: "simp-bar-btn-inactive",
-
+                  label: 'Compilazione guidata',
                   isEnabled: function() { return waeUI.getInstance().isEnabled(); },
                   enable: function() { var idProfile = null; waeUI.getInstance().enable(idProfile); },
                   disable: function() { waeUI.getInstance().disable(); }
-                }
+                },
+                { // session feedback
+                    id: 'process',
+                    imageSrcEnabled: "img/diagram.png",
+                    imageSrcDisabled: "img/diagram.png",
+                    alt: "Procedura amministrativa",
+                    // Ad-hoc css classes to define the enabled/disabled styles
+                    styleClassEnabled: "simp-bar-btn-active",
+                    styleClassDisabled: "simp-bar-btn-inactive",
+                    label: 'Procedura',
+                    isEnabled: function() { return false; },
+                    enable: function() { citizenpediaUI.getInstance().openDiagram(); },
+                    disable: function() {  }
+                  },
+                  { // session feedback
+                      id: 'sf',
+                      imageSrcEnabled: "img/feedback.png",
+                      imageSrcDisabled: "img/feedback.png",
+                      alt: "La tua opinione",
+                      // Ad-hoc css classes to define the enabled/disabled styles
+                      styleClassEnabled: "simp-bar-btn-active",
+                      styleClassDisabled: "simp-bar-btn-inactive",
+                      label: 'Feedback',
+                      isEnabled: function() { return false; },
+                      enable: function() { sfUI.getInstance().showSF(); },
+                      disable: function() { sfUI.getInstance().hideSF(); },
+                      exclusive: true
+                    }
              
             ];
 }//initFeatures()
@@ -250,15 +280,16 @@ function initFeatures() {
 // It creates the HTML code corresponding to the button passed as parameter
 // - button: The button object stored in buttons
 function createButtonHTML(button) {
-  return '<li class="'+ button.styleClassDisabled +'" id="' + button.id + '" '+
-                          'onclick="toggleAction(\'' + button.id + '\');">'+
+  return '<li class="'+ button.styleClassDisabled +'" id="' + button.id + '" ' +'onclick="toggleAction(\'' + button.id + '\');"'+
+                          '">'+
                           //'<a href="#">' +
-                          '<img ' +
+                          '<img ' + 
                             'alt="' + button.alt + '" ' + 
                             'title="' + button.alt + '" ' +
                             'id="' + button.id + '-img" ' +
                             'src="' + button.imageSrcDisabled + '" ' +
                             'width="50" height="50" />' +
+                            (button.label ? ('<div class="toolbar-button-label">'+ button.label+'</div>') :'')+
                             //'</a>'+
                           '</li>';
 }//createButtonHTMLbutton()
@@ -344,28 +375,30 @@ function addSimpaticoBar(containerID) {
 // switch on/off the control buttons.
 // -id: of the button which calls this function
 function toggleAction(id) {
-  var clickedButon;
+  var clickedButton;
   if (buttons[0].id == id) {
     // Login button
-    clickedButon = buttons[0];
+    clickedButton = buttons[0];
   } else {
     // Disable all the buttons
     for (var i = 1, len = buttons.length; i < len; i++) {
       if(buttons[i].id == id) {
-        clickedButon = buttons[i];
-      } else {
-        buttons[i].disable();
-        updateButtonStyle(buttons[i]);
+        clickedButton = buttons[i];
       }
     } 
+    if (!!clickedButton && clickedButton.exclusive) {
+    	buttons.forEach(function(b){
+    		if (b.exclusive && b.id != clickedButton.id) b.disable();
+    	});
+    }
   }
   // Enable/Disable the selected button
-  if (clickedButon.isEnabled()) {
-    clickedButon.disable();
+  if (clickedButton.isEnabled()) {
+	  clickedButton.disable();
   } else {
-    clickedButon.enable();
+	  clickedButton.enable();
   }
-  updateButtonStyle(clickedButon);
+  updateButtonStyle(clickedButton);
 } //toggleAction(id)
 
 

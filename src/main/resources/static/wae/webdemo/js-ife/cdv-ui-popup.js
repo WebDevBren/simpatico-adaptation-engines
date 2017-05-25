@@ -344,7 +344,6 @@ var cdvUI = (function () {
 						'		</div>' +
 						'	</div>' +
 						'</div>').dialog({
-						dialogClass: "no-close",
 						autoOpen: false,
 						modal: false,
 						closeOnEscape: false,
@@ -356,19 +355,13 @@ var cdvUI = (function () {
 							of: "#simp-bar"
 						},
 						width: 600,
-						show: {
-							effect: "blind",
-							duration: 200
-						},
-						hide: {
-							effect: "blind",
-							duration: 200
-						},
 						
 						open: function(){
                                 var errCb = setError("tab-0");
 				                var getPDataList = updatePDataFields(null, null);
 				                cdvCORE.getInstance().cdv_getdata(getPDataList, null);
+                        }, close: function(){
+                        	featureEnabled = false;
                         }
 
 					});

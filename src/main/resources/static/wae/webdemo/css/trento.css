@@ -24,12 +24,12 @@ body {
 	position: absolute;
 	width: 1cm;
 	height: 100%;
-	left: 19cm;
+	left: 19.05cm;
 	background-image:
 		url(https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/citizenpedia.png);
 	background-repeat: no-repeat;
 	background-size: contain;
-	border-left: 6px solid #24BCDA;
+	border-left: 3px solid #24BCDA;
 }
 
 .simp-ctz-ui-qb {
@@ -37,6 +37,7 @@ body {
 	left: 20.5cm;
 	top: 0;
 	min-width: 8cm;
+	margin-left: 0 !important;
 }
 
 #slider-session-feedback-content {
@@ -49,27 +50,49 @@ body {
 	max-width: 100px;
 	text-transform: uppercase;
 	vertical-align: middle;
+	font-size: 11px;
 }
 
 #simp-bar-container-left li {
 	position: relative;
 }    
-#simp-bar-sw-tae-popup img {
-	padding-right: 100px;
-}
 
-#simp-bar-sw-tae-popup .toolbar-button-label {
-    position: absolute;
-    right: 0;
-    padding-top: 11px;
-    pointer-events: none;
+#simp-usr-data {
+	font-size: 12px;
 }
 
 .block_edited {
     border: 3px #24BCDA solid !important;
     width: 19cm;
     /* margin: 2px; */
-  padding: 2px;
+  padding: 0.05cm;
+}
+
+.block_edited_wrapper {
+	width: 100%;
+	position: relative;
+}
+
+#div_simpatico_block_description {
+	position: absolute;
+	left: 20.5cm;
+	right: 0.5cm;
+	top: 9px;
+}
+#div_simpatico_block_description h5 {
+	margin: 0;
+	font-weight: bold;
+    padding-left: 10px;
+    color: #E9F8FC !important;
+    background-color: #24BCDA !important;
+    font-size: 12px;
+    line-height: 18px;
+}
+#div_simpatico_block_description p {
+	background-color: #E9F8FC !important;
+	padding: 10px;
+	margin: 0;
+	color: #24BCDA !important;
 }
 
 #btn_simpatico_next, #btn_simpatico_prev {

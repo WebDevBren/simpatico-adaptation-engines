@@ -18,9 +18,12 @@ function initFeatures() {
 	    clientID: '8ab03990-d5dd-47ea-8fc6-c92a3b0c04a4',
 	    authority: null,
 	    redirect: 'https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/logincb.html'
+  });
+  
   logCORE.getInstance().init({
 	  endpoint: "https://dev.smartcommunitylab.it/simpatico-logs/api"
-  });
+  });  
+
 
   // Init the Citizenpedia component (see ctz-ui.js)
   // - endpoint: the main URL of the used Citizenpedia instance
@@ -118,6 +121,7 @@ function initFeatures() {
   // - topBarHeight: height of the bar to control the scroll
   // - errorLabel: map with blockId - error message in case of block precondition fails
   waeUI.getInstance().init({
+		lang: 'it',
 		endpoint: 'https://dev.smartcommunitylab.it/simp-engines/wae',
 		prevButtonLabel: 'Precedente',
 		nextButtonLabel: 'Successivo',

@@ -108,7 +108,7 @@ var authManager = (function () {
               return;
           }
           userData = data;
-          document.getElementById(userdataElementID).innerHTML = 'Hello, ' + data.name + ' '+ data.surname;
+          document.getElementById(userdataElementID).innerHTML = data.name + ' '+ data.surname;
           document.getElementById(userdataElementID).style = "display:block";
           enablePrivateFeatures();
           featureEnabled = true;

@@ -138,9 +138,11 @@ function initFeatures() {
   // - topBarHeight: height of the bar to control the scroll
   // - errorLabel: map with blockId - error message in case of block precondition fails
   waeUI.getInstance().init({
-		endpoint: 'https://dev.smartcommunitylab.it/simp-engines/wae',
+		lang: 'it',
+	  	endpoint: 'https://dev.smartcommunitylab.it/simp-engines/wae',
 		prevButtonLabel: 'Precedente',
 		nextButtonLabel: 'Successivo',
+		lastButtonLabel: 'Fine',
 		topBarHeight: 60,
 		errorLabel: ERROR_LABELS
   });
@@ -195,21 +197,6 @@ function initFeatures() {
                   enable: function() { citizenpediaUI.getInstance().enable(); },
                   disable: function() { citizenpediaUI.getInstance().disable(); }
                 },
-
-//                {
-//                  id: "simp-bar-sw-tae",
-//                  // Ad-hoc images to define the enabled/disabled images
-//                  imageSrcEnabled: "./img/simplify.png",
-//                  imageSrcDisabled: "./img/simplify.png",
-//                  alt: "Semplificazione del testo",
-//                  // Ad-hoc css classes to define the enabled/disabled styles
-//                  styleClassEnabled: "simp-bar-btn-active-tae",
-//                  styleClassDisabled: "simp-bar-btn-inactive-tae",
-//
-//                  isEnabled: function() { return taeUI.getInstance().isEnabled(); },
-//                  enable: function() { taeUI.getInstance().enable(); },
-//                  disable: function() { taeUI.getInstance().disable(); }
-//                },
                 
                 {
                     id: "simp-bar-sw-tae-popup",
@@ -218,17 +205,18 @@ function initFeatures() {
                     imageSrcDisabled: "https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/enrich.png",
                     alt: "Semplificazione del testo selezionato",
                     // Ad-hoc css classes to define the enabled/disabled styles
-                    styleClassEnabled: "simp-bar-btn-active-tae",
-                    styleClassDisabled: "simp-bar-btn-inactive-tae",
+                    styleClassEnabled: "simp-bar-btn-active",
+                    styleClassDisabled: "simp-bar-btn-inactive",
                     label: 'Semplifica testo',
-                    isEnabled: function() { taeUIPopup.getInstance().isEnabled(); },
+                    isEnabled: function() { return false; },
                     enable: function() { 
                     	console.log(window.getSelection().toString().trim());
                     	taeUIPopup.getInstance().showDialog(); 
                     },
                     disable: function() { 
                     	taeUIPopup.getInstance().hideDialog(); 
-                    }
+                    },
+                    exclusive: true
                   },
                 {
                   id: "simp-bar-sw-cdv",
@@ -237,12 +225,13 @@ function initFeatures() {
                   imageSrcDisabled: "https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/cdv.png",
                   alt: "Salva e precompila i campi usando i tuoi dati personali attraverso Citizen Data Vault",
                   // Ad-hoc css classes to define the enabled/disabled styles
-                  styleClassEnabled: "simp-bar-btn-active-cdv",
+                  styleClassEnabled: "simp-bar-btn-active",
                   styleClassDisabled: "simp-bar-btn-inactive",
                   label: 'Dati personali',
-                  isEnabled: function() { return cdvUI.getInstance().isEnabled(); },
+                  isEnabled: function() { return false; },
                   enable: function() { cdvUI.getInstance().enable(); },
-                  disable: function() { cdvUI.getInstance().disable(); }
+                  disable: function() { cdvUI.getInstance().disable(); },
+                  exclusive: true
                 },
                 { // workflow adaptation. Switch to the modality, where the form adaptation starts
                   id: 'workflow',
@@ -250,7 +239,7 @@ function initFeatures() {
                   imageSrcDisabled: "https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/forms.png",
                   alt: "Compilazione guidata del modulo",
                   // Ad-hoc css classes to define the enabled/disabled styles
-                  styleClassEnabled: "simp-bar-btn-active-wae",
+                  styleClassEnabled: "simp-bar-btn-active",
                   styleClassDisabled: "simp-bar-btn-inactive",
                   label: 'Compilazione guidata',
                   isEnabled: function() { return waeUI.getInstance().isEnabled(); },
@@ -263,7 +252,7 @@ function initFeatures() {
                     imageSrcDisabled: "https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/diagram.png",
                     alt: "Procedura amministrativa",
                     // Ad-hoc css classes to define the enabled/disabled styles
-                    styleClassEnabled: "simp-bar-btn-active-wae",
+                    styleClassEnabled: "simp-bar-btn-active",
                     styleClassDisabled: "simp-bar-btn-inactive",
                     label: 'Procedura',
                     isEnabled: function() { return false; },
@@ -276,12 +265,13 @@ function initFeatures() {
                       imageSrcDisabled: "https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/feedback.png",
                       alt: "La tua opinione",
                       // Ad-hoc css classes to define the enabled/disabled styles
-                      styleClassEnabled: "simp-bar-btn-active-wae",
+                      styleClassEnabled: "simp-bar-btn-active",
                       styleClassDisabled: "simp-bar-btn-inactive",
                       label: 'Feedback',
-                      isEnabled: function() { return sfUI.getInstance().isActive(); },
+                      isEnabled: function() { return false; },
                       enable: function() { sfUI.getInstance().showSF(); },
-                      disable: function() { sfUI.getInstance().hideSF(); }
+                      disable: function() { sfUI.getInstance().hideSF(); },
+                      exclusive: true
                     }
              
             ];
@@ -385,28 +375,30 @@ function addSimpaticoBar(containerID) {
 // switch on/off the control buttons.
 // -id: of the button which calls this function
 function toggleAction(id) {
-  var clickedButon;
+  var clickedButton;
   if (buttons[0].id == id) {
     // Login button
-    clickedButon = buttons[0];
+    clickedButton = buttons[0];
   } else {
     // Disable all the buttons
     for (var i = 1, len = buttons.length; i < len; i++) {
       if(buttons[i].id == id) {
-        clickedButon = buttons[i];
-      } else {
-        buttons[i].disable();
-        updateButtonStyle(buttons[i]);
+        clickedButton = buttons[i];
       }
     } 
+    if (!!clickedButton && clickedButton.exclusive) {
+    	buttons.forEach(function(b){
+    		if (b.exclusive && b.id != clickedButton.id) b.disable();
+    	});
+    }
   }
   // Enable/Disable the selected button
-  if (clickedButon.isEnabled()) {
-    clickedButon.disable();
+  if (clickedButton.isEnabled()) {
+	  clickedButton.disable();
   } else {
-    clickedButon.enable();
+	  clickedButton.enable();
   }
-  updateButtonStyle(clickedButon);
+  updateButtonStyle(clickedButton);
 } //toggleAction(id)
 
 

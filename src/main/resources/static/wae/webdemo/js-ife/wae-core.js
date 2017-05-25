@@ -307,6 +307,15 @@ var waeEngine = new function() {
 	 */
 	this.nextBlock = nextBlock;
 
+	/**
+	 * RETURN BLOCK DESCRIPTION
+	 */
+	this.getBlockDescription = function() {
+		if (!!workflowModel && !!workflowModel.blocks && workflowModel.blocks[actualBlockIndex]) {
+			return workflowModel.blocks[actualBlockIndex].description;
+		}
+	}
+	
 	this.restartBlock = function(callback, errorCallback) {
 		setActualBlock(actualBlockIndex -1);
 		this.nextBlock(callback,errorCallback);

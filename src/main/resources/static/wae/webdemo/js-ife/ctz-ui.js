@@ -122,6 +122,9 @@ var citizenpediaUI = (function () {
     // IMPORTANT: Here is used the global variable simpaticoEservice
     function paragraphEvent(paragraphName) {
       if (!featureEnabled) return;
+      // trick for WAE
+      if ($('#'+paragraphName).hasClass('wae-disabled')) return;
+      
       if (document.getElementById(paragraphName + "_questions") === null) {
         logger().logContentRequest(simpaticoEservice, paragraphName);
         qaeCORE.getInstance().getQuestions(simpaticoEservice, paragraphName, drawQuestionsBox);
@@ -151,7 +154,9 @@ var citizenpediaUI = (function () {
     // - responseQuestions: the JSON Object of the questions related to the paragraph
     // IMPORTANT: Here is used the global variable simpaticoEservice
     function drawQuestionsBox(paragraphName, responseQuestions) {
-
+        // trick for WAE
+      $('#div_simpatico_block_description').hide();
+    	
       // Create the Questions Box div
       var questionsBox = document.createElement('div');
       questionsBox.id = paragraphName + "_questions";
@@ -207,6 +212,9 @@ var citizenpediaUI = (function () {
     // Hide the questions box attached to a paragraph passed as paramether
     // - paragraphName: the id of the paragraph
     function hideQuestionsBox(paragraphName) {
+      // trick for WAE
+      $('#div_simpatico_block_description').show();
+        
       var qBoxToRemove = document.getElementById(paragraphName + "_questions");
       qBoxToRemove.parentNode.removeChild(qBoxToRemove);
     }
