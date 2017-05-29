@@ -143,6 +143,7 @@ function initFeatures() {
 		prevButtonLabel: 'Precedente',
 		nextButtonLabel: 'Successivo',
 		lastButtonLabel: 'Fine',
+		descriptionLabel: 'Descrizione',
 		topBarHeight: 60,
 		errorLabel: ERROR_LABELS
   });
@@ -160,10 +161,10 @@ function initFeatures() {
   // It is useful for UI elements like different tabs in the same view or an accordion.
   // - elementsToTrackTimeClassName: The CSS class used to define the different tabs
   // - apiEndpoint: the main URL of the logs API server (<site>/simpatico/api)
-  daUI.getInstance().init({
-    elementsToTrackTimeClassName: '',
-    apiEndpoint: 'https://dev.smartcommunitylab.it/simpatico-logs/api'
-  });
+//  daUI.getInstance().init({
+//    elementsToTrackTimeClassName: '',
+//    apiEndpoint: 'https://dev.smartcommunitylab.it/simpatico-logs/api'
+//  });
 
   // Declare here the buttons that will be available in the Simpatico Bar
   // The first one is the login button. This is mandatory but it also can be personalised
@@ -422,5 +423,11 @@ document.addEventListener('DOMContentLoaded', function () {
   authManager.getInstance().updateUserData();
 });
 window.addEventListener('beforeunload', function (e) {
-  logCORE.getInstance().logTimeEvent($('body'));
+  logCORE.getInstance().setSyncMode();	
+  logCORE.getInstance().ifeLogger.sessionEnd(simpaticoEservice);
+  if (window.simpaticoForm) {
+      // log end of session
+	  logCORE.getInstance().ifeLogger.formEnd(simpaticoEservice, simpaticoForm);
+  }
+  
 });

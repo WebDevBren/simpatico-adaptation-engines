@@ -24,7 +24,11 @@ var logCORE = (function () {
 	var sfEndpoint = '';
 	var logsEndpoint = '';
 	
-  var start;
+	var syncMode = false;
+	
+	var activityStart = {};
+  
+	var start;
 	var log = function(url, data) {
 		if (TEST_MODE) return;
 		var token = authManager.getInstance().getToken();
@@ -34,6 +38,7 @@ var logCORE = (function () {
 			url: url,
 			type: 'POST',
 			data: JSON.stringify(data),
+			async: !syncMode,
 			contentType: "application/json; charset=utf-8",
 			dataType: 'json',
 			success: (function (resp) {
@@ -64,9 +69,9 @@ var logCORE = (function () {
 		logTermRequest: function(eservice, contentId, term) {
 			log(ctzpEndpoint+'/termrequest', {'e-serviceID': eservice, annotableElementID: contentId, selected_term: term});
 		},	
-    logNewAnswer: function(eservice, contentId, questionId) {
-      log(ctzpEndpoint+'/newanswer', {'e-serviceID': eservice, annotableElementID: contentId, questionID: questionId});
-    }
+	    logNewAnswer: function(eservice, contentId, questionId) {
+	      log(ctzpEndpoint+'/newanswer', {'e-serviceID': eservice, annotableElementID: contentId, questionID: questionId});
+	    }
 	};  
 	var taeLogger = {
 		logParagraph: function(eservice, paragraphID) {
@@ -93,22 +98,26 @@ var logCORE = (function () {
 			// record session start for sessionEnd reference
 			localStorage.logSessionStart = ts;
 			log(ifeEndpoint+'/sessionstart', {'e-serviceID': eservice, timestamp: ''+ts});
+			startActivity('ife','session', null, null, true);
 		},
 		sessionEnd: function(eservice) {
 			var ts = parseInt(localStorage.logSessionStart || (''+new Date().getTime()));
 			var diff = new Date().getTime() - ts;
 			log(ifeEndpoint+'/sessionend', {'e-serviceID': eservice, timestamp: ''+ts, sessionDuration: ''+diff, averageTime: diff});
+			endActivity('ife','session', null, null, true);
 		},
 		formStart: function(eservice, form) {
 			var ts = new Date().getTime();
 			log(ifeEndpoint+'/formstart', {'e-serviceID': eservice, formID: form, timestamp: ''+ts});
+			startActivity('ife','form', null, null, true);
 		},
 		formEnd: function(eservice, form) {
 			var ts = new Date().getTime();
 			log(ifeEndpoint+'/formend', {'e-serviceID': eservice, formID: form, timestamp: ''+ts});
+			endActivity('ife','form', null, null, true);
 		},
-    clicks: function(eservice, contentId, clicks) {
-      log(ifeEndpoint+'/clicks', {'e-serviceID': eservice, annotableElementID: contentId, clicks: clicks});
+		clicks: function(eservice, contentId, clicks) {
+			log(ifeEndpoint+'/clicks', {'e-serviceID': eservice, annotableElementID: contentId, clicks: clicks});
 		}
 	}
 	var sfLogger = {
@@ -153,17 +162,41 @@ var logCORE = (function () {
       //TODO: HIB- Implement it
       var postData = {
         "component": component, // Component which produces the event
-        "element": element,
         "event": event,
-        "details": details,
         "e-serviceID": simpaticoEservice, // the id of the corresponding e-service
         "timestamp": timestamp
       }
+      if (!!element) postData.element = element;
+      if (!!details) postData.details = details;
       insertLogEvent(postData);
     }
 
-
-    // TODO: HIB - Complete it
+    function startActivity(component, activity, element, details, skipLog) {
+    	if (activityStart[component] == null) activityStart[component] = {};
+    	activityStart[component][activity] = new Date().getTime();
+    	if (!skipLog) logSimpaticoEvent(component, element, activity+'_start', details);
+    }
+    function endActivity(component, activity, element, details, skipLog) {
+    	var end = new Date().getTime();
+    	if (activityStart[component] == null) activityStart[component] = {};
+    	var start = activityStart[component][activity];
+    	if (start != null) {
+			var postData = {
+				"duration" : end - start,
+				"datatype" : "duration",
+		        "e-serviceID": simpaticoEservice, // the id of the corresponding e-service
+				"timeForElement" : activity,
+				"component": component
+			}
+			if (details)
+				postData.details = details;
+			insertLogEvent(postData);
+			activityStart[component][activity] = null;
+			if (!skipLog) logSimpaticoEvent(component, element, activity+'_end', details);
+    	}
+    }
+    
+        // TODO: HIB - Complete it
     // It logs an event caused when a user uses interacts with a hooked element.
     // - element: Id of the element that causes the event (e.g. paragraphID...)
     // - details: Optional parameter to pass additional info if it is required
@@ -183,11 +216,16 @@ var logCORE = (function () {
         init: initComponent,
         logSimpaticoEvent: logSimpaticoEvent,
         logTimeEvent: logTimeEvent,
+        startActivity: startActivity,
+        endActivity: endActivity,
         ctzpLogger: ctzpLogger,
         taeLogger: taeLogger,
         waeLogger: waeLogger,
         ifeLogger: ifeLogger,
-        sfLogger: sfLogger
+        sfLogger: sfLogger,
+        setSyncMode: function() {
+        	syncMode = true;
+        }
       };
   }
   return {

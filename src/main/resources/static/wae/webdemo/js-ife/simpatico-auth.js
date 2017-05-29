@@ -91,6 +91,10 @@ var authManager = (function () {
       
       // log end of session
       logger().sessionEnd(simpaticoEservice);
+      if (window.simpaticoForm) {
+          // log end of session
+    	  logger().formEnd(simpaticoEservice, simpaticoForm);
+      }
       localStorage.userData = '';
       updateUserData();
     }

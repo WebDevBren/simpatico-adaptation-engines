@@ -80,6 +80,7 @@ var citizenpediaUI = (function () {
           "paragraphEvent('" + paragraphName + "');");
         paragrapId++;
       }
+	  logCORE.getInstance().startActivity('ctz', 'simplification');
 
     }
   
@@ -106,6 +107,7 @@ var citizenpediaUI = (function () {
         diagramContainer.parentNode.removeChild(diagramContainer);
         diagramContainer = null;
       }
+	  logCORE.getInstance().endActivity('ctz', 'simplification');      
     }
 
 
@@ -253,6 +255,7 @@ var citizenpediaUI = (function () {
       disable: disableComponentFeatures, // Called when the Component button is disabled or another one enabled
       isEnabled: function() { return featureEnabled;}, // Returns if the feature is enabled
       openDiagram: function(){
+    	  logCORE.getInstance().startActivity('cpd', 'process');
     	  window.open(diagramURL,"_blank");
       },
       paragraphEvent: paragraphEvent,

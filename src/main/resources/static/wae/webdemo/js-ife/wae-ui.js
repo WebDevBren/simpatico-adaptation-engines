@@ -79,6 +79,7 @@ var waeUI = (function () {
     	} else {
         	this.loadModel(idProfile);
     	}
+		logCORE.getInstance().startActivity('wae', 'simplification');
 		instance.active = true;
     }
 	/**
@@ -102,6 +103,7 @@ var waeUI = (function () {
 		instance.active = false;
 		if (!stay) $('html, body').animate({scrollTop: 0}, 200);
 		//waeEngine.reset();
+		logCORE.getInstance().endActivity('wae', 'simplification');
 	}
     this.disable = this.reset;
 

@@ -121,7 +121,6 @@ var cdvUI = (function () {
 
 			}
 			highlightFields(dataFields, true);
-
 		}
 
 		function disableComponentFeatures() {
@@ -360,8 +359,10 @@ var cdvUI = (function () {
                                 var errCb = setError("tab-0");
 				                var getPDataList = updatePDataFields(null, null);
 				                cdvCORE.getInstance().cdv_getdata(getPDataList, null);
+				    			logCORE.getInstance().startActivity('cdv', 'compile');
                         }, close: function(){
                         	featureEnabled = false;
+                			logCORE.getInstance().endActivity('cdv', 'compile');
                         }
 
 					});

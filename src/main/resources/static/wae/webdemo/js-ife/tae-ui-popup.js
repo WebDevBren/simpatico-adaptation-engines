@@ -85,7 +85,14 @@ var taeUIPopup = (function () {
 				modal: true,
 				resizable: true,
 				height: "auto",
-				width: 600
+				width: 600,
+				open: function(){
+	    			logCORE.getInstance().startActivity('tae', 'simplification');
+	            }, close: function(){
+	            	featureEnabled = false;
+	    			logCORE.getInstance().endActivity('tae', 'simplification');
+	            }
+				
 			});
 			_instance.dialog_simplify.tabs({
 				beforeActivate: function( event, ui ) {
