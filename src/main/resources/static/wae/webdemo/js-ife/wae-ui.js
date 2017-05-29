@@ -50,7 +50,7 @@ var waeUI = (function () {
 	// It uses the log component to register the produced events
 	var logger = function(event, details) {
       if (logCORE != null) return logCORE.getInstance().waeLogger;
-      else return {logWae: function(){}};
+      else return {logWae: function(){}, logBlockStart: function(){}, logBlockEnd: function(){}};
     }
 
 	
@@ -117,6 +117,7 @@ var waeUI = (function () {
 		}
 		logger().logWae(simpaticoEservice);
 		waeEngine.nextBlock(doActions, moduleErrorMsg);
+		logger().logBlockStart(simpaticoEservice, waeEngine.getActualBlockId());
 	};
 	
 	function moduleLoadError(text) {
@@ -240,7 +241,9 @@ var waeUI = (function () {
 		};
 	
 	function nextBlock() {
-		waeEngine.nextBlock(doActions, moduleErrorMsg)
+		if (waeEngine.getActualBlockId()) logger().logBlockEnd(simpaticoEservice, waeEngine.getActualBlockId());
+		waeEngine.nextBlock(doActions, moduleErrorMsg);
+		if (waeEngine.getActualBlockId()) logger().logBlockStart(simpaticoEservice, waeEngine.getActualBlockId());
 	};
 	function lastBlock() {
 		instance.reset(true);
@@ -256,7 +259,9 @@ var waeUI = (function () {
 	};
 	
 	function prevBlock() {
+		if (waeEngine.getActualBlockId()) logger().logBlockEnd(simpaticoEservice, waeEngine.getActualBlockId());
 		waeEngine.prevBlock(doActions, moduleErrorMsg);
+		if (waeEngine.getActualBlockId()) logger().logBlockStart(simpaticoEservice, waeEngine.getActualBlockId());
 	};
   }
   return {

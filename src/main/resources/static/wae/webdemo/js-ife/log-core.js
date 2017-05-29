@@ -34,6 +34,7 @@ var logCORE = (function () {
 		var token = authManager.getInstance().getToken();
 		var userId = authManager.getInstance().getUserId();
 		data.userID = userId;
+		data.sessionId = localStorage.logSessionStart;
 		$.ajax({
 			url: url,
 			type: 'POST',
@@ -90,6 +91,20 @@ var logCORE = (function () {
 	var waeLogger = {
 		logWae: function(eservice) {
 			log(waeEndpoint, {'e-serviceID': eservice, timestamp: ''+new Date().getTime()});
+		},
+		logBlockStart: function(eservice, blockId) {
+			startActivity('wae','block',blockId);
+		},
+		logBlockEnd: function(eservice, blockId) {
+			endActivity('wae','block',blockId);
+		}
+	}
+	var cdvLogger = {
+		saveData: function(eservice) {
+			console.log('saving data');
+		},
+		useData: function(eservice, fieldId) {
+			console.log('using data');
 		}
 	}
 	var ifeLogger = {
@@ -188,6 +203,8 @@ var logCORE = (function () {
 				"timeForElement" : activity,
 				"component": component
 			}
+			if (element)
+				postData.element = element;
 			if (details)
 				postData.details = details;
 			insertLogEvent(postData);
