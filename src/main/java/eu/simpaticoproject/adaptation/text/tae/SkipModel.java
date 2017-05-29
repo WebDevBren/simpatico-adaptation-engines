@@ -7,23 +7,25 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by alessio on 25/05/15.
  */
 
-public class LexensteinModel {
+public class SkipModel {
 
-    private static LexensteinModel instance;
-    private Map<String, String> lemmaList;
-    private static final Logger LOGGER = LoggerFactory.getLogger(LexensteinModel.class);
+    private static SkipModel instance;
+    //    private Map<String, String> lemmaList;
+    private Map<String, String> replaceList;
+    private Set<String> skipList;
+    private static final Logger LOGGER = LoggerFactory.getLogger(SkipModel.class);
 
-    private LexensteinModel(String listFile) {
-        LOGGER.trace("Loading model for Lexenstein");
-        lemmaList = new HashMap<>();
+    private SkipModel(String listFile) {
+        LOGGER.trace("Loading model for Skipping");
+//        lemmaList = new HashMap<>();
+        replaceList = new HashMap<>();
+        skipList = new HashSet<>();
 
         if (listFile != null) {
             try {
@@ -41,10 +43,12 @@ public class LexensteinModel {
 
                     switch (parts.length) {
                     case 1:
-                        lemmaList.put(parts[0], null);
+                        skipList.add(parts[0]);
+//                        lemmaList.put(parts[0], null);
                         break;
                     case 2:
-                        lemmaList.put(parts[0], parts[1]);
+                        replaceList.put(parts[0], parts[1]);
+//                        lemmaList.put(parts[0], parts[1]);
                         break;
                     default:
                         LOGGER.warn("The line '{}' has too many tabs", line);
@@ -59,18 +63,25 @@ public class LexensteinModel {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+//            System.out.println(skipList);
+//            System.out.println(replaceList);
         }
     }
 
-    public static LexensteinModel getInstance(String listFile) {
+    public static SkipModel getInstance(String listFile) {
         if (instance == null) {
-            instance = new LexensteinModel(listFile);
+            instance = new SkipModel(listFile);
         }
 
         return instance;
     }
 
-    public Map<String, String> getLemmaList() {
-        return lemmaList;
+    public Map<String, String> getReplaceList() {
+        return replaceList;
+    }
+
+    public Set<String> getSkipList() {
+        return skipList;
     }
 }

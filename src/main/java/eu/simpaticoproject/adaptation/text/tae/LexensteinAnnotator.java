@@ -2,6 +2,7 @@ package eu.simpaticoproject.adaptation.text.tae;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
+import edu.stanford.nlp.ling.CoreAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.pipeline.Annotation;
@@ -101,7 +102,7 @@ public class LexensteinAnnotator implements Annotator {
         LinkedHashMap<Integer, Map<Integer, String>> sentenceWords = new LinkedHashMap<>();
         List<Simplification> simplificationList = new ArrayList<>();
 
-        Set<String> skipLemmaList = lexensteinModel.getLemmaList();
+        Map<String, String> skipLemmaList = lexensteinModel.getLemmaList();
 
         try {
 
@@ -129,10 +130,10 @@ public class LexensteinAnnotator implements Annotator {
                     if (difficultyLevel != null && difficultyLevel < 3) {
                         simplify = false;
                     }
-                    if (skipLemmaList.contains(lemma)) {
+                    if (skipLemmaList.containsKey(lemma)) {
                         simplify = false;
                     }
-                    if (skipLemmaList.contains(word)) {
+                    if (skipLemmaList.containsKey(word)) {
                         simplify = false;
                     }
                     if (word.length() < MIN_LENGTH) {
@@ -206,7 +207,7 @@ public class LexensteinAnnotator implements Annotator {
      * Returns a set of requirements for which tasks this annotator can
      * provide.  For example, the POS annotator will return "pos".
      */
-    @Override public Set<Requirement> requirementsSatisfied() {
+    @Override public Set<Class<? extends CoreAnnotation>> requirementsSatisfied() {
         return Collections.emptySet();
     }
 
@@ -215,11 +216,13 @@ public class LexensteinAnnotator implements Annotator {
      * to perform.  For example, the POS annotator will return
      * "tokenize", "ssplit".
      */
-    @Override public Set<Requirement> requires() {
-        return Collections.unmodifiableSet(new ArraySet(new Annotator.Requirement[] {
-                TOKENIZE_REQUIREMENT, SSPLIT_REQUIREMENT, POS_REQUIREMENT,
-                ReadabilityAnnotations.READABILITY_REQUIREMENT
-        }));
+    @Override public Set<Class<? extends CoreAnnotation>> requires() {
+        return Collections.unmodifiableSet(new ArraySet<>(Arrays.asList(
+                CoreAnnotations.PartOfSpeechAnnotation.class,
+                CoreAnnotations.TokensAnnotation.class,
+                CoreAnnotations.SentencesAnnotation.class,
+                ReadabilityAnnotations.ReadabilityAnnotation.class
+        )));
     }
 
 }

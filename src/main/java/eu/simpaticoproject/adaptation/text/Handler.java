@@ -83,7 +83,7 @@ public class Handler {
         esProps = PropertiesUtils.dotConvertedProperties(allProps, "es");
 
         LOGGER.info("Loading English pipeline");
-        StanfordCoreNLP enPipeline = new StanfordCoreNLP(enProps);
+//        StanfordCoreNLP enPipeline = new StanfordCoreNLP(enProps);
 
         LOGGER.info("Loading Spanish pipeline");
         StanfordCoreNLP esPipeline = new StanfordCoreNLP(esProps);

@@ -1,24 +1,18 @@
 package eu.simpaticoproject.adaptation.text.tae;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Properties;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.internal.LinkedTreeMap;
-
 import eu.fbk.dh.tint.readability.GlossarioEntry;
 import eu.fbk.dh.tint.readability.it.ItalianReadability;
 import eu.fbk.dh.tint.readability.it.ItalianReadabilityModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.util.*;
 
 /**
  * Created by alessio on 26/09/16.
@@ -30,7 +24,7 @@ public class FakeSynModel {
     private HashMap<String, GlossarioEntry> glossario = new HashMap<>();
 //    File inputFile = new File("/Users/alessio/Documents/out-sinonimicontrari-lemmatized-noinvert.txt");
 
-    public static FakeSynModel getInstance(Properties globalProperties, Properties localProperties) {
+    public static FakeSynModel getInstance(Properties globalProperties, Properties localProperties, SkipModel skipModel) {
         if (ourInstance == null) {
             HashMap<String, GlossarioEntry> glossario = new HashMap<>();
 
@@ -55,6 +49,22 @@ public class FakeSynModel {
 //                String[] strings = (String[]) linkedTreeMap.get("forms");
                     String description = (String) linkedTreeMap.get("description");
                     GlossarioEntry entry = new GlossarioEntry(strings, description);
+
+                    if (skipModel.getSkipList().contains(form)) {
+                        continue;
+                    }
+//                    for (String skipTerm : skipModel.getSkipList()) {
+//                        if (skipTerm.contains(",")) {
+//                            if (entry.getDescription().startsWith(skipTerm)) {
+//                                System.out.println("Skipping " + form + " because of " + skipTerm);
+//                                continue glossarioLoop;
+//                            }
+//                            else {
+//                                System.out.println(entry.getDescription());
+//                            }
+//                        }
+//                    }
+
                     glossario.put(form, entry);
                 }
 

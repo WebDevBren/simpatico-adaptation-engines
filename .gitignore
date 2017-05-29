@@ -15,3 +15,8 @@ buildNumber.properties
 simp-engines.log
 .idea
 *.iml
+.DS_Store
+
+*.log
+data
+
