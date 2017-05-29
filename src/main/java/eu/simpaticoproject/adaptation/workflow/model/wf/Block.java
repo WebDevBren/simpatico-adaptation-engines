@@ -2,6 +2,7 @@ package eu.simpaticoproject.adaptation.workflow.model.wf;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Block {
 	private String id;
@@ -13,6 +14,7 @@ public class Block {
 	private List<String> dependencies = new ArrayList<String>();
 	private String condition;
 	private String completed;
+	private Map<String,String> description;
 	
 	public String getId() {
 		return id;
@@ -68,4 +70,11 @@ public class Block {
 	public void setXpath(String xpath) {
 		this.xpath = xpath;
 	}
+	public Map<String, String> getDescription() {
+		return description;
+	}
+	public void setDescription(Map<String, String> description) {
+		this.description = description;
+	}
+	
 }

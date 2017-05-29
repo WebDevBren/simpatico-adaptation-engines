@@ -22,6 +22,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +35,7 @@ import eu.simpaticoproject.adaptation.text.Handler;
 import eu.simpaticoproject.adaptation.text.tae.SimpaticoInput;
 import eu.simpaticoproject.adaptation.text.tae.SimpaticoOutput;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 /**
  * @author raman
@@ -48,22 +50,33 @@ public class TAEController {
 	@RequestMapping(value = "/tae/simp", method = RequestMethod.GET)
 	@ApiOperation(value = "Process text",
 				  response = SimpaticoOutput.class,
-				  notes = "Obtain text annotations and simplifications")
+				  notes = "Obtain annotations and simplifications. Two modalities supported: word simplification and sentence/paragraph simplification.")
 	public @ResponseBody String simp(
-			@RequestParam(required = false) String lang,
-			@RequestParam(required = false) String text,
-			@RequestParam(required = false) Boolean doLex) throws Exception {
-		String json = handler.service(lang, text, doLex);
+			@ApiParam(value = "word to be simplified, if any", required = false) @RequestParam(required = false) String word,
+			@ApiParam(value = "word position in the context, in case of word simplification", required = false) @RequestParam(required = false) Integer position,
+			@ApiParam(value = "language, as 2-letter ISO code. If not specified, derived by the tool", required = false) @RequestParam(required = false) String lang,
+			@ApiParam(value = "sentext or text to be simplified in case of syntactic simplification. Word context in case of word simplification", required = false) @RequestParam(required = false) String text) throws Exception {
+		String json = handler.service(word, position, lang, text);
+//		SimpaticoOutput output = new ObjectMapper().readValue(json, SimpaticoOutput.class);
+//		if (StringUtils.isEmpty(word) && output.getSimplifiedText() == null) {
+//			output.setSimplifiedText(text);
+//		}
+//
+//		return output;
 		return json;
-//		return new ObjectMapper().readValue(json, SimpaticoOutput.class);
 	}
 	@RequestMapping(value = "/tae/simp", method = RequestMethod.POST)
 	@ApiOperation(value = "Process text",
 	  response = SimpaticoOutput.class,
 	  notes = "Obtain text annotations and simplifications")
-	public @ResponseBody SimpaticoOutput simp(@RequestBody SimpaticoInput input) throws Exception {
-		String json = handler.service(input.getLang(), input.getText(), input.getDoLex());
-		return new ObjectMapper().readValue(json, SimpaticoOutput.class);
+	public @ResponseBody String simp(@RequestBody SimpaticoInput input) throws Exception {
+		String json = handler.service(input.getWord(), input.getPosition(), input.getLang(), input.getText());
+//		SimpaticoOutput output = new ObjectMapper().readValue(json, SimpaticoOutput.class); 
+//		if (StringUtils.isEmpty(input.getWord()) && output.getSimplifiedText() == null) {
+//			output.setSimplifiedText(input.getText());
+//		}
+//		return output;
+		return json;
 	}
 
 	@ExceptionHandler(OperationNotSupportedException.class)

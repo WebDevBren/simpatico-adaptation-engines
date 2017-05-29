@@ -12,7 +12,7 @@ buildNumber.properties
 /.project
 /.settings/
 
-simp-engines.log
+simp-engines*.log
 .idea
 *.iml
 .DS_Store

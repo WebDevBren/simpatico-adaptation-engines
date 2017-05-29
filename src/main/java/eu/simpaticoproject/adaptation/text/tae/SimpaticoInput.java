@@ -23,7 +23,9 @@ public class SimpaticoInput {
 
 	private String text;
 	private String lang;
-	private Boolean doLex;
+	private String word;
+	private Integer position;
+	
 	public String getText() {
 		return text;
 	}
@@ -36,10 +38,17 @@ public class SimpaticoInput {
 	public void setLang(String lang) {
 		this.lang = lang;
 	}
-	public Boolean getDoLex() {
-		return doLex;
+	public String getWord() {
+		return word;
 	}
-	public void setDoLex(Boolean doLex) {
-		this.doLex = doLex;
+	public void setWord(String word) {
+		this.word = word;
 	}
+	public Integer getPosition() {
+		return position;
+	}
+	public void setPosition(Integer position) {
+		this.position = position;
+	}
+	
 }

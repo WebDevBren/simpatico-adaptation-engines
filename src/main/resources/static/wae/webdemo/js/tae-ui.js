@@ -13,6 +13,7 @@ var taeUI = new function() {
 	
 	this.labels = {
 		dialogTitle: 'Text enrichment',
+		tabSyntSimpTitle: 'Simplified text',
 		tabDefinitionsTitle: 'Definitions',
 		tabSimplificationTitle: 'Semplification',
 		tabWikipediaTitle: 'Wikipedia',
@@ -26,6 +27,7 @@ var taeUI = new function() {
 	 * CONFIG PARAMETERS:
 	 * - endpoint: URL OF THE TAE API ENDPOINT 
 	 * - dialogTitle:  title of the dialog
+	 * - tabSyntSimpTitle: title of the syntactic simplification tab
 	 * - tabDefinitionsTitle: title of the definitions tab
 	 * - tabSimplificationTitle: title of the simplification tab
 	 * - tabWikipediaTitle: text on the wikipedia tab
@@ -34,10 +36,9 @@ var taeUI = new function() {
 	 */
 	this.init = function(config) {
 		config = config || {};
-		if (config.endpoint) {
-			taeEngine.init({endpoint: config.endpoint});
-		}
+		taeEngine.init({endpoint: config.endpoint, lang: config.lang});
 		this.labels.dialogTitle = config.dialogTitle || this.labels.dialogTitle;
+		this.labels.tabSyntSimpTitle = config.tabSyntSimpTitle || this.labels.tabSyntSimpTitle;
 		this.labels.tabDefinitionsTitle = config.tabDefinitionsTitle || this.labels.tabDefinitionsTitle;
 		this.labels.tabSimplificationTitle = config.tabSimplificationTitle || this.labels.tabSimplificationTitle;
 		this.labels.tabWikipediaTitle = config.tabWikipediaTitle || this.labels.tabWikipediaTitle;
@@ -50,12 +51,16 @@ var taeUI = new function() {
 				'	<div id="tabs">'+
 				'		<ul>'+
 				'			<li><a href="#tab-0">Simpatico</a></li>'+
+				'			<li><a href="#tab-synt-simp">'+taeUI.labels.tabSyntSimpTitle+'</a></li>'+
 				'			<li><a href="#tab-definizioni">'+taeUI.labels.tabDefinitionsTitle+'</a></li>'+
 				'			<li><a href="#tab-semplificazione">'+taeUI.labels.tabSimplificationTitle+'</a></li>'+
 				'			<li><a href="#tab-wikipedia">'+taeUI.labels.tabWikipediaTitle+'</a></li>'+
 				'		</ul>'+
 				'		<div id="tab-0">'+
 				'			<p>'+taeUI.labels.entryMessage+'</p>'+
+				'		</div>'+
+				'		<div id="tab-synt-simp">'+
+				'			<p>Loading...</p>'+
 				'		</div>'+
 				'		<div id="tab-definizioni">'+
 				'			<p>Loading...</p>'+
@@ -86,27 +91,34 @@ var taeUI = new function() {
 				var errCb = setError(ui.newPanel["0"].id);
 				
 				if(ui.newPanel["0"].id == "tab-0") {
-					if(taeUI.selectedText != "") {
+					if(!!taeUI.selectedText) {
 						ui.newPanel["0"].innerHTML = '<p>'+taeUI.labels.entryMessage+'</p>';
 					} else {
 						ui.newPanel["0"].innerHTML = '<p>'+taeUI.labels.notextMessage+'</p>';
 					}
+				} if(ui.newPanel["0"].id == "tab-synt-simp") {
+					if(!!taeUI.selectedText) {
+						ui.newPanel["0"].innerHTML = '<p>Loading...</p>';
+						taeEngine.getSimplifiedText(taeUI.selectedText, cb, errCb);
+					} else {
+						ui.newPanel["0"].innerHTML = '<p>'+taeUI.labels.notextMessage+'</p>';
+					}
 				} if(ui.newPanel["0"].id == "tab-definizioni") {
-					if(taeUI.selectedText != "") {
+					if(!!taeUI.selectedText) {
 						ui.newPanel["0"].innerHTML = '<p>Loading...</p>';
 						taeEngine.getDefinitions(taeUI.selectedText, cb, errCb);
 					} else {
 						ui.newPanel["0"].innerHTML = '<p>'+taeUI.labels.notextMessage+'</p>';
 					}
 				} if(ui.newPanel["0"].id == "tab-semplificazione") {
-					if(taeUI.selectedText != "") {
+					if(!!taeUI.selectedText) {
 						ui.newPanel["0"].innerHTML = '<p>Loading...</p>';
 						taeEngine.getExplanations(taeUI.selectedText, cb, errCb);
 					} else {
 						ui.newPanel["0"].innerHTML = '<p>'+taeUI.labels.notextMessage+'</p>';
 					}
 				} else if(ui.newPanel["0"].id == "tab-wikipedia") {
-					if(taeUI.selectedText != "") {
+					if(!!taeUI.selectedText) {
 						ui.newPanel["0"].innerHTML = '<p>Loading...</p>';
 						taeEngine.wikipedia(taeUI.selectedText, cb, errCb);
 					} else {
@@ -122,7 +134,7 @@ var taeUI = new function() {
 	}
 	
 	/**
-	 * CURRENTLY SELECTED TEXT
+	 * CURRENTLY SELECTED TEXT DATA: text, word, position (if apply)
 	 */
 	this.selectedText = null;
 	
@@ -132,9 +144,12 @@ var taeUI = new function() {
 	 * OPEN TAE UI DIALOG FOR CURRENTLY SELECTED TEXT
 	 */
 	this.showDialog = function() {
+		this.selectedText = getSelectedTextData();
 		this.dialog_simplify.tabs( "option", "active", 0);
-		this.dialog_simplify.tabs("option", "disabled", [] );
-		this.selectedText = getSelectedText().trim();
+		var disabled = [];
+		if (!this.selectedText || !this.selectedText.text) disabled = [0,1,2,3,4];
+		else if (this.selectedText.word) disabled.push(1);
+		this.dialog_simplify.tabs("option", "disabled", disabled);
 		this.dialog_simplify.dialog("open");
 		
 	}
@@ -193,14 +208,30 @@ var taeUI = new function() {
 		});
 	}
 	
-	function getSelectedText(){
-		var text = "";
+	function getSelectedTextData(){
+	  var textData = {text:''};
+		
 	  if (window.getSelection()) {
-	      text = window.getSelection().toString();
+	      textData.text = window.getSelection().toString().trim();
+	      if (!textData.text.match(/(\s)/i)) {
+	    	  textData.word = textData.text;
+	    	  var selection = window.getSelection(); 
+	    	  if (selection && selection.anchorNode) {
+	    		  textData.text = selection.anchorNode.textContent;
+	    	  }
+	      }
 	  } else if (document.selection && document.selection.type != "Control") {
-	      text = document.selection.createRange().text;
+		  textData.text = document.selection.createRange().text;
+	      if (!textData.text.match(/(\s)/i)) {
+	    	  textData.word = textData.text;
+	    	  var selection = window.getSelection(); 
+	    	  if (selection && selection.anchorNode) {
+	    		  textData.text = selection.anchorNode.value;
+	    	  }
+	      }
 	  }
-	  return text;
+	  if (!textData.text) return null;
+	  return textData;
 	};	
 	
 	function setInnerText(target) {

@@ -5,6 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.module.jsonSchema.JsonSchema;
 import com.fasterxml.jackson.module.jsonSchema.JsonSchemaGenerator;
 import eu.fbk.dkm.pikes.twm.LinkingTag;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.languagetool.rules.DemoRule;
+import org.languagetool.rules.Rule;
+import org.languagetool.rules.RuleMatch;
 
 import java.util.*;
 
@@ -17,9 +21,12 @@ public class SimpaticoOutput {
     SimpaticoReadability readability;
     String docDate;
     String timings;
-    List<LinkingTag> linkings;
-    List<LexensteinAnnotator.Simplification> simplifications;
+    List<Linking> linkings;
+    List<Simplification> simplifications;
     List<String> sentenceTexts;
+    List<String> sentences;
+
+    String simplifiedText;
 
     public SimpaticoReadability getReadability() {
         return readability;
@@ -45,19 +52,19 @@ public class SimpaticoOutput {
         this.timings = timings;
     }
 
-    public List<LinkingTag> getLinkings() {
+    public List<Linking> getLinkings() {
         return linkings;
     }
 
-    public void setLinkings(List<LinkingTag> linkings) {
+    public void setLinkings(List<Linking> linkings) {
         this.linkings = linkings;
     }
 
-    public List<LexensteinAnnotator.Simplification> getSimplifications() {
+    public List<Simplification> getSimplifications() {
         return simplifications;
     }
 
-    public void setSimplifications(List<LexensteinAnnotator.Simplification> simplifications) {
+    public void setSimplifications(List<Simplification> simplifications) {
         this.simplifications = simplifications;
     }
 
@@ -67,6 +74,34 @@ public class SimpaticoOutput {
 
     public void setSentenceTexts(List<String> sentenceTexts) {
         this.sentenceTexts = sentenceTexts;
+    }
+
+    public List<String> getSentences() {
+        return sentences;
+    }
+
+    public void setSentences(List<String> sentences) {
+        this.sentences = sentences;
+    }
+
+    public String getSimplifiedText() {
+        return simplifiedText;
+    }
+
+    public void setSimplifiedText(String simplifiedText) {
+        this.simplifiedText = simplifiedText;
+    }
+
+    public static class Simplification extends LexensteinAnnotator.Simplification {
+
+        public Simplification() {
+            super(0, 0, null);
+        }
+
+        public Simplification(int start, int end, String simplification) {
+            super(start, end, simplification);
+        }
+
     }
 
     public static class SimpaticoReadability {
@@ -245,6 +280,63 @@ public class SimpaticoOutput {
 
         public void setSupport(HashMap<String, Integer> support) {
             this.support = support;
+        }
+    }
+
+    public static class Linking extends LinkingTag {
+
+        private static final long serialVersionUID = 5329649530750133527L;
+
+        public Linking() {
+            super(0, null, 0, null, 0, null);
+        }
+
+        public Linking(int offset, String page, double score, String originalText, int length, String source) {
+            super(offset, page, score, originalText, length, source);
+        }
+
+    }
+
+    @JsonIgnoreProperties({ "rule", "context" })
+    public static class SimpRuleMatch extends RuleMatch {
+
+        public SimpRuleMatch() {
+            super(new DemoRule(), 0, 1, "");
+        }
+
+        public SimpRuleMatch(Rule rule, int fromPos, int toPos, String message, String shortMessage,
+                boolean startWithUppercase, String suggestionsOutMsg) {
+            super(rule, fromPos, toPos, message, shortMessage, startWithUppercase, suggestionsOutMsg);
+        }
+
+        public SimpRuleMatch(Rule rule, int fromPos, int toPos, String message, String shortMessage) {
+            super(rule, fromPos, toPos, message, shortMessage);
+        }
+
+        public SimpRuleMatch(Rule rule, int fromPos, int toPos, String message) {
+            super(rule, fromPos, toPos, message);
+        }
+
+        private int offset, length;
+
+        public int getOffset() {
+            return offset;
+        }
+
+        public void setOffset(int offset) {
+            this.offset = offset;
+        }
+
+        public int getLength() {
+            return length;
+        }
+
+        public void setLength(int length) {
+            this.length = length;
+        }
+
+        public void setRule(Rule rule) {
+
         }
     }
 
