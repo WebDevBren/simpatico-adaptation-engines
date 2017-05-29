@@ -1,21 +1,25 @@
 package eu.simpaticoproject.adaptation.text.tae;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import edu.stanford.nlp.ling.CoreAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.Annotator;
 import edu.stanford.nlp.util.ArraySet;
-import eu.fbk.dh.tint.readability.DescriptionForm;
-import eu.fbk.dh.tint.readability.GlossarioEntry;
-import eu.fbk.dh.tint.readability.it.ItalianReadability;
+import edu.stanford.nlp.util.CoreMap;
+import eu.fbk.dh.tint.readability.ReadabilityAnnotations;
 import eu.fbk.utils.core.PropertiesUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by alessio on 19/12/16.
@@ -24,17 +28,79 @@ import java.util.regex.Pattern;
 public class LexSimpAnnotator implements Annotator {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LexSimpAnnotator.class);
+    private static final int DEFAULT_TIMEOUT = 20000;
+    private static final int DEFAULT_PORT = 8012;
+    private static final String DEFAULT_HOST = "localhost";
+    private static final String DEFAULT_LANGUAGE = "en";
+
+    private String host;
+    private Integer port;
+    private int timeout;
+    private String language;
 
     public LexSimpAnnotator(String annotatorName, Properties props) {
-//        Properties globalProperties = props;
-//        Properties localProperties = PropertiesUtils.dotConvertedProperties(props, annotatorName);
-//        this.onlyOne = PropertiesUtils.getBoolean(localProperties.getProperty("only_one", "false"), false);
-//        this.skipModel = SkipModel.getInstance(localProperties.getProperty("skipLemmaFile"));
-//        this.model = FakeSynModel.getInstance(globalProperties, localProperties, this.skipModel);
+        Properties localProperties = PropertiesUtils.dotConvertedProperties(props, annotatorName);
+        this.host = localProperties.getProperty("host", DEFAULT_HOST);
+        this.port = PropertiesUtils.getInteger(localProperties.getProperty("port"), DEFAULT_PORT);
+        this.timeout = PropertiesUtils.getInteger("timeout", DEFAULT_TIMEOUT);
+        this.language = localProperties.getProperty("language", DEFAULT_LANGUAGE);
     }
 
     @Override public void annotate(Annotation annotation) {
 
+        List<LexensteinAnnotator.Simplification> simplificationList = new ArrayList<>();
+
+        List<CoreMap> sentences = annotation.get(CoreAnnotations.SentencesAnnotation.class);
+        for (CoreMap sentence : sentences) {
+            Map<Integer, String> contentWords = new HashMap<>();
+            StringBuffer buffer = new StringBuffer();
+            List<CoreLabel> get = sentence.get(CoreAnnotations.TokensAnnotation.class);
+            for (int i = 0; i < get.size(); i++) {
+                CoreLabel token = get.get(i);
+                String rawText = token.originalText().replace("\\s+", "_");
+                buffer.append(rawText);
+                buffer.append(" ");
+                Boolean contentWord = token.get(ReadabilityAnnotations.ContentWord.class);
+                if (contentWord) {
+                    contentWords.put(i, rawText);
+                }
+            }
+            String sentenceText = buffer.toString().trim();
+
+            for (Integer contentWord : contentWords.keySet()) {
+                Map<String, String> pars = new HashMap<>();
+                pars.put("sentence", sentenceText);
+                pars.put("target", contentWords.get(contentWord));
+                pars.put("index", Integer.toString(contentWord));
+                pars.put("lang", this.language);
+
+                String simplifiedVersion;
+                try {
+                    simplifiedVersion = request(pars);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return;
+                }
+
+                LOGGER.debug(simplifiedVersion);
+                
+                CoreLabel token = sentence.get(CoreAnnotations.TokensAnnotation.class).get(contentWord);
+                LexensteinAnnotator.Simplification simplification = new LexensteinAnnotator.Simplification(
+                        token.beginPosition(),
+                        token.endPosition(),
+                        simplifiedVersion
+                );
+                simplification.setOriginalValue(token.word());
+                simplificationList.add(simplification);
+                token.set(SimpaticoAnnotations.SimplifiedAnnotation.class, simplifiedVersion);
+
+//                System.out.println(pars);
+//                System.out.println(simplifiedVersion);
+            }
+
+        }
+
+        annotation.set(SimpaticoAnnotations.SimplificationsAnnotation.class, simplificationList);
     }
 
     /**
@@ -52,11 +118,34 @@ public class LexSimpAnnotator implements Annotator {
      */
     @Override public Set<Class<? extends CoreAnnotation>> requires() {
         return Collections.unmodifiableSet(new ArraySet<>(Arrays.asList(
-                CoreAnnotations.PartOfSpeechAnnotation.class,
                 CoreAnnotations.TokensAnnotation.class,
-                CoreAnnotations.LemmaAnnotation.class,
                 CoreAnnotations.SentencesAnnotation.class
         )));
 
+    }
+
+    protected String request(Map<String, String> pars) throws IOException {
+        Gson gson = new GsonBuilder().create();
+        String json = gson.toJson(pars);
+
+        Socket echoSocket = new Socket(host, port);
+        PrintWriter out = new PrintWriter(echoSocket.getOutputStream(), true);
+        BufferedReader in = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
+//        BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
+
+        out.println(json);
+        String responseLine;
+        StringBuffer response = new StringBuffer();
+        while ((responseLine = in.readLine()) != null) {
+            response.append(responseLine);
+            // continue...
+        }
+        in.close();
+        out.close();
+        echoSocket.close();
+
+//        System.out.println(json);
+
+        return response.toString();
     }
 }
