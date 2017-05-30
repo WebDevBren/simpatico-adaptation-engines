@@ -10,6 +10,7 @@ var sfUI = (function () {
   function Singleton() {
     // Compònent-related variables
     var buttonToShowSfId = '';
+    var formSelector = null;
 
     // Internal parts
     var ctzSelected = false;
@@ -18,14 +19,13 @@ var sfUI = (function () {
     var timeout = 5 * 60 * 1000; // 5 minutes in ms
     var startTime;
 
+
     this.active = false;
     
     function initComponent (parameters) {
       buttonToShowSfId = parameters.buttonToShowSfId;
-      sfCORE.getInstance().init({
-        endpoint: parameters.apiEndpoint
-      });
-
+      formSelector = parameters.formSelector;
+      
       // Add the onclick event
       if (buttonToShowSfId) {
           var button = document.getElementById(buttonToShowSfId);
@@ -35,6 +35,30 @@ var sfUI = (function () {
               });
           }
       }
+      if (formSelector != null) {
+    	  var formElement = $(formSelector).get(0);
+    	  var originalHandler = formElement.onsubmit;
+    	  var handler = function(e) {
+    		  e.preventDefault();
+    		  showSF();
+    	  };
+    	  if (originalHandler != null && typeof originalHandler == 'function') {
+    		  formElement.removeEventListener('submit',originalHandler);
+    		  handler = function(e){
+    			  var res = originalHandler();
+        		  e.preventDefault();
+    			  if (res) {
+    				  showSF();
+    	    		  formElement.removeEventListener('submit',handler);
+    			  }
+    		  }
+    	  }
+    	  formElement.addEventListener('submit', handler);
+      }
+      sfCORE.getInstance().init({
+          endpoint: parameters.apiEndpoint,
+          listener: parameters.listener
+        });
 
       // Start counting time
       startTime = new Date().getTime();

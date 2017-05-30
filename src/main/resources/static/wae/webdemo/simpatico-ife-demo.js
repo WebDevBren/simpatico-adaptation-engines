@@ -152,7 +152,10 @@ function initFeatures() {
   // - apiEndpoint: the main URL of the logs API server (<site>/simpatico/api)
   // NOTE: Requires jquery-ui to work properly
   sfUI.getInstance().init({
-    buttonToShowSfId: 'SF',
+    formSelector: 'form',
+    listener: function() {
+    	$('form').submit();
+    },
     apiEndpoint: 'https://dev.smartcommunitylab.it/simpatico-logs/api',
   });
 
