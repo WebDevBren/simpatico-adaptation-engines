@@ -61,12 +61,17 @@ To run the multi-language environment, you need to implement two steps:
 Requirements
 ============
 
-The TAE server needs the last version of [Tint](http://tint.fbk.eu/) installed.
+The TAE server needs the last version of [Tint](http://tint.fbk.eu/) and [FBK utils](https://github.com/fbk/utils) installed.
 
 Run these commands:
 ```
- git clone https://github.com/dhfbk/tint
+git clone https://github.com/dhfbk/tint
 cd tint
 git checkout corenlp370
+mvn clean install
+cd ..
+git clone https://github.com/fbk/utils
+cd utils
+git checkout develop
 mvn clean install
 ```
