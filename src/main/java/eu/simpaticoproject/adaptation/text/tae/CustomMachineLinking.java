@@ -106,9 +106,6 @@ public class CustomMachineLinking extends Linking {
                 }
             }
 
-//            System.out.println(skipIndexes);
-//            System.out.println(ret);
-
             Map<String, Object> userData;
             String output = request(pars);
 

@@ -22,6 +22,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.annotation.Nullable;
 import javax.annotation.PostConstruct;
 import javax.naming.OperationNotSupportedException;
 
@@ -106,47 +107,53 @@ public class Handler {
 	
 	public String service(String word, Integer position, String lang, String text) throws Exception {
 		if (modeProxy) {
-			return rest.getForObject(proxyEndpoint+"?lang={lang}&text={text}", String.class, lang, text);
+			return rest.getForObject(proxyEndpoint+"?lang={lang}&text={text}&position={position}", String.class, lang, text, position);
 		} else {
-			return serviceLocal(lang, text);
+			return serviceLocal(lang, text, word, position);
 		}
 	}
-	private String serviceLocal(String lang, String text) throws Exception {
+	
+	private String serviceLocal(String lang, String text, @Nullable String word, @Nullable Integer position) throws Exception {
         LOGGER.debug("Starting service");
-//        request.setCharacterEncoding("UTF-8");
-//        response.setCharacterEncoding("UTF-8");
 
         Annotation annotation = null;
-
-        StanfordCoreNLP enPipeline = new StanfordCoreNLP(enProps);
-        StanfordCoreNLP esPipeline = new StanfordCoreNLP(esProps);
-        TintPipeline itPipeline = new TintPipeline();
-        try {
-            itPipeline.loadDefaultProperties();
-            itPipeline.addProperties(itProps);
-            String annotators = itPipeline.getProperty("annotators");
-            if (!annotators.contains("lexenstein")) {
-                itPipeline.setProperty("annotators", itProps.getProperty("annotators") + ", lexenstein");
-                System.out.println("Annotators: " + itPipeline.getProperty("annotators"));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        itPipeline.load();
 
         if (lang == null || !supportedLanguages.contains(lang)) {
             lang = machineLinking.lang(text);
         }
 
+        Properties additionalProps = new Properties();
+        if (position != null) {
+            additionalProps.put("lsimp.offset", position.toString());
+        }
+        itProps.putAll(additionalProps);
+        enProps.putAll(additionalProps);
+        esProps.putAll(additionalProps);
+
         switch (lang) {
         case "it":
+            TintPipeline itPipeline = new TintPipeline();
+            try {
+                itPipeline.loadDefaultProperties();
+                itPipeline.addProperties(itProps);
+//            String annotators = itPipeline.getProperty("annotators");
+//            if (!annotators.contains("lexenstein")) {
+//                itPipeline.setProperty("annotators", itProps.getProperty("annotators") + ", lexenstein");
+//                System.out.println("Annotators: " + itPipeline.getProperty("annotators"));
+//            }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            itPipeline.load();
             annotation = itPipeline.runRaw(text);
             break;
         case "es":
+            StanfordCoreNLP esPipeline = new StanfordCoreNLP(esProps);
             annotation = new Annotation(text);
             esPipeline.annotate(annotation);
             break;
         case "en":
+            StanfordCoreNLP enPipeline = new StanfordCoreNLP(enProps);
             annotation = new Annotation(text);
             enPipeline.annotate(annotation);
             break;

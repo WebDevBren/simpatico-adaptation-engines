@@ -38,6 +38,7 @@ public class LexSimpAnnotator implements Annotator {
     private Integer port;
     private Integer minDiff;
     private String language;
+    private Integer position;
 
     public LexSimpAnnotator(String annotatorName, Properties props) {
         Properties localProperties = PropertiesUtils.dotConvertedProperties(props, annotatorName);
@@ -45,6 +46,7 @@ public class LexSimpAnnotator implements Annotator {
         this.port = PropertiesUtils.getInteger(localProperties.getProperty("port"), DEFAULT_PORT);
         this.language = localProperties.getProperty("language", DEFAULT_LANGUAGE);
         this.minDiff = PropertiesUtils.getInteger(localProperties.getProperty("min_difficult"), DEFAULT_MIN_DIFF);
+        this.position = PropertiesUtils.getInteger(localProperties.getProperty("offset"), -1);
     }
 
     @Override public void annotate(Annotation annotation) {
@@ -67,7 +69,12 @@ public class LexSimpAnnotator implements Annotator {
                     difficult = DEFAULT_DIFF;
                 }
 
-                if (contentWord && difficult >= minDiff) {
+                if (this.position >= 0) {
+                    Integer start = token.get(CoreAnnotations.CharacterOffsetBeginAnnotation.class);
+                    if (start.equals(this.position)) {
+                        contentWords.put(i, rawText);
+                    }
+                } else if (contentWord && difficult >= minDiff) {
                     contentWords.put(i, rawText);
                 }
             }
@@ -84,8 +91,8 @@ public class LexSimpAnnotator implements Annotator {
                 try {
                     simplifiedVersion = request(pars);
                 } catch (IOException e) {
-                    e.printStackTrace();
-                    return;
+                    LOGGER.error(e.getMessage());
+                    continue;
                 }
 
                 LOGGER.debug(simplifiedVersion);
