@@ -28,22 +28,23 @@ import java.util.*;
 public class LexSimpAnnotator implements Annotator {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LexSimpAnnotator.class);
-    private static final int DEFAULT_TIMEOUT = 20000;
+    private static final int DEFAULT_MIN_DIFF = 3;
+    private static final int DEFAULT_DIFF = 4;
     private static final int DEFAULT_PORT = 8012;
     private static final String DEFAULT_HOST = "localhost";
     private static final String DEFAULT_LANGUAGE = "en";
 
     private String host;
     private Integer port;
-    private int timeout;
+    private Integer minDiff;
     private String language;
 
     public LexSimpAnnotator(String annotatorName, Properties props) {
         Properties localProperties = PropertiesUtils.dotConvertedProperties(props, annotatorName);
         this.host = localProperties.getProperty("host", DEFAULT_HOST);
         this.port = PropertiesUtils.getInteger(localProperties.getProperty("port"), DEFAULT_PORT);
-        this.timeout = PropertiesUtils.getInteger("timeout", DEFAULT_TIMEOUT);
         this.language = localProperties.getProperty("language", DEFAULT_LANGUAGE);
+        this.minDiff = PropertiesUtils.getInteger(localProperties.getProperty("min_difficult"), DEFAULT_MIN_DIFF);
     }
 
     @Override public void annotate(Annotation annotation) {
@@ -61,7 +62,12 @@ public class LexSimpAnnotator implements Annotator {
                 buffer.append(rawText);
                 buffer.append(" ");
                 Boolean contentWord = token.get(ReadabilityAnnotations.ContentWord.class);
-                if (contentWord) {
+                Integer difficult = token.get(ReadabilityAnnotations.DifficultyLevelAnnotation.class);
+                if (difficult == null) {
+                    difficult = DEFAULT_DIFF;
+                }
+
+                if (contentWord && difficult >= minDiff) {
                     contentWords.put(i, rawText);
                 }
             }
@@ -83,7 +89,7 @@ public class LexSimpAnnotator implements Annotator {
                 }
 
                 LOGGER.debug(simplifiedVersion);
-                
+
                 CoreLabel token = sentence.get(CoreAnnotations.TokensAnnotation.class).get(contentWord);
                 LexensteinAnnotator.Simplification simplification = new LexensteinAnnotator.Simplification(
                         token.beginPosition(),
