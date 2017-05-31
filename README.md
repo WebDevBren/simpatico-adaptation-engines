@@ -58,3 +58,20 @@ To run the multi-language environment, you need to implement two steps:
 - Install the [Simpatico TAE server](https://github.com/SIMPATICOProject/SimpaticoTAEServer) for lexical and syntactic simplification.
 - Edit the configuration file and add the `lex.server` and `lex.port` settings so that they point to the correct information.
 
+Requirements
+============
+
+The TAE server needs the last version of [Tint](http://tint.fbk.eu/) and [FBK utils](https://github.com/fbk/utils) installed.
+
+Run these commands:
+```
+git clone https://github.com/dhfbk/tint
+cd tint
+git checkout corenlp370
+mvn clean install
+cd ..
+git clone https://github.com/fbk/utils
+cd utils
+git checkout develop
+mvn clean install
+```

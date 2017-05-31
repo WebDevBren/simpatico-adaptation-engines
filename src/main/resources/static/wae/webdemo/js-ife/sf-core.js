@@ -3,9 +3,11 @@ var sfCORE = (function () {
 
   function Singleton () {
     var endpoint = '';
+    var listener = null;
 
     function initComponent (parameters) {
       endpoint = parameters.endpoint;
+      listener = parameters.listener;
     }
 
     function selectDialog (ctzSelected, simplificationSelected, timeoutExceeded, userId) {
@@ -31,6 +33,7 @@ var sfCORE = (function () {
       });
       $('#dialogSF').show();
       $('#dialogSF #button_cancel_session_feedback_text').off('click').on('click', function () {
+    	  if (!!listener) listener();
     	  $('#dialogSF').dialog("destroy").remove();
       });
       $('#dialogSF #button_send_session_feedback_text').off('click').on('click', sendFeedback);
@@ -53,8 +56,9 @@ var sfCORE = (function () {
 		complexity = 0;
 		logCORE.getInstance().sfLogger.feedbackEvent(simpaticoEservice, complexity);
 
-      // Close dialog
-      $('#dialogSF').dialog("destroy").remove();
+		if (!!listener) listener();
+        // Close dialog
+        $('#dialogSF').dialog("destroy").remove();
     }
 
     return {
