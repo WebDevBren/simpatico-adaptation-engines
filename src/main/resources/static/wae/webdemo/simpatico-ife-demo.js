@@ -17,13 +17,13 @@ function initFeatures() {
     endpoint: 'https://tn.smartcommunitylab.it/aac', 
     clientID: '8ab03990-d5dd-47ea-8fc6-c92a3b0c04a4',
     authority: null,
-    redirect: 'https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/logincb.html'
+    redirect: 'https://simpatico.smartcommunitylab.it/simp-engines/wae/webdemo/logincb.html'
   });
   
   // Init the LOG component (see log-core.js)
   // - endpoint: the main URL of the used LOG instance
   logCORE.getInstance().init({
-	  endpoint: "https://dev.smartcommunitylab.it/simpatico-logs/api"
+	  endpoint: "https://simpatico.smartcommunitylab.it/simpatico-logs/api"
   });
 
   // Init the Citizenpedia component (see ctz-ui.js)
@@ -38,7 +38,7 @@ function initFeatures() {
   // - diagramNotificationClassName: The CSS class of the img shown when a diagram is found
   // - diagramNotificationText: The text to notify that a diagram
   citizenpediaUI.getInstance().init({
-    endpoint: 'https://dev.smartcommunitylab.it/qae',
+    endpoint: 'https://simpatico.smartcommunitylab.it/qae',
     primaryColor: "#24BCDA",
     secondaryColor:"#D3F2F8",
     elementsToEnhanceClassName: "simp-text-paragraph",
@@ -59,7 +59,7 @@ function initFeatures() {
   // - dialogTitle: Title of the dialog box of CDV component
   // - tabPFieldsTitle: tab label of personal data
   cdvUI.getInstance().init({
-    endpoint: 'https://dev.smartcommunitylab.it/',
+    endpoint: 'https://simpatico.smartcommunitylab.it/',
     serviceID: simpaticoEservice,
     dataFields: simpaticoMapping,
     cdvColor: '#008000',
@@ -99,7 +99,7 @@ function initFeatures() {
   // - simplifyBoxTitle: Title of the box which shows the simplifications
   // - wordPropertiesClassName: The CSS class of the word properties box
   taeUI.getInstance().init({
-    endpoint: 'https://dev.smartcommunitylab.it/simp-engines/tae',
+    endpoint: 'https://simpatico.smartcommunitylab.it/simp-engines/tae',
     language: 'it',
     primaryColor: "#DE453E",
     secondaryColor:"#F0ABA8",
@@ -120,7 +120,7 @@ function initFeatures() {
   // - notextMessage: label of 'no text selected' hint
   taeUIPopup.getInstance().init({
 		lang: 'it',
-		endpoint: 'https://dev.smartcommunitylab.it/simp-engines/tae',
+		endpoint: 'https://simpatico.smartcommunitylab.it/simp-engines/tae',
 		dialogTitle: 'Arricchimento testo',
 		tabDefinitionsTitle: 'Definizioni',
 		tabSyntSimpTitle: 'Testo semplificato',
@@ -139,7 +139,7 @@ function initFeatures() {
   // - errorLabel: map with blockId - error message in case of block precondition fails
   waeUI.getInstance().init({
 		lang: 'it',
-	  	endpoint: 'https://dev.smartcommunitylab.it/simp-engines/wae',
+	  	endpoint: 'https://simpatico.smartcommunitylab.it/simp-engines/wae',
 		prevButtonLabel: 'Precedente',
 		nextButtonLabel: 'Successivo',
 		lastButtonLabel: 'Fine',
@@ -156,7 +156,7 @@ function initFeatures() {
     listener: function() {
     	$('form').submit();
     },
-    apiEndpoint: 'https://dev.smartcommunitylab.it/simpatico-logs/api',
+    apiEndpoint: 'https://simpatico.smartcommunitylab.it/simpatico-logs/api',
   });
 
   // Init the Data Analysis component (see da-ui.js)
@@ -165,7 +165,7 @@ function initFeatures() {
   // - apiEndpoint: the main URL of the logs API server (<site>/simpatico/api)
   daUI.getInstance().init({
     elementsToTrackTimeClassName: '',
-    apiEndpoint: 'https://dev.smartcommunitylab.it/simpatico-logs/api'
+    apiEndpoint: 'https://simpatico.smartcommunitylab.it/simpatico-logs/api'
   });
 
   // Declare here the buttons that will be available in the Simpatico Bar

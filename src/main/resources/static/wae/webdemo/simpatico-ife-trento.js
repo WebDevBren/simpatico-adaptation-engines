@@ -17,13 +17,13 @@ function initFeatures() {
     endpoint: 'https://tn.smartcommunitylab.it/aac', 
     clientID: '8ab03990-d5dd-47ea-8fc6-c92a3b0c04a4',
     authority: null,
-    redirect: 'https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/logincb.html'
+    redirect: 'https://simpatico.smartcommunitylab.it/simp-engines/wae/webdemo/logincb.html'
   });
   
   // Init the LOG component (see log-core.js)
   // - endpoint: the main URL of the used LOG instance
   logCORE.getInstance().init({
-	  endpoint: "https://dev.smartcommunitylab.it/simpatico-logs/api"
+	  endpoint: "https://simpatico.smartcommunitylab.it/simpatico-logs/api"
   });
 
   // Init the Citizenpedia component (see ctz-ui.js)
@@ -38,14 +38,14 @@ function initFeatures() {
   // - diagramNotificationClassName: The CSS class of the img shown when a diagram is found
   // - diagramNotificationText: The text to notify that a diagram
   citizenpediaUI.getInstance().init({
-    endpoint: 'https://dev.smartcommunitylab.it/qae',
+    endpoint: 'https://simpatico.smartcommunitylab.it/qae',
     primaryColor: "#24BCDA",
     secondaryColor:"#D3F2F8",
     elementsToEnhanceClassName: "simpatico-query-and-answer",
     questionsBoxClassName: "simp-ctz-ui-qb",
     questionsBoxTitle: "Domande legate",
     addQuestionLabel: "+ Aggiungi una domanda",
-    diagramNotificationImage: "https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/diagram.png",
+    diagramNotificationImage: "https://simpatico.smartcommunitylab.it/simp-engines/wae/webdemo/img/diagram.png",
     diagramNotificationClassName: "simp-ctz-ui-diagram",
     diagramNotificationText: "C'e' una visualizzazione di e-service in Citizenpedia"
   });
@@ -59,7 +59,7 @@ function initFeatures() {
   // - dialogTitle: Title of the dialog box of CDV component
   // - tabPFieldsTitle: tab label of personal data
   cdvUI.getInstance().init({
-    endpoint: 'https://dev.smartcommunitylab.it/',
+    endpoint: 'https://simpatico.smartcommunitylab.it/',
     serviceID: simpaticoEservice,
     dataFields: simpaticoMapping,
     cdvColor: '#008000',
@@ -99,7 +99,7 @@ function initFeatures() {
   // - simplifyBoxTitle: Title of the box which shows the simplifications
   // - wordPropertiesClassName: The CSS class of the word properties box
   taeUI.getInstance().init({
-    endpoint: 'https://dev.smartcommunitylab.it/simp-engines/tae',
+    endpoint: 'https://simpatico.smartcommunitylab.it/simp-engines/tae',
     language: 'it',
     primaryColor: "#DE453E",
     secondaryColor:"#F0ABA8",
@@ -120,7 +120,7 @@ function initFeatures() {
   // - notextMessage: label of 'no text selected' hint
   taeUIPopup.getInstance().init({
 		lang: 'it',
-		endpoint: 'https://dev.smartcommunitylab.it/simp-engines/tae',
+		endpoint: 'https://simpatico.smartcommunitylab.it/simp-engines/tae',
 		dialogTitle: 'Arricchimento testo',
 		tabDefinitionsTitle: 'Definizioni',
 		tabSyntSimpTitle: 'Testo semplificato',
@@ -139,7 +139,7 @@ function initFeatures() {
   // - errorLabel: map with blockId - error message in case of block precondition fails
   waeUI.getInstance().init({
 		lang: 'it',
-	  	endpoint: 'https://dev.smartcommunitylab.it/simp-engines/wae',
+	  	endpoint: 'https://simpatico.smartcommunitylab.it/simp-engines/wae',
 		prevButtonLabel: 'Precedente',
 		nextButtonLabel: 'Successivo',
 		lastButtonLabel: 'Fine',
@@ -154,7 +154,7 @@ function initFeatures() {
   // NOTE: Requires jquery-ui to work properly
   sfUI.getInstance().init({
     buttonToShowSfId: 'SF',
-    apiEndpoint: 'https://dev.smartcommunitylab.it/simpatico-logs/api',
+    apiEndpoint: 'https://simpatico.smartcommunitylab.it/simpatico-logs/api',
     formSelector: 'form',
     listener: function() {
     	$('form').submit();
@@ -167,7 +167,7 @@ function initFeatures() {
   // - apiEndpoint: the main URL of the logs API server (<site>/simpatico/api)
 //  daUI.getInstance().init({
 //    elementsToTrackTimeClassName: '',
-//    apiEndpoint: 'https://dev.smartcommunitylab.it/simpatico-logs/api'
+//    apiEndpoint: 'https://simpatico.smartcommunitylab.it/simpatico-logs/api'
 //  });
 
   // Declare here the buttons that will be available in the Simpatico Bar
@@ -176,8 +176,8 @@ function initFeatures() {
   buttons = [{
                   id: "simp-bar-sw-login",
                   // Ad-hoc images to define the enabled/disabled images
-                  imageSrcEnabled: "https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/ic_on.png",
-                  imageSrcDisabled: "https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/login.png",
+                  imageSrcEnabled: "https://simpatico.smartcommunitylab.it/simp-engines/wae/webdemo/img/ic_on.png",
+                  imageSrcDisabled: "https://simpatico.smartcommunitylab.it/simp-engines/wae/webdemo/img/login.png",
                   alt: "Entra",
                   // Ad-hoc css classes to define the enabled/disabled styles
                   styleClassEnabled: "simp-none", 
@@ -191,8 +191,8 @@ function initFeatures() {
                 {
                   id: "simp-bar-sw-citizenpedia",
                   // Ad-hoc images to define the enabled/disabled images
-                  imageSrcEnabled: "https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/citizenpedia.png",
-                  imageSrcDisabled: "https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/citizenpedia.png",
+                  imageSrcEnabled: "https://simpatico.smartcommunitylab.it/simp-engines/wae/webdemo/img/citizenpedia.png",
+                  imageSrcDisabled: "https://simpatico.smartcommunitylab.it/simp-engines/wae/webdemo/img/citizenpedia.png",
                   alt: "Accedi alle domande e risposte associate agli elementi del modulo",
                   // Ad-hoc css classes to define the enabled/disabled styles
                   styleClassEnabled: "simp-bar-btn-active",
@@ -206,8 +206,8 @@ function initFeatures() {
                 {
                     id: "simp-bar-sw-tae-popup",
                     // Ad-hoc images to define the enabled/disabled images
-                    imageSrcEnabled: "https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/enrich.png",
-                    imageSrcDisabled: "https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/enrich.png",
+                    imageSrcEnabled: "https://simpatico.smartcommunitylab.it/simp-engines/wae/webdemo/img/enrich.png",
+                    imageSrcDisabled: "https://simpatico.smartcommunitylab.it/simp-engines/wae/webdemo/img/enrich.png",
                     alt: "Semplificazione del testo selezionato",
                     // Ad-hoc css classes to define the enabled/disabled styles
                     styleClassEnabled: "simp-bar-btn-active",
@@ -226,8 +226,8 @@ function initFeatures() {
                 {
                   id: "simp-bar-sw-cdv",
                   // Ad-hoc images to define the enabled/disabled images
-                  imageSrcEnabled: "https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/cdv.png",
-                  imageSrcDisabled: "https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/cdv.png",
+                  imageSrcEnabled: "https://simpatico.smartcommunitylab.it/simp-engines/wae/webdemo/img/cdv.png",
+                  imageSrcDisabled: "https://simpatico.smartcommunitylab.it/simp-engines/wae/webdemo/img/cdv.png",
                   alt: "Salva e precompila i campi usando i tuoi dati personali attraverso Citizen Data Vault",
                   // Ad-hoc css classes to define the enabled/disabled styles
                   styleClassEnabled: "simp-bar-btn-active",
@@ -240,8 +240,8 @@ function initFeatures() {
                 },
                 { // workflow adaptation. Switch to the modality, where the form adaptation starts
                   id: 'workflow',
-                  imageSrcEnabled: "https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/forms.png",
-                  imageSrcDisabled: "https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/forms.png",
+                  imageSrcEnabled: "https://simpatico.smartcommunitylab.it/simp-engines/wae/webdemo/img/forms.png",
+                  imageSrcDisabled: "https://simpatico.smartcommunitylab.it/simp-engines/wae/webdemo/img/forms.png",
                   alt: "Compilazione guidata del modulo",
                   // Ad-hoc css classes to define the enabled/disabled styles
                   styleClassEnabled: "simp-bar-btn-active",
@@ -253,8 +253,8 @@ function initFeatures() {
                 },
                 { // session feedback
                     id: 'process',
-                    imageSrcEnabled: "https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/diagram.png",
-                    imageSrcDisabled: "https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/diagram.png",
+                    imageSrcEnabled: "https://simpatico.smartcommunitylab.it/simp-engines/wae/webdemo/img/diagram.png",
+                    imageSrcDisabled: "https://simpatico.smartcommunitylab.it/simp-engines/wae/webdemo/img/diagram.png",
                     alt: "Procedura amministrativa",
                     // Ad-hoc css classes to define the enabled/disabled styles
                     styleClassEnabled: "simp-bar-btn-active",
@@ -266,8 +266,8 @@ function initFeatures() {
                   },
                   { // session feedback
                       id: 'sf',
-                      imageSrcEnabled: "https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/feedback.png",
-                      imageSrcDisabled: "https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/feedback.png",
+                      imageSrcEnabled: "https://simpatico.smartcommunitylab.it/simp-engines/wae/webdemo/img/feedback.png",
+                      imageSrcDisabled: "https://simpatico.smartcommunitylab.it/simp-engines/wae/webdemo/img/feedback.png",
                       alt: "La tua opinione",
                       // Ad-hoc css classes to define the enabled/disabled styles
                       styleClassEnabled: "simp-bar-btn-active",
@@ -355,7 +355,7 @@ function addSimpaticoBar(containerID) {
   var simpaticoBarHtml = '<div id="simp-bar">' +
                             '<div>' +
                               '<a href="#">' +
-                                '<img src="https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/logo.png" ' +
+                                '<img src="https://simpatico.smartcommunitylab.it/simp-engines/wae/webdemo/img/logo.png" ' +
                                 'height="50px" ' +
                                 'alt="Simpatico ">' +
                               '</a>' +
