@@ -155,10 +155,11 @@ function initFeatures() {
   sfUI.getInstance().init({
     buttonToShowSfId: 'SF',
     apiEndpoint: 'https://simpatico.smartcommunitylab.it/simpatico-logs/api',
-    formSelector: 'form',
-    listener: function() {
-    	$('form').submit();
-    },
+    // TEMPORALY DISABLED
+//    formSelector: 'form',
+//    listener: function() {
+//    	$('form').submit();
+//    },
   });
 
   // Init the Data Analysis component (see da-ui.js)

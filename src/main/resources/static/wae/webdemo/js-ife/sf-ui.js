@@ -65,11 +65,14 @@ var sfUI = (function () {
     }
 
     function showSF () {
-      if (!authManager.getInstance().isEnabled()) return; // If there isn't an user logged in, SF won't work
+      if (!authManager.getInstance().isEnabled()){
+        console.log("Auth needed");
+        return; // If there isn't an user logged in, SF won't work
+      } 
 
       var data = JSON.parse(localStorage.userData); // Get the user's ID from localStorage
-      if (citizenpediaUI.getInstance().isEnabled()) ctzSelected = true;
-      if (taeUI.getInstance().isEnabled()) simplificationSelected = true;
+      ctzSelected = citizenpediaUI.getInstance().isEnabled();
+      simplificationSelected = taeUI.getInstance().isEnabled();
       // Check if timeout exists
       var currentTime = new Date().getTime();
       timeoutExceeded = isTimeExceeded(currentTime - startTime);
