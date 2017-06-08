@@ -442,6 +442,11 @@ document.addEventListener('DOMContentLoaded', function () {
   link.type = "text/css";
   link.rel = "stylesheet";
   document.getElementsByTagName( "head" )[0].appendChild( link );
+  link = document.createElement( "link" );
+  link.href = "https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css";
+  link.type = "text/css";
+  link.rel = "stylesheet";
+  document.getElementsByTagName( "head" )[0].appendChild( link );
 });
 window.addEventListener('beforeunload', function (e) {
   logCORE.getInstance().setSyncMode();	
