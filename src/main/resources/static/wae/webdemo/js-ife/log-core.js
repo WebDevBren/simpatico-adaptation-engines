@@ -86,6 +86,18 @@ var logCORE = (function () {
 		},
 		logFreetext: function(eservice, selected_text) {
 			log(taeEndpoint+'/freetext', {'e-serviceID': eservice, selected_text: selected_text});
+		},
+		logAction: function(eservice, action, word) {
+	      var timestamp = new Date().getTime();
+	      //TODO: HIB- Implement it
+	      var postData = {
+	        "component": 'tae', 
+	        "e-serviceID": eservice, // the id of the corresponding e-service
+	        "timestamp": timestamp,
+	        "action": action	        
+	      }
+	      if (!!word) postData.word = word;
+	      insertLogEvent(postData);
 		}
 	}
 	var waeLogger = {
