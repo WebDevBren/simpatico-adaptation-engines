@@ -153,7 +153,12 @@ var logCORE = (function () {
 		},
 		feedbackData: function(eservice, data) {
 			data['e-serviceID'] = eservice;
-      data['datatype'] = 'session-feedback'; // to distinguish it
+			// SEND NUMERIC DATA OTHERWISE ELASTICSEARCH DOES NOT INDEX AS NUMERIC 
+			if (data.slider_session_feedback_paragraph) data.slider_session_feedback_paragraph = parseInt(data.slider_session_feedback_paragraph);
+			if (data.slider_session_feedback_phrase) data.slider_session_feedback_phrase = parseInt(data.slider_session_feedback_phrase);
+			if (data.slider_session_feedback_word) data.slider_session_feedback_word = parseInt(data.slider_session_feedback_word);
+			if (data.slider_session_feedback_ctz) data.slider_session_feedback_ctz = parseInt(data.slider_session_feedback_ctz);
+			data['datatype'] = 'session-feedback'; // to distinguish it
 			log(logsEndpoint, data);
 		}
 	}

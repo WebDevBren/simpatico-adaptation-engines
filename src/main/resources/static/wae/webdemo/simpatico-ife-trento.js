@@ -143,7 +143,7 @@ function initFeatures() {
 		prevButtonLabel: 'Precedente',
 		nextButtonLabel: 'Successivo',
 		lastButtonLabel: 'Fine',
-		descriptionLabel: 'Descrizione',
+		descriptionLabel: 'Guida passo a passo',
 		topBarHeight: 60,
 		errorLabel: ERROR_LABELS
   });
@@ -189,7 +189,20 @@ function initFeatures() {
                   disable: function() { authManager.getInstance().disable(); }
                 },
 
-                {
+                { // WAE. Switch to the modality, where the form adaptation starts
+                    id: 'workflow',
+                    imageSrcEnabled: "https://simpatico.smartcommunitylab.it/simp-engines/wae/webdemo/img/forms.png",
+                    imageSrcDisabled: "https://simpatico.smartcommunitylab.it/simp-engines/wae/webdemo/img/forms.png",
+                    alt: "Compilazione guidata del modulo",
+                    // Ad-hoc css classes to define the enabled/disabled styles
+                    styleClassEnabled: "simp-bar-btn-active",
+                    styleClassDisabled: "simp-bar-btn-inactive",
+                    label: 'Compilazione guidata',
+                    isEnabled: function() { return waeUI.getInstance().isEnabled(); },
+                    enable: function() { var idProfile = null; waeUI.getInstance().enable(idProfile); },
+                    disable: function() { waeUI.getInstance().disable(); }
+                  },
+                { // CITIZENPEDIA
                   id: "simp-bar-sw-citizenpedia",
                   // Ad-hoc images to define the enabled/disabled images
                   imageSrcEnabled: "https://simpatico.smartcommunitylab.it/simp-engines/wae/webdemo/img/citizenpedia.png",
@@ -203,8 +216,7 @@ function initFeatures() {
                   enable: function() { citizenpediaUI.getInstance().enable(); },
                   disable: function() { citizenpediaUI.getInstance().disable(); }
                 },
-                
-                {
+                {	// TAE
                     id: "simp-bar-sw-tae-popup",
                     // Ad-hoc images to define the enabled/disabled images
                     imageSrcEnabled: "https://simpatico.smartcommunitylab.it/simp-engines/wae/webdemo/img/enrich.png",
@@ -224,35 +236,22 @@ function initFeatures() {
                     },
                     exclusive: true
                   },
-                {
-                  id: "simp-bar-sw-cdv",
-                  // Ad-hoc images to define the enabled/disabled images
-                  imageSrcEnabled: "https://simpatico.smartcommunitylab.it/simp-engines/wae/webdemo/img/cdv.png",
-                  imageSrcDisabled: "https://simpatico.smartcommunitylab.it/simp-engines/wae/webdemo/img/cdv.png",
-                  alt: "Salva e precompila i campi usando i tuoi dati personali attraverso Citizen Data Vault",
-                  // Ad-hoc css classes to define the enabled/disabled styles
-                  styleClassEnabled: "simp-bar-btn-active",
-                  styleClassDisabled: "simp-bar-btn-inactive",
-                  label: 'Dati personali',
-                  isEnabled: function() { return false; },
-                  enable: function() { cdvUI.getInstance().enable(); },
-                  disable: function() { cdvUI.getInstance().disable(); },
-                  exclusive: true
-                },
-                { // workflow adaptation. Switch to the modality, where the form adaptation starts
-                  id: 'workflow',
-                  imageSrcEnabled: "https://simpatico.smartcommunitylab.it/simp-engines/wae/webdemo/img/forms.png",
-                  imageSrcDisabled: "https://simpatico.smartcommunitylab.it/simp-engines/wae/webdemo/img/forms.png",
-                  alt: "Compilazione guidata del modulo",
-                  // Ad-hoc css classes to define the enabled/disabled styles
-                  styleClassEnabled: "simp-bar-btn-active",
-                  styleClassDisabled: "simp-bar-btn-inactive",
-                  label: 'Compilazione guidata',
-                  isEnabled: function() { return waeUI.getInstance().isEnabled(); },
-                  enable: function() { var idProfile = null; waeUI.getInstance().enable(idProfile); },
-                  disable: function() { waeUI.getInstance().disable(); }
-                },
-                { // session feedback
+                  {	// CDV
+                      id: "simp-bar-sw-cdv",
+                      // Ad-hoc images to define the enabled/disabled images
+                      imageSrcEnabled: "https://simpatico.smartcommunitylab.it/simp-engines/wae/webdemo/img/cdv.png",
+                      imageSrcDisabled: "https://simpatico.smartcommunitylab.it/simp-engines/wae/webdemo/img/cdv.png",
+                      alt: "Salva e precompila i campi usando i tuoi dati personali attraverso Citizen Data Vault",
+                      // Ad-hoc css classes to define the enabled/disabled styles
+                      styleClassEnabled: "simp-bar-btn-active",
+                      styleClassDisabled: "simp-bar-btn-inactive",
+                      label: 'Dati personali',
+                      isEnabled: function() { return false; },
+                      enable: function() { cdvUI.getInstance().enable(); },
+                      disable: function() { cdvUI.getInstance().disable(); },
+                      exclusive: true
+                    },
+                { // CPD: procedure model
                     id: 'process',
                     imageSrcEnabled: "https://simpatico.smartcommunitylab.it/simp-engines/wae/webdemo/img/diagram.png",
                     imageSrcDisabled: "https://simpatico.smartcommunitylab.it/simp-engines/wae/webdemo/img/diagram.png",
@@ -265,7 +264,7 @@ function initFeatures() {
                     enable: function() { citizenpediaUI.getInstance().openDiagram(); },
                     disable: function() {  }
                   },
-                  { // session feedback
+                  { // SF: session feedback
                       id: 'sf',
                       imageSrcEnabled: "https://simpatico.smartcommunitylab.it/simp-engines/wae/webdemo/img/feedback.png",
                       imageSrcDisabled: "https://simpatico.smartcommunitylab.it/simp-engines/wae/webdemo/img/feedback.png",
