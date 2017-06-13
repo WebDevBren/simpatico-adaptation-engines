@@ -89,7 +89,6 @@ var logCORE = (function () {
 		},
 		logAction: function(eservice, action, word) {
 	      var timestamp = new Date().getTime();
-	      //TODO: HIB- Implement it
 	      var postData = {
 	        "component": 'tae', 
 	        "e-serviceID": eservice, // the id of the corresponding e-service
@@ -113,10 +112,25 @@ var logCORE = (function () {
 	}
 	var cdvLogger = {
 		saveData: function(eservice) {
-			console.log('saving data');
+		      var timestamp = new Date().getTime();
+		      var postData = {
+		        "component": 'cdv', 
+		        "e-serviceID": eservice, // the id of the corresponding e-service
+		        "timestamp": timestamp,
+		        "action": "savedata"	        
+		      }
+		      insertLogEvent(postData);
 		},
 		useData: function(eservice, fieldId) {
-			console.log('using data');
+		      var timestamp = new Date().getTime();
+		      var postData = {
+		        "component": 'cdv', 
+		        "e-serviceID": eservice, // the id of the corresponding e-service
+		        "timestamp": timestamp,
+		        "action": "usedata"	        
+		      }
+		      if (fieldId != null) postData.fieldId = fieldId;
+		      insertLogEvent(postData);
 		}
 	}
 	var ifeLogger = {
@@ -253,6 +267,7 @@ var logCORE = (function () {
         startActivity: startActivity,
         endActivity: endActivity,
         ctzpLogger: ctzpLogger,
+        cdvLogger: cdvLogger,
         taeLogger: taeLogger,
         waeLogger: waeLogger,
         ifeLogger: ifeLogger,
