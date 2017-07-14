@@ -51,7 +51,7 @@ public class LexSimpAnnotator implements Annotator {
 
     @Override public void annotate(Annotation annotation) {
 
-        List<LexensteinAnnotator.Simplification> simplificationList = new ArrayList<>();
+        List<RawSimplification> simplificationList = new ArrayList<>();
 
         List<CoreMap> sentences = annotation.get(CoreAnnotations.SentencesAnnotation.class);
         for (CoreMap sentence : sentences) {
@@ -98,7 +98,7 @@ public class LexSimpAnnotator implements Annotator {
                 LOGGER.debug(simplifiedVersion);
 
                 CoreLabel token = sentence.get(CoreAnnotations.TokensAnnotation.class).get(contentWord);
-                LexensteinAnnotator.Simplification simplification = new LexensteinAnnotator.Simplification(
+                RawSimplification simplification = new RawSimplification(
                         token.beginPosition(),
                         token.endPosition(),
                         simplifiedVersion

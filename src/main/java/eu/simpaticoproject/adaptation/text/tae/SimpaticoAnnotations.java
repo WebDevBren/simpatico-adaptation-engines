@@ -12,10 +12,10 @@ import java.util.List;
 public class SimpaticoAnnotations {
 
     @JSONLabel("simplifications")
-    public static class SimplificationsAnnotation implements CoreAnnotation<List<LexensteinAnnotator.Simplification>> {
+    public static class SimplificationsAnnotation implements CoreAnnotation<List<RawSimplification>> {
 
-        public Class<List<LexensteinAnnotator.Simplification>> getType() {
-            return ErasureUtils.<Class<List<LexensteinAnnotator.Simplification>>>uncheckedCast(List.class);
+        public Class<List<RawSimplification>> getType() {
+            return ErasureUtils.<Class<List<RawSimplification>>>uncheckedCast(List.class);
         }
     }
 

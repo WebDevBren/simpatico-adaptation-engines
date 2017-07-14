@@ -27,53 +27,8 @@ import java.util.stream.Stream;
  * Created by alessio on 03/11/16.
  */
 
+@Deprecated
 public class LexensteinAnnotator implements Annotator {
-
-    static public class Simplification {
-
-        int start;
-        int end;
-        String simplification;
-        String originalValue;
-
-        public Simplification(int start, int end, String simplification) {
-            this.start = start;
-            this.end = end;
-            this.simplification = simplification;
-        }
-
-        public int getStart() {
-            return start;
-        }
-
-        public void setStart(int start) {
-            this.start = start;
-        }
-
-        public int getEnd() {
-            return end;
-        }
-
-        public void setEnd(int end) {
-            this.end = end;
-        }
-
-        public String getSimplification() {
-            return simplification;
-        }
-
-        public String getOriginalValue() {
-            return originalValue;
-        }
-
-        public void setOriginalValue(String originalValue) {
-            this.originalValue = originalValue;
-        }
-
-        public void setSimplification(String simplification) {
-            this.simplification = simplification;
-        }
-    }
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LexensteinAnnotator.class);
     int DEFAULT_PORT = 8057;
@@ -100,7 +55,7 @@ public class LexensteinAnnotator implements Annotator {
     @Override public void annotate(Annotation annotation) {
 
         LinkedHashMap<Integer, Map<Integer, String>> sentenceWords = new LinkedHashMap<>();
-        List<Simplification> simplificationList = new ArrayList<>();
+        List<RawSimplification> simplificationList = new ArrayList<>();
 
         Map<String, String> skipLemmaList = lexensteinModel.getLemmaList();
 
@@ -181,7 +136,7 @@ public class LexensteinAnnotator implements Annotator {
                                         CoreAnnotations.TokensAnnotation.class).get(tokenID);
                         String simplifiedVersion = simplifications.get(index);
                         if (simplifiedVersion.length() > 0) {
-                            Simplification simplification = new Simplification(
+                            RawSimplification simplification = new RawSimplification(
                                     token.beginPosition(),
                                     token.endPosition(),
                                     simplifiedVersion

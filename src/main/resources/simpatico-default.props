@@ -1,8 +1,10 @@
+supportedLanguages = it, en, es
+
 en.annotators = tokenize, ssplit, pos, lemma, readability
 en.readability.language = en
 en.customAnnotatorClass.readability = eu.fbk.dh.tint.readability.ReadabilityAnnotator
 
-es.annotators = spanish, readability, lsimp
+es.annotators = spanish, readability, lexsimp
 es.spanish.posModel = /Volumes/LEXAR/Resources/spanish/morph-models-1.5.0/es/es-pos-perceptron-autodict01-ancora-2.0.bin
 es.spanish.lemmaModel = /Volumes/LEXAR/Resources/spanish/morph-models-1.5.0/es/es-lemma-perceptron-ancora-2.0.bin
 es.readability.language = es
@@ -10,27 +12,16 @@ es.lsimp.host = gardner
 es.lsimp.port = 50011
 es.lsimp.language = es
 es.lsimp.min_difficult = 4
-es.customAnnotatorClass.spanish = eu.simpaticoproject.adaptation.text.spanish.BasicAnnotator
-es.customAnnotatorClass.readability = eu.fbk.dh.tint.readability.ReadabilityAnnotator
-es.customAnnotatorClass.lsimp = eu.simpaticoproject.adaptation.text.tae.LexSimpAnnotator
+es.customAnnotatorClass.lexsimp = eu.simpaticoproject.adaptation.text.tae.LexSimpAnnotator
 
 # add languagetool
-it.annotators = ita_toksent, pos, ita_morpho, ita_lemma, readability, fakesyn, ml
+it.annotators = ita_toksent, pos, ita_morpho, ita_lemma, readability, simplesyn, ml
 it.readability.language = it
 it.readability.glossario.parse = yes
 it.readability.glossario.use = yes
 it.readability.glossario.stanford.annotators = ita_toksent, pos, ita_morpho, ita_lemma
-it.customAnnotatorClass.lexenstein = eu.simpaticoproject.adaptation.text.tae.LexensteinAnnotator
-it.customAnnotatorClass.languagetool = eu.fbk.dh.tint.languagetool.LanguageToolAnnotator
-it.customAnnotatorClass.fakesyn = eu.simpaticoproject.adaptation.text.tae.FakeSynAnnotator
-# it.lexenstein.inputFile = /tmp/simpatico_input.txt
-# it.lexenstein.outputFile = /tmp/simpatico_output.txt
-# it.lexenstein.port = 50002
-# it.lexenstein.server = localhost
-# it.lexenstein.skipLemmaFile = /gardner1/data/simpatico/skipList.txt
 it.fakesyn.list = src/main/resources/out-sinonimicontrari-lemmatized-noinvert.txt
 it.fakesyn.only_one = false
-it.languagetool.port = 50007
 it.ita_toksent.model = src/main/resources/token-settings.xml
 it.ml.annotator = ml-annotate
 it.ml.address = http://ml.apnetwork.it/annotate
@@ -38,3 +29,13 @@ it.ml.min_confidence = 0.25
 
 ml_address = http://ml.apnetwork.it/annotate
 ml_min_confidence = 0.25
+
+all.customAnnotatorClass.ita_toksent=eu.fbk.dh.tint.tokenizer.annotators.ItalianTokenizerAnnotator
+all.customAnnotatorClass.ita_lemma=eu.fbk.dh.tint.digimorph.annotator.DigiLemmaAnnotator
+all.customAnnotatorClass.ita_morpho=eu.fbk.dh.tint.digimorph.annotator.DigiMorphAnnotator
+all.customAnnotatorClass.ita_tense=eu.fbk.dh.tint.tense.TenseAnnotator
+all.customAnnotatorClass.ml=eu.fbk.dkm.pikes.twm.LinkingAnnotator
+all.customAnnotatorClass.readability=eu.fbk.dh.tint.readability.ReadabilityAnnotator
+all.customAnnotatorClass.simplesyn = eu.simpaticoproject.adaptation.text.tae.SimpleSynAnnotator
+all.customAnnotatorClass.spanish = eu.simpaticoproject.adaptation.text.spanish.BasicAnnotator
+all.customAnnotatorClass.lexsimp = eu.simpaticoproject.adaptation.text.tae.LexSimpAnnotator

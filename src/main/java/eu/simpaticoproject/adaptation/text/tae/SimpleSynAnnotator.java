@@ -21,16 +21,16 @@ import java.util.regex.Pattern;
  * Created by alessio on 19/12/16.
  */
 
-public class FakeSynAnnotator implements Annotator {
+public class SimpleSynAnnotator implements Annotator {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FakeSynAnnotator.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SimpleSynAnnotator.class);
     private FakeSynModel model;
     private static Pattern firstLinePattern = Pattern.compile("1. ([^2]+)");
     private static Pattern firstResPattern = Pattern.compile("1. ([^,]+)");
     private boolean onlyOne = false;
     SkipModel skipModel;
 
-    public FakeSynAnnotator(String annotatorName, Properties props) {
+    public SimpleSynAnnotator(String annotatorName, Properties props) {
         Properties globalProperties = props;
         Properties localProperties = PropertiesUtils.dotConvertedProperties(props, annotatorName);
         this.onlyOne = PropertiesUtils.getBoolean(localProperties.getProperty("only_one", "false"), false);
@@ -40,7 +40,7 @@ public class FakeSynAnnotator implements Annotator {
 
     @Override public void annotate(Annotation annotation) {
 
-        List<LexensteinAnnotator.Simplification> simplificationList = new ArrayList<>();
+        List<RawSimplification> simplificationList = new ArrayList<>();
 
         int lemmaIndex = 0;
         HashMap<Integer, Integer> lemmaIndexes = new HashMap<>();
@@ -160,7 +160,7 @@ public class FakeSynAnnotator implements Annotator {
                 }
             }
 
-            LexensteinAnnotator.Simplification simplification = new LexensteinAnnotator.Simplification(
+            RawSimplification simplification = new RawSimplification(
                     token.beginPosition(),
                     token.endPosition(),
                     simplifiedVersion

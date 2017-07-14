@@ -92,7 +92,7 @@ public class SimpaticoOutput {
         this.simplifiedText = simplifiedText;
     }
 
-    public static class Simplification extends LexensteinAnnotator.Simplification {
+    public static class Simplification extends RawSimplification {
 
         public Simplification() {
             super(0, 0, null);

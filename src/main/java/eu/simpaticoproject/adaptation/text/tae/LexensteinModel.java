@@ -15,6 +15,7 @@ import java.util.Map;
  * Created by alessio on 25/05/15.
  */
 
+@Deprecated
 public class LexensteinModel {
 
     private static LexensteinModel instance;
