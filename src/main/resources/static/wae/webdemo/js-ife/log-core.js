@@ -86,6 +86,17 @@ var logCORE = (function () {
 		},
 		logFreetext: function(eservice, selected_text) {
 			log(taeEndpoint+'/freetext', {'e-serviceID': eservice, selected_text: selected_text});
+		},
+		logAction: function(eservice, action, word) {
+	      var timestamp = new Date().getTime();
+	      var postData = {
+	        "component": 'tae', 
+	        "e-serviceID": eservice, // the id of the corresponding e-service
+	        "timestamp": timestamp,
+	        "action": action	        
+	      }
+	      if (!!word) postData.word = word;
+	      insertLogEvent(postData);
 		}
 	}
 	var waeLogger = {
@@ -101,10 +112,25 @@ var logCORE = (function () {
 	}
 	var cdvLogger = {
 		saveData: function(eservice) {
-			console.log('saving data');
+		      var timestamp = new Date().getTime();
+		      var postData = {
+		        "component": 'cdv', 
+		        "e-serviceID": eservice, // the id of the corresponding e-service
+		        "timestamp": timestamp,
+		        "action": "savedata"	        
+		      }
+		      insertLogEvent(postData);
 		},
 		useData: function(eservice, fieldId) {
-			console.log('using data');
+		      var timestamp = new Date().getTime();
+		      var postData = {
+		        "component": 'cdv', 
+		        "e-serviceID": eservice, // the id of the corresponding e-service
+		        "timestamp": timestamp,
+		        "action": "usedata"	        
+		      }
+		      if (fieldId != null) postData.fieldId = fieldId;
+		      insertLogEvent(postData);
 		}
 	}
 	var ifeLogger = {
@@ -141,7 +167,12 @@ var logCORE = (function () {
 		},
 		feedbackData: function(eservice, data) {
 			data['e-serviceID'] = eservice;
-      data['datatype'] = 'session-feedback'; // to distinguish it
+			// SEND NUMERIC DATA OTHERWISE ELASTICSEARCH DOES NOT INDEX AS NUMERIC 
+			if (data.slider_session_feedback_paragraph) data.slider_session_feedback_paragraph = parseInt(data.slider_session_feedback_paragraph);
+			if (data.slider_session_feedback_phrase) data.slider_session_feedback_phrase = parseInt(data.slider_session_feedback_phrase);
+			if (data.slider_session_feedback_word) data.slider_session_feedback_word = parseInt(data.slider_session_feedback_word);
+			if (data.slider_session_feedback_ctz) data.slider_session_feedback_ctz = parseInt(data.slider_session_feedback_ctz);
+			data['datatype'] = 'session-feedback'; // to distinguish it
 			log(logsEndpoint, data);
 		}
 	}
@@ -236,6 +267,7 @@ var logCORE = (function () {
         startActivity: startActivity,
         endActivity: endActivity,
         ctzpLogger: ctzpLogger,
+        cdvLogger: cdvLogger,
         taeLogger: taeLogger,
         waeLogger: waeLogger,
         ifeLogger: ifeLogger,

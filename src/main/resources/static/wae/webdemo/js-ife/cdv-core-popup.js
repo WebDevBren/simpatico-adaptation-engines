@@ -84,6 +84,7 @@ var cdvCORE = (function () {
 			console.log(tokenData);
 			var pdata = formFieldsToJSON(serviceLink, data.userId, dataFields);
 
+			logCORE.getInstance().cdvLogger.saveData(simpaticoEservice);
 			$.ajax({
 				url: url,
 				type: 'POST',

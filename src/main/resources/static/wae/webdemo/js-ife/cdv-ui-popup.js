@@ -237,12 +237,17 @@ var cdvUI = (function () {
 					}
 					datalisttemp += '</select></datalist>';
 					$('#' +propertyField).attr("list", "datalist" + property.key);
+					$('#' + property.key).change(function(evt){
+						logCORE.getInstance().cdvLogger.useData(simpaticoEservice, evt.currentTarget.id);
+					});
 					console.log(datalisttemp);
 					if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
 						 $('#' +propertyField).autocomplete({
 							 source: property.values,
 							 minLength: 0,
-							 }).focus(function () {
+							 change:function(evt) {
+									logCORE.getInstance().cdvLogger.useData(simpaticoEservice, evt.currentTarget.id);
+							 }}).focus(function () {
 							 $(this).autocomplete("search");
 						 });
 					}

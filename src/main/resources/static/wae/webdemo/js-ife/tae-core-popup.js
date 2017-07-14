@@ -43,7 +43,7 @@ var taeEngine = ( function () {
 				    	annotatedText = annotatedText + value.substring(index, item.start-1);
 				    	var originalText = value.substring(item.start, item.end);
 				      annotatedText = annotatedText + 
-				      ' <a class="simpatico-label" title="' + item.description.description + 
+				      ' <a class="simpatico-label simpatico-label-def" title="' + item.description.description + 
 				      '">' + originalText +'</a> ';
 				      index = item.end;
 				    }
@@ -54,7 +54,7 @@ var taeEngine = ( function () {
 				    for (itemName in json.readability.forms) {
 				    	item = json.readability.forms[itemName];
 				    	if (item.start == position) {
-						      var text = ' <a class="simpatico-label" title="' + item.description.description + 
+						      var text = ' <a class="simpatico-label simpatico-label-def" title="' + item.description.description + 
 						      '">' + word +'</a> ';
 						      callback(text);
 						      return;
@@ -89,7 +89,7 @@ var taeEngine = ( function () {
 					    for (var item = 0; item < json.simplifications.length; item++) {
 					    	var originalText = value.substring(json.simplifications[item].start, json.simplifications[item].end);
 					        annotatedText = annotatedText + value.substring(index, json.simplifications[item].start-1);
-					        annotatedText = annotatedText + ' <a class="simpatico-label" title="' + json.simplifications[item].simplification + 
+					        annotatedText = annotatedText + ' <a class="simpatico-label simpatico-label-simp" title="' + json.simplifications[item].simplification + 
 					        '">' + originalText +'</a> '
 					        index = json.simplifications[item].end;
 					    }
@@ -98,7 +98,7 @@ var taeEngine = ( function () {
 			    	} else {
 					    for (var item = 0; item < json.simplifications.length; item++) {
 					    	if (json.simplifications[item].start == value.indexOf(data.word)) {
-					    		callback(' <a class="simpatico-label" title="' + json.simplifications[item].simplification + 
+					    		callback(' <a class="simpatico-label simpatico-label-simp" title="' + json.simplifications[item].simplification + 
 								        '">' + data.word +'</a> ');
 					    		return;
 					    	}
@@ -142,7 +142,7 @@ var taeEngine = ( function () {
 					    	annotatedText = annotatedText + value.substring(index, actualLinkItem.offset-1);
 					    	var originalText = value.substring(actualLinkItem.offset, actualLinkItem.offset + actualLinkItem.length);
 					      annotatedText = annotatedText + 
-					      ' <a class="simpatico-label" target="_blank" href="' + actualLinkItem.page + 
+					      ' <a class="simpatico-label simpatico-label-wiki" target="_blank" href="' + actualLinkItem.page + 
 					      '">' + originalText +'</a> ';
 					      index = actualLinkItem.offset + actualLinkItem.length;
 					      actualLinkItem = item;
@@ -155,7 +155,7 @@ var taeEngine = ( function () {
 				    	annotatedText = annotatedText + value.substring(index, actualLinkItem.offset-1);
 				    	var originalText = value.substring(actualLinkItem.offset, actualLinkItem.offset + actualLinkItem.length);
 				      annotatedText = annotatedText + 
-				      ' <a class="simpatico-label" target="_blank" href="' + actualLinkItem.page + 
+				      ' <a class="simpatico-label simpatico-label-wiki" target="_blank" href="' + actualLinkItem.page + 
 				      '">' + originalText +'</a> ';
 				      index = actualLinkItem.offset + actualLinkItem.length;
 				    }
@@ -166,7 +166,7 @@ var taeEngine = ( function () {
 				    for (var itemName = 0; itemName < json.linkings.length; itemName++) {
 				    	var item = json.linkings[itemName];
 				    	if(item.offset == value.indexOf(data.word)) {
-					      callback(' <a class="simpatico-label" target="_blank" href="' + item.page + 
+					      callback(' <a class="simpatico-label simpatico-label-wiki" target="_blank" href="' + item.page + 
 					      '">' + data.word +'</a> ');
 					      return;
 				    	}
