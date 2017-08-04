@@ -103,7 +103,7 @@ body {
     padding: 10px;
     margin: 0;
 }
-.div_simpatico_block_description_content * {
+.div_simpatico_block_description_content, .div_simpatico_block_description_content * {
     color: #24BCDA !important;	
 }
 
