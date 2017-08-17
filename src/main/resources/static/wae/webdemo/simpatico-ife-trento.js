@@ -122,12 +122,12 @@ function initFeatures() {
 		lang: 'it',
 		endpoint: 'https://simpatico.smartcommunitylab.it/simp-engines/tae',
 		dialogTitle: 'Arricchimento testo',
-		tabDefinitionsTitle: 'Definizioni',
+		tabDefinitionsTitle: 'Vocabolario',
 		tabSyntSimpTitle: 'Testo semplificato',
-		tabSimplificationTitle: 'Semplificazione lessicale',
+		tabSimplificationTitle: 'Aiuto comprensione',
 		tabWikipediaTitle: 'Wikipedia',
 		entryMessage: 'Scegli il tipo di aiuto',
-		notextMessage: 'Nessun testo selezionato'
+		notextMessage: 'Selezione una parola o una frase per procedere con la semplificazione'
 	});
 
   
@@ -225,7 +225,7 @@ function initFeatures() {
                     // Ad-hoc css classes to define the enabled/disabled styles
                     styleClassEnabled: "simp-bar-btn-active",
                     styleClassDisabled: "simp-bar-btn-inactive",
-                    label: 'Semplifica testo',
+                    label: 'Semplificazione testo',
                     isEnabled: function() { return false; },
                     enable: function() { 
                     	console.log(window.getSelection().toString().trim());

@@ -97,7 +97,17 @@ body {
 	right: 0.5cm;
 	top: 9px;
 }
-#div_simpatico_block_description h5 {
+
+.div_simpatico_block_description_content {
+    background-color: #E9F8FC !important;
+    padding: 10px;
+    margin: 0;
+}
+.div_simpatico_block_description_content, .div_simpatico_block_description_content * {
+    color: #24BCDA !important;	
+}
+
+#div_simpatico_block_description > h5 {
 	margin: 0;
 	font-weight: bold;
     padding-left: 10px;
@@ -105,12 +115,6 @@ body {
     background-color: #24BCDA !important;
     font-size: 12px;
     line-height: 18px;
-}
-#div_simpatico_block_description p {
-	background-color: #E9F8FC !important;
-	padding: 10px;
-	margin: 0;
-	color: #24BCDA !important;
 }
 
 #btn_simpatico_next, #btn_simpatico_prev {

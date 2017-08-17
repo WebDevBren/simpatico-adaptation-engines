@@ -220,7 +220,7 @@ var waeUI = (function () {
 		});
 	};
 	function createDescription(text) {
-		return $('<div id="div_simpatico_block_description"><h5>'+labels.descriptionLabel+'</h5><p>'+text+'</p></div>');
+		return $('<div id="div_simpatico_block_description"><h5>'+labels.descriptionLabel+'</h5><div class="div_simpatico_block_description_content">'+text+'</div></div>');
 	};
 
 	function createNextButton() {
