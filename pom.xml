@@ -124,12 +124,12 @@
         <dependency>
             <groupId>eus.ixa</groupId>
             <artifactId>ixa-pipe-pos</artifactId>
-            <version>1.5.1</version>
+            <version>1.5.2</version>
         </dependency>
         <dependency>
             <groupId>eus.ixa</groupId>
             <artifactId>ixa-pipe-tok</artifactId>
-            <version>1.8.5</version>
+            <version>1.8.6</version>
         </dependency>
         <dependency>
             <groupId>com.github.ixa-ehu</groupId>
