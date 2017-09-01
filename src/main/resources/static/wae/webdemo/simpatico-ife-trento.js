@@ -17,7 +17,8 @@ function initFeatures() {
     endpoint: 'https://tn.smartcommunitylab.it/aac', 
     clientID: '8ab03990-d5dd-47ea-8fc6-c92a3b0c04a4',
     authority: null,
-    redirect: 'https://simpatico.smartcommunitylab.it/simp-engines/wae/webdemo/logincb.html'
+    redirect: 'https://simpatico.smartcommunitylab.it/simp-engines/wae/webdemo/logincb.html',
+    greeting: 'ACCEDI A SIMPATICO'
   });
   
   // Init the LOG component (see log-core.js)
@@ -426,6 +427,7 @@ document.addEventListener('DOMContentLoaded', function () {
   addSimpaticoBar("simpatico_top");
   authManager.getInstance().updateUserData();
   
+  
   var link = document.createElement( "link" );
   link.href = "https://simpatico.smartcommunitylab.it/simp-engines/wae/webdemo/css/moduli.css";
   link.type = "text/css";
@@ -446,7 +448,10 @@ document.addEventListener('DOMContentLoaded', function () {
   link.type = "text/css";
   link.rel = "stylesheet";
   document.getElementsByTagName( "head" )[0].appendChild( link );
+  
+  checkShowTutorial();
 });
+
 window.addEventListener('beforeunload', function (e) {
   logCORE.getInstance().setSyncMode();	
   logCORE.getInstance().ifeLogger.sessionEnd(simpaticoEservice);
@@ -454,5 +459,68 @@ window.addEventListener('beforeunload', function (e) {
       // log end of session
 	  logCORE.getInstance().ifeLogger.formEnd(simpaticoEservice, simpaticoForm);
   }
-  
 });
+
+dialog_tutorial = null;
+dialog_step = 0;
+function checkShowTutorial() {
+	if (!localStorage.simpatico_tutorial_shown || localStorage.simpatico_tutorial_shown == 'null') {
+		
+
+		setTimeout(function(){
+			dialog_tutorial = $(
+					'<div id="dialog-tutorial">' +
+					'	<div id="tutorial">'+
+						 '<div class="tutorial-header">'+
+					       '<img src="https://simpatico.smartcommunitylab.it/simp-engines/wae/webdemo/img/logo.png" ' +
+					      		'style="vertical-align: bottom;" height="50px" alt="Simpatico">'+
+					      		'<div style="display: inline-block;"><h1 style="margin: 0;">Simpatico</h1><span style="float:right;">TUTORIAL</span></div>'+
+			      		 '</div>'+
+			      		 '<div id="tutorialcontent"></div>' +
+			      		 '<div id="tutorial-buttons">' +
+			      		 '  <a id="tutorialesc" href="#">ESCI</a>' +
+			      		 '  <a id="tutorialnext"  href="#">AVANTI</a>'+
+			      		 '</div>' +
+			      	   '</div>' +
+					'</div>'
+					).dialog({
+						autoOpen: false,
+						classes: {
+							"ui-dialog": "tutorial-dialog"
+						},
+						modal: true,
+						closeOnEscape: false,
+						height: "auto",
+						width: 500
+			});
+			dialog_tutorial.dialog('open');
+			$('#tutorialesc').click(closeTutorial);
+			$('#tutorialnext').click(nextTutorial);
+			$('#tutorialcontent').html(tutorialContent(0));
+		}, 500);
+		localStorage.simpatico_tutorial_shown = true;
+	}
+}
+
+function closeTutorial() {
+	dialog_step = 0;
+	dialog_tutorial.dialog('destroy');
+}
+function nextTutorial() {
+	dialog_step++;
+	$('#tutorialcontent').html(tutorialContent(dialog_step));
+	if (dialog_step == 6) {
+		$('#tutorialnext').hide();
+	}
+}
+function tutorialContent(step) {
+	switch(step) {
+	case 0: return '<p>Il servizio SIMPATICO mette a disposizione strumenti per semplificare la compilazione dei moduli online.</p><br/><p>Per accedere alle funzionalità effettua l\'accesso in alto a destra.</p>';
+	case 1: return '<table><tr><td><img src="https://simpatico.smartcommunitylab.it/simp-engines/wae/webdemo/img/forms.png"></td><td width="100%">La funzionalità COMPILAZIONE GUIDATA ti accompagna passo-passo nella compilazione del modulo online.</td></tr></table>';
+	case 2: return '<table><tr><td><img src="https://simpatico.smartcommunitylab.it/simp-engines/wae/webdemo/img/citizenpedia.png"></td><td width="100%">La funzionalità DOMANDE E RISPOSTE ti permette di leggere e/o inserire domande legate a specifiche sezioni del servizio.</td></tr></table>';
+	case 3: return '<table><tr><td><img src="https://simpatico.smartcommunitylab.it/simp-engines/wae/webdemo/img/enrich.png"></td><td width="100%">La funzionalità SEMPLIFICAZIONE TESTO mette a disposizione strumenti per meglio comprendere le frasi nel modulo. Per attivarla devi selezionare il testo da semplificare e cliccare sull\'icona.</td></tr></table>';
+	case 4: return '<table><tr><td><img src="https://simpatico.smartcommunitylab.it/simp-engines/wae/webdemo/img/cdv.png"></td><td width="100%">La funzionalità DATI PERSONALI ti consente di salvare e recuperare in altri moduli le informazioni che hai inserito (es. nucleo familiare).</td></tr></table>';
+	case 5: return '<table><tr><td><img src="https://simpatico.smartcommunitylab.it/simp-engines/wae/webdemo/img/diagram.png"></td><td width="100%">La funzionalità PROCEDURA ti permette di avere uno sguardo di insieme dei passi previsti per l’attivazione e l’utilizzo del servizio.</td></tr></table>';
+	case 6: return '<table><tr><td><img src="https://simpatico.smartcommunitylab.it/simp-engines/wae/webdemo/img/feedback.png"></td><td width="100%">La funzione FEEDBACK ti consente di esprimere in ogni momento una valutazione rispetto alle funzionalità di SIMPATICO.</td></tr></table>';
+	}
+}

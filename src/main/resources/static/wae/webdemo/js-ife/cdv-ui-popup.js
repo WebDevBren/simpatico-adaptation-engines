@@ -334,18 +334,18 @@ var cdvUI = (function () {
 				dialog_cdv = $(
 						'<div id="dialog-cdv" title="' + labels.dialogTitle + '">' +
 						'	<div id="tabs">' +
-						'		<ul>' +
-						'			<li><a href="#tab-0">Simpatico</a></li>' +
-						'			<li><a href="#tab-setting">' + labels.tabSettingsTitle + '</a></li>' +
-						'		</ul>' +
+//						'		<ul>' +
+//						'			<li><a href="#tab-0">Simpatico</a></li>' +
+//						'			<li><a href="#tab-setting">' + labels.tabSettingsTitle + '</a></li>' +
+//						'		</ul>' +
 						'		<div id="tab-0">' +
 						'			<p>' + entryMessage + '</p>' +
 						'			<br>' +
 						'			<p>' + statusMessage + '</p>' +
 						'		</div>' +
-						'		<div id="tab-setting">' +
-						'			<p>Loading...</p>' +
-						'		</div>' +
+//						'		<div id="tab-setting">' +
+//						'			<p>Loading...</p>' +
+//						'		</div>' +
 						'	</div>' +
 						'</div>').dialog({
 						autoOpen: false,
@@ -406,7 +406,17 @@ var cdvUI = (function () {
 						var confirm = confirmUpdateData();
 						cdvCORE.getInstance().cdv_postdata(confirm);
 					};
+					dlgData.buttons[labels.buttonRemoveAccount] = function () {
+						cdvUI.getInstance().confirmRemoveAccount();
+					};
+					dlgData.buttons[labels.buttonExport] = function () {
+						cdvCORE.getInstance().exportData();;
+					};
 					dialog_cdv.dialog(dlgData);
+
+//				    fieldSelect1 += ' <button class="ui-button ui-widget ui-corner-all" onClick="cdvUI.getInstance().confirmRemoveAccount();">'+labels.buttonRemoveAccount+'</button>';
+//					var fieldSelect2 = "<fieldset><legend>"+labels.labelExport+"</legend>";
+//					fieldSelect2 += ' <button on-click class="ui-button ui-widget ui-corner-all" onClick="cdvCORE.getInstance().exportData();">'+labels.buttonExport+'</button>';
 				}
 
 				dialog_cdv.tabs({

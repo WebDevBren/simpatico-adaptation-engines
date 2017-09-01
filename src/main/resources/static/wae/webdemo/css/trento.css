@@ -77,6 +77,9 @@ body {
 
 #simp-usr-data {
 	font-size: 12px;
+	display: block;
+	color: #399E4C;
+	font-weight: bold;
 }
 
 .block_edited {
@@ -151,3 +154,48 @@ label[for="face-sad-session-feedback"] {
     background-image:
         url(https://dev.smartcommunitylab.it/simp-engines/wae/webdemo/img/sad_face.png);
 }
+
+.ui-dialog-buttonset {
+	width: 100%;
+}
+
+.ui-dialog-buttonset button:not(:first-child) {
+    float: right;
+}
+
+.tutorial-dialog .ui-dialog-titlebar {
+	display: none;
+}
+
+.tutorial-dialog .tutorial-header {
+	text-align: center;
+	margin-top: 20px;
+}
+
+#tutorial-buttons {
+	margin: 30px 10px 10px 20px;
+	padding-bottom: 10px;
+	float: right;
+}
+#tutorial-buttons a {
+	text-transform: uppercase;
+	font-size: 16px;
+	margin-left: 20px;
+	text-decoration: none;
+}
+#tutorialcontent {
+	margin: 40px 20px;
+}
+#tutorialcontent img {
+	vertical-align: bottom;
+	height: 50px;
+}
+#tutorialcontent td {
+	border: 0 !important;
+}
+#tutorialnext {
+   color: #339645;
+} 
+#tutorialesc {
+   color: #DD4039;
+} 

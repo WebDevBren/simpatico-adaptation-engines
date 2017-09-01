@@ -12,11 +12,13 @@ var authManager = (function () {
     var endpoint = 'http://localhost:8080/aac'
     var authority = 'google';
     var redirect = null;
+    var greeting = '';
 
     function initComponent(parameters) {
       endpoint = parameters.endpoint;
       ifeClientID = parameters.clientID;
       authority = parameters.authority;
+      greeting = parameters.greeting || '';
       // support null setting where authority is selected by user
       if (!authority) {
         authority = "";
@@ -126,7 +128,8 @@ var authManager = (function () {
           }
 
         } else {
-          document.getElementById(userdataElementID).innerHTML = "";
+          document.getElementById(userdataElementID).innerHTML = greeting;
+          document.getElementById(userdataElementID).style  = "display:block";
           disablePrivateFeatures();
           featureEnabled = false;
         }
