@@ -244,7 +244,9 @@ var citizenpediaUI = (function () {
 //                              'alt="' + diagramNotificationText + '" ' +
 //                      '</a>'
 //        diagramContainer.innerHTML = content;
-        diagramURL = response["url"];
+        if (response.length > 0) {
+        	diagramURL = response[0]["url"];
+        }
       }
     }
 

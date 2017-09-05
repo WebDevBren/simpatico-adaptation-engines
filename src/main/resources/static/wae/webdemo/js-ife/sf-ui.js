@@ -72,7 +72,7 @@ var sfUI = (function () {
 
       var data = JSON.parse(localStorage.userData); // Get the user's ID from localStorage
       ctzSelected = citizenpediaUI.getInstance().isEnabled();
-      simplificationSelected = taeUI.getInstance().isEnabled();
+      simplificationSelected = true;//taeUI.getInstance().isEnabled();
       // Check if timeout exists
       var currentTime = new Date().getTime();
       timeoutExceeded = isTimeExceeded(currentTime - startTime);
