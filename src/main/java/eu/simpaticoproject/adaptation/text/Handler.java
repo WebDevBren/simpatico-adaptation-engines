@@ -112,9 +112,13 @@ public class Handler {
 
     public String service(String word, Integer position, String lang, String text) throws Exception {
         if (modeProxy) {
-            return rest.getForObject(proxyEndpoint + "?lang={lang}&text={text}&position={position}", String.class, lang, text, position);
+            String res = rest.getForObject(proxyEndpoint + "?lang={lang}&text={text}&position={position}", String.class, lang, text, position);
+            res = res.replace(" NaN", " null");
+            return res;
         } else {
-            return serviceLocal(lang, text, word, position);
+        	 String res = serviceLocal(lang, text, word, position);
+             res = res.replace(" NaN", " null");
+        	 return res;
         }
     }
 
