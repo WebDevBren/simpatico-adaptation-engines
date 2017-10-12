@@ -20,13 +20,12 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoException;
 
+import eu.simpaticoproject.adaptation.text.Handler;
 import eu.simpaticoproject.adaptation.workflow.storage.RepositoryManager;
 
 @SpringBootApplication
 @Configuration
 public class SimpaticoApplication {
-	static Logger logger = Logger.getLogger("SimpaticoApplication");
-
 	@Value("${db.name}")
 	private String dbName;
 	
@@ -44,7 +43,7 @@ public class SimpaticoApplication {
 	
 	public String generateDbUrl() {
 		String dbUrl = "";
-		if( StringUtils.isNotEmpty(dbUsername) && StringUtils.isNotEmpty(dbPassword) ) {
+		if( dbUsername != "" && dbPassword != "") {
 			dbUrl = String.format("mongodb://%s:%s@%s:%s", dbUsername, dbPassword, dbHost, dbPort);
 		} else {
 			dbUrl = String.format("mongodb://%s:%s", dbHost, dbPort);
@@ -69,7 +68,6 @@ public class SimpaticoApplication {
 	@Bean
 	public MongoTemplate getMongo() throws UnknownHostException, MongoException {
 		String dbUrl = generateDbUrl();
-		logger.info("Database URL : \"" + dbUrl+ "\"")
 		return new MongoTemplate(new MongoClient(dbUrl), dbName);
 	}
 	
