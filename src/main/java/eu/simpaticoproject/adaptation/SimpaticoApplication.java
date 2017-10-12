@@ -4,6 +4,7 @@ import java.net.UnknownHostException;
 
 import org.apache.commons.lang.StringUtils;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -24,6 +25,7 @@ import eu.simpaticoproject.adaptation.workflow.storage.RepositoryManager;
 @SpringBootApplication
 @Configuration
 public class SimpaticoApplication {
+	static Logger logger = Logger.getLogger("SimpaticoApplication");
 
 	@Value("${db.name}")
 	private String dbName;
@@ -67,6 +69,7 @@ public class SimpaticoApplication {
 	@Bean
 	public MongoTemplate getMongo() throws UnknownHostException, MongoException {
 		String dbUrl = generateDbUrl();
+		logger.info("Database URL : \"" + dbUrl+ "\"")
 		return new MongoTemplate(new MongoClient(dbUrl), dbName);
 	}
 	
