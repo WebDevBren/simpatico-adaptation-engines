@@ -2,7 +2,7 @@ package eu.simpaticoproject.adaptation;
 
 import java.net.UnknownHostException;
 
-import org.apache.commons.lang.StringUtils
+import org.apache.commons.lang.StringUtils;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
