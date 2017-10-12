@@ -2,6 +2,8 @@ package eu.simpaticoproject.adaptation;
 
 import java.net.UnknownHostException;
 
+import org.apache.commons.lang.StringUtils
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -41,11 +43,10 @@ public class SimpaticoApplication {
 	public String generateDbUrl() {
 		String dbUrl = "";
 		if( StringUtils.isNotEmpty(dbUsername) && StringUtils.isNotEmpty(dbPassword) ) {
-			String dbUrl = String.format("mongodb://%s:%s@%s:%s/%s", dbUsername, dbPassword, dbHost, dbPort, dbName);
+			dbUrl = String.format("mongodb://%s:%s@%s:%s/%s", dbUsername, dbPassword, dbHost, dbPort, dbName);
 		} else {
-			String dbUrl = String.format("mongodb://%s:%s/%s", dbHost, dbPort, dbName);
+			dbUrl = String.format("mongodb://%s:%s/%s", dbHost, dbPort, dbName);
 		}
-		
 		return dbUrl;
 	}
 	
