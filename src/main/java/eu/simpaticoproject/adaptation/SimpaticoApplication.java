@@ -68,7 +68,7 @@ public class SimpaticoApplication {
 	@Bean
 	public MongoTemplate getMongo() throws UnknownHostException, MongoException {
 		String dbUrl = generateDbUrl();
-		return new MongoTemplate(new MongoClient(dbUrl), dbName);
+		return new MongoTemplate(new MongoClient(new MongoClientURI(dbUrl)), dbName);
 	}
 	
 	@Bean
