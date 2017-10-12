@@ -25,7 +25,30 @@ public class SimpaticoApplication {
 
 	@Value("${db.name}")
 	private String dbName;
+	
+	@Value("${db.host}")
+	private String dbHost;
 
+	@Value("${db.port}")
+	private int dbPort;
+	
+	@Value("${db.username}")
+	private String dbUsername;
+	
+	@Value("${db.password}")
+	private String dbPassword;
+	
+	public String generateDbUrl() {
+		String dbUrl = "";
+		if( StringUtils.isNotEmpty(dbUsername) && StringUtils.isNotEmpty(dbPassword) ) {
+			String dbUrl = String.format("mongodb://%s:%s@%s:%s/%s", dbUsername, dbPassword, dbHost, dbPort, dbName);
+		} else {
+			String dbUrl = String.format("mongodb://%s:%s/%s", dbHost, dbPort, dbName);
+		}
+		
+		return dbUrl;
+	}
+	
 	public static void main(String[] args) {
 		SpringApplication.run(SimpaticoApplication.class, args);
 	}
@@ -42,7 +65,7 @@ public class SimpaticoApplication {
 	
 	@Bean
 	public MongoTemplate getMongo() throws UnknownHostException, MongoException {
-		return new MongoTemplate(new MongoClient(), dbName);
+		return new MongoTemplate(new MongoClient(generateDbUrl());
 	}
 	
 	@Bean
