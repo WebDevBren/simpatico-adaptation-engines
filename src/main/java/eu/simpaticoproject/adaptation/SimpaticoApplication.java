@@ -45,9 +45,9 @@ public class SimpaticoApplication {
 	public String generateDbUrl() {
 		String dbUrl = "";
 		if( dbUsername != "" && dbPassword != "") {
-			dbUrl = String.format("mongodb://%s:%s@%s:%s", dbUsername, dbPassword, dbHost, dbPort);
+			dbUrl = String.format("mongodb://%s:%s@%s:%s/%s", dbUsername, dbPassword, dbHost, dbPort, dbName);
 		} else {
-			dbUrl = String.format("mongodb://%s:%s", dbHost, dbPort);
+			dbUrl = String.format("mongodb://%s:%s/%s", dbHost, dbPort, dbName);
 		}
 		return dbUrl;
 	}
